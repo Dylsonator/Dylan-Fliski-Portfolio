@@ -1,4 +1,4 @@
-export type Project={slug:string;title:string;status:'Completed'|'In Development'|'On Hold';featured:boolean;image?:string;gallery?:{src:string;caption:string}[];sections?:{heading:string;text:string;image?:string;caption?:string;smallMedia?:boolean}[];category:string;tech:string[];summary:string;details:string[];videos?:{label:string;id:string}[];videoFile?:{label:string;src:string;poster?:string};steamTrailerUrl?:string;smallImage?:boolean;fallbackImage?:string;links?:{label:string;url:string}[];source?:string;role?:string;recognition?:string};
+export type Project={slug:string;title:string;status:'Completed'|'In Development'|'On Hold';featured:boolean;image?:string;gallery?:{src:string;caption:string}[];sections?:{heading:string;text:string;image?:string;caption?:string;smallMedia?:boolean}[];category:string;tech:string[];summary:string;details:string[];videos?:{label:string;id:string}[];videoFile?:{label:string;src:string;poster?:string};steamTrailerUrl?:string;smallImage?:boolean;fallbackImage?:string;links?:{label:string;url:string}[];source?:string};
 export const projects:Project[] = [
   {
     "slug": "fish-evolution",
@@ -35,40 +35,39 @@ export const projects:Project[] = [
       "Simulation",
       "Procedural Generation"
     ],
-    "summary": "My final-year Unity research project exploring autonomous fish, inherited traits and changing populations inside a simulated marine ecosystem.",
+    "summary": "A 3D autonomous marine ecosystem exploring behavioural evolution, inherited morphology and emergent interactions.",
     "details": [
-      "For my final-year research project, I developed a 3D marine ecosystem in Unity using C#. I wanted to explore how a population of autonomous fish would change over generations when each creature had its own traits, needs and behaviour instead of being directly controlled by a player.",
-      "I programmed the fish agents and the systems they interact with, including food, hunger, digestion, predators and prey, reproduction, ageing and environmental conditions. I also worked on inherited behaviour and morphology so the fish could vary between individuals and generations rather than all behaving identically.",
-      "A large part of the project was observing and debugging the simulation. I added selected-fish readouts, population graphs and CSV logging, then worked on performance and balancing as I tested how the ecosystem behaved over longer runs. Some behaviours needed repeated adjustments as predator and prey populations changed."
+      "Final-year research project focused on an autonomous ecosystem, inherited traits and non-player-driven behavioural evolution.",
+      "Implemented hunger, digestion, mating, eggs, ageing, resource selection, carrion, procedural plants and currents.",
+      "Added research metrics, CSV export and performance optimisation to support experimentation."
     ],
     "sections": [
       {
-        "heading": "Building the ecosystem",
-        "text": "I created the Unity environment and the systems that keep the simulation running, including resources, procedural plants and changing environmental conditions. The wider view shows the habitat that the fish move around and depend on.",
+        "heading": "Autonomous marine ecosystem",
+        "text": "I developed a 3D ecosystem where autonomous fish interact with their environment. The simulation explores behaviour and emergent interactions without direct player control.",
         "image": "/images/gallery/fish-ecosystem.jpg",
-        "caption": "The simulated habitat, with fish and environmental resources visible."
+        "caption": "The simulated marine environment and active fish population."
       },
       {
-        "heading": "Fish behaviour and inherited traits",
-        "text": "I programmed agents that respond to things such as hunger, nearby threats and their own inherited characteristics. The selection and debug panels let me inspect a particular fish’s current behaviour, health, energy and other values while it is running.",
+        "heading": "Behaviour and inherited morphology",
+        "text": "Fish differ through inherited characteristics, while autonomous behaviour responds to factors including hunger, diet, survival and their surroundings.",
         "image": "/images/gallery/fish-closeup.jpg",
-        "caption": "A fish in the simulation with its individual debug information visible."
+        "caption": "A closer look at individual fish and their varying characteristics."
       },
       {
-        "heading": "Population and resources",
-        "text": "I worked on the systems connecting feeding, reproduction, eggs, ageing and death to the available resources. These interactions affect how the population changes over time. The screenshot shows fish distributed around the environment; it does not by itself show every lifecycle system.",
+        "heading": "Lifecycle and environmental systems",
+        "text": "The simulation includes digestion, mating, eggs, ageing, carrion and resource selection, alongside procedural plants and water currents.",
         "image": "/images/gallery/fish-population.jpg",
-        "caption": "Fish spread through the simulation environment."
+        "caption": "Fish and plant resources distributed through the ecosystem."
       },
       {
-        "heading": "Tracking generations and testing changes",
-        "text": "I added graphs and CSV exports so I could record information such as population, diversity and behaviour over multiple generations. I used these alongside debugging and performance tests to see whether changes were improving the simulation or causing new problems.",
+        "heading": "Research data and iteration",
+        "text": "I added research metrics, CSV export and performance optimisation to help assess population behaviour and evolution across generations.",
         "image": "/images/gallery/fish-evolution-graphs.jpg",
-        "caption": "In-game graph and generation information used while testing the ecosystem."
+        "caption": "On-screen evolution graphs and simulation metrics."
       }
     ],
-    "source": "Games Programmer CV / final-year research project",
-    "role": "Solo developer · final-year research project"
+    "source": "Games Programmer CV"
   },
   {
     "slug": "twisted-guardians",
@@ -83,11 +82,11 @@ export const projects:Project[] = [
       "Blueprints",
       "AI"
     ],
-    "summary": "For a university group assignment, I programmed enemy and boss AI for an Unreal Engine action-adventure game focused on boss combat.",
+    "summary": "Reusable enemy and boss combat AI for an Unreal Engine action-adventure group project.",
     "details": [
-      "For a university group assignment, I worked as a programmer on Twisted Guardians, an Unreal Engine action adventure game focused around boss combat. My main work was creating the enemy and boss AI systems mainly in C++ with Blueprints used where needed. This included enemy detection, chasing the player, returning to a home area, attack selection, cooldowns, hit detection and telegraphed attacks.",
-      "I also made the system use editable attack data instead of hardcoded attacks, so values like damage, range, wind-up time, recovery, cooldowns, telegraph shape and attack weighting could be changed more easily by the team. A big part of the work was making sure the boss attacks felt fair, so the ground telegraphs had to match where the damage would actually happen.",
-      "I spent a lot of time debugging AI detection, C++ build errors, Blueprint issues, attack timing and general combat balancing. This project helped me improve a lot with Unreal Engine C++, AI controllers, actor components, data assets and working on a larger team project. The project is currently waiting for its final grade."
+      "Developed enemy detection, chase and return-home behaviours alongside attack selection and cooldowns.",
+      "Built data-driven boss attacks with editable damage, range, wind-up, recovery, cooldown, telegraph shape and weighting.",
+      "Worked on aligning telegraphed areas with hit detection and debugging C++, Blueprint integration and combat timing."
     ],
     "videos": [
       {
@@ -98,30 +97,30 @@ export const projects:Project[] = [
     "sections": [
       {
         "heading": "Enemy detection and pursuit",
-        "text": "I created enemy AI that detects the player, follows them and returns to its home area when the encounter ends or the player moves away. I worked on making that behaviour reusable for different enemies instead of writing completely separate logic for each one.",
+        "text": "I worked on reusable enemy detection, chasing, leash and return-home behaviour. This allows enemies to respond to the player without losing their home-area rules.",
         "image": "/images/gallery/twisted-guardians/enemy-approach.jpg",
-        "caption": "An encounter captured from the project’s gameplay recording."
+        "caption": "Enemy encounters from the recorded combat demonstration."
       },
       {
         "heading": "Data-driven attacks",
-        "text": "I programmed the attack-selection system in C++ with editable data for damage, range, wind-up, recovery, cooldowns, telegraph shapes and attack weighting. This meant the team could tune attacks without having to change the C++ code for every adjustment.",
+        "text": "Boss attacks expose damage, range, wind-up and recovery timing, cooldowns and selection weighting. I developed the systems in C++ with Blueprint integration for iteration.",
         "image": "/images/gallery/twisted-guardians/combat-closeup.jpg",
-        "caption": "A combat moment from the recorded Unreal Engine build."
+        "caption": "A close-range combat moment from the original footage."
       },
       {
-        "heading": "Matching attack warnings to damage",
-        "text": "I worked on the telegraph and hit-detection systems so the area shown to the player matched where the attack would actually deal damage. Getting the timing and positioning right was important for making boss attacks feel fair.",
+        "heading": "Telegraphs and hit detection",
+        "text": "I worked on coordinating attack telegraphs with hit detection and timing, so incoming danger has a visual warning aligned with the combat logic.",
         "image": "/images/gallery/twisted-guardians/attack-telegraph.jpg",
-        "caption": "A visible ground telegraph during an enemy attack."
+        "caption": "An attack telegraph shown in the gameplay recording."
       },
       {
-        "heading": "Testing and debugging the AI",
-        "text": "I spent time diagnosing inconsistent detection, attack timing, C++ compilation issues and Blueprint integration problems. Testing the encounters in-game helped me check that the AI behaved as expected rather than relying only on the code.",
+        "heading": "Debugging and combat response",
+        "text": "I investigated AI transitions, response timing and integration between C++ and Blueprints during combat-system development.",
         "image": "/images/gallery/twisted-guardians/combat-response.jpg",
-        "caption": "Gameplay testing of the enemy combat systems."
+        "caption": "Combat response during a gameplay test."
       }
     ],
-    "source": "Original Wix project description + Games Programmer CV",
+    "source": "Wix project page and Games Programmer CV",
     "videoFile": {
       "label": "Combat AI gameplay recording",
       "src": "/videos/twisted-guardians-combat.mp4",
@@ -144,8 +143,7 @@ export const projects:Project[] = [
         "src": "/images/gallery/twisted-guardians/combat-response.jpg",
         "caption": "Combat response during a gameplay test."
       }
-    ],
-    "role": "Enemy and boss AI programmer · university group assignment"
+    ]
   },
   {
     "slug": "easyfoliage",
@@ -174,11 +172,11 @@ export const projects:Project[] = [
       "Editor Scripting",
       "Procedural Generation"
     ],
-    "summary": "A Unity editor tool I developed in C# to give developers more control over procedural foliage placement.",
+    "summary": "A Unity editor extension for faster, more controllable procedural foliage placement.",
     "details": [
-      "I originally made EasyFoliage for a university assignment, where the idea was to create a Unity editor tool that could place foliage around a scene without having to position every object by hand. After submitting the assignment, I kept working on it because I wanted to turn it into something other Unity developers could actually use.",
-      "I programmed a custom editor window with separate controls for trees, bushes, grass, plants and generation boundaries. I worked on prefab lists, the generation system and the controls for where objects can appear, then continued improving how the editor handles multiple boundaries, presets and previews.",
-      "A lot of the work after the assignment has been about usability as well as the generation itself. I improved the layout, add and remove controls, prefab management and how boundaries are kept in sync with the scene. The tool is published on the Unity Asset Store and is still being developed."
+      "Originally developed for a university assignment and continued as a published Unity Asset Store tool.",
+      "Features configurable foliage types, prefab lists, generation boundaries, presets and scene-aware editor workflows.",
+      "Includes deterministic generation, preview workflows, focus-point placement and an editor interface designed for repeated use."
     ],
     "links": [
       {
@@ -188,26 +186,29 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "Building the editor tool",
-        "text": "I wrote a custom Unity editor window so users could manage foliage types and their prefab lists in one place. I kept the layout consistent across trees, grass, bushes and plants to make it easier to switch between them.",
-        "image": "/images/gallery/foliage-generated.jpg",
-        "caption": "The EasyFoliage editor next to a scene containing generated foliage."
-      },
-      {
-        "heading": "Setting generation boundaries",
-        "text": "I added and improved a boundary system to control which areas of the scene can receive foliage. I also worked on the scene and UI workflow for selecting, adding and managing boundaries.",
+        "heading": "Shaped boundaries",
+        "text": "The tool places foliage within editable boundaries so artists and level designers can define where objects should appear.",
         "image": "/images/gallery/foliage-boundaries.jpg",
-        "caption": "Boundary outlines visible over the terrain in Unity."
+        "caption": "Editable foliage generation boundaries in the Unity editor."
       },
       {
-        "heading": "Previewing and repeating results",
-        "text": "I implemented preview and preset workflows so users could try settings before generating the final objects. Seed-based generation makes it possible to repeat placements when the same setup is used.",
+        "heading": "Deterministic generation and previews",
+        "text": "Configurable tree, grass, bush and plant settings support deterministic seeds and preview workflows, so placement can be inspected before generation.",
         "image": "/images/gallery/foliage-preview.jpg",
-        "caption": "The Unity editor showing foliage placement previews and generation controls."
+        "caption": "A placement preview in the Unity editor."
+      },
+      {
+        "heading": "Presets and generation workflow",
+        "text": "The editor supports prefab lists, presets and focus-point placement. Type-aware spacing and a programmatic interface make repeated generation easier to manage.",
+        "image": "/images/gallery/foliage-generated.jpg",
+        "caption": "Generated foliage with its preset and generation controls."
+      },
+      {
+        "heading": "Published editor extension",
+        "text": "EasyFoliage is an editor-only Unity Asset Store package, designed for Unity 2022.3 LTS and Unity 6 with Built-in, URP and HDRP support."
       }
     ],
-    "source": "Original Wix project description + Games Programmer CV",
-    "role": "Solo Unity editor-tool developer"
+    "source": "Wix project page and Games Programmer CV"
   },
   {
     "slug": "horror-bus",
@@ -217,16 +218,13 @@ export const projects:Project[] = [
     "image": "/images/horror-bus-cover.jpg",
     "category": "Horror · Prototype",
     "tech": [
-      "Unity",
-      "Solo Development",
-      "Gameplay Prototyping",
-      "UI"
+      "Game Development",
+      "Horror"
     ],
-    "summary": "A solo first-person horror prototype in Unity about examining bus passengers and deciding who to let aboard.",
+    "summary": "An anomaly-focused horror game prototype, currently on hold for potential future development.",
     "details": [
-      "Horror Bus is my first larger solo indie game project. I started developing it around a simple idea: the player drives the same bus route, checks the passengers waiting to board and decides who to allow on using limited information.",
-      "I wanted the horror to come from observation and memory rather than constant jump scares. I worked on a passenger-inspection loop with questioning and identity-check interfaces, while keeping obvious hints to a minimum so players would have to pay attention to what they could actually see.",
-      "The project is currently on hold, and there are parts of the design I still want to expand. In particular, I want more sophisticated anomalies, better delayed consequences and scoring, and additional audio and visual polish. Those are plans for a future version, not features I am claiming are complete in the current prototype."
+      "A horror game concept built around noticing anomalies and environmental changes.",
+      "The source repository is intentionally private while the game may be developed further."
     ],
     "links": [
       {
@@ -236,41 +234,41 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "The bus route and atmosphere",
-        "text": "I set the prototype around one repeating bus route, using the dark depot and foggy road to make ordinary stops feel uneasy. The environment is part of the atmosphere I wanted: players should become familiar enough with the setting to notice when something changes.",
+        "heading": "Horror at the depot",
+        "text": "Horror Bus is a prototype built around noticing anomalies and investigating unusual passengers and environmental changes. The project is currently on hold.",
         "image": "/images/gallery/horror-bus/depot-road.jpg",
-        "caption": "The depot and foggy road visible from the bus.",
+        "caption": "The depot and foggy road establish the nighttime setting.",
         "smallMedia": true
       },
       {
-        "heading": "Inspecting passengers",
-        "text": "I built the game around looking closely at people before making a decision. The passenger shown here is one of the people the player can observe at a stop; the image shows the character, rather than proving that any particular anomaly has occurred.",
+        "heading": "Spotting suspicious passengers",
+        "text": "Players encounter passengers and look for details that might not be quite right. The visual interactions form part of the prototype’s anomaly-focused concept.",
         "image": "/images/gallery/horror-bus/passenger-inspection.jpg",
-        "caption": "A passenger viewed up close at the depot."
+        "caption": "A passenger encountered at the depot."
       },
       {
-        "heading": "Questioning the people on board",
-        "text": "I added a questioning interface so the player can ask passengers for information instead of relying only on appearances. I wanted conversations to add to the uncertainty without simply telling players the correct answer.",
+        "heading": "Questioning and interaction",
+        "text": "The prototype includes on-screen questions and passenger interactions to support examining people during the journey.",
         "image": "/images/gallery/horror-bus/passenger-dialogue.jpg",
-        "caption": "Dialogue and questioning choices displayed inside the bus.",
+        "caption": "Passenger questioning and interaction options.",
         "smallMedia": true
       },
       {
-        "heading": "Checking identification",
-        "text": "I worked on an identity-checking interface that gives the player another way to inspect a passenger. The screenshot shows that UI directly, rather than the wider bus gameplay.",
+        "heading": "Identity and inspection interface",
+        "text": "I prototyped a visual inspection interface for comparing information and deciding whether something appears suspicious.",
         "image": "/images/gallery/horror-bus/identity-station.jpg",
-        "caption": "The identification-check interface from the prototype.",
+        "caption": "An identity-check screen from the prototype.",
         "smallMedia": true
       },
       {
-        "heading": "Making decisions",
-        "text": "I prototyped interactions around what to do with a passenger after examining them. My longer-term plan is to make those decisions matter over the course of a run through improved consequences and scoring.",
+        "heading": "Prototype availability",
+        "text": "The public prototype can be played through Itch.io. I am keeping its source code private while the project may be developed further.",
         "image": "/images/gallery/horror-bus/questions.jpg",
-        "caption": "Passenger interaction options visible in the current prototype.",
+        "caption": "Inspection and questioning controls in the prototype.",
         "smallMedia": true
       }
     ],
-    "source": "Original Wix project description + published itch.io feature list",
+    "source": "Wix project page",
     "gallery": [
       {
         "src": "/images/gallery/horror-bus/depot-road.jpg",
@@ -292,26 +290,24 @@ export const projects:Project[] = [
         "src": "/images/gallery/horror-bus/questions.jpg",
         "caption": "Inspection and questioning controls in the prototype."
       }
-    ],
-    "role": "Solo developer · prototype on hold"
+    ]
   },
   {
     "slug": "sightline-command",
     "title": "Sightline Command",
     "status": "Completed",
     "featured": false,
-    "image": "/images/sightline-command-cover.webp",
+    "image": "/images/sightline-command-cover.jpg",
     "category": "Strategy · Experimental Input",
     "tech": [
       "Unity",
       "Team Project",
       "Hand Tracking"
     ],
-    "summary": "A university group project exploring turn-based strategy gameplay with hand tracking and a dual-monitor setup.",
+    "summary": "A turn-based strategy game using hand-tracking input and a dual-monitor display.",
     "details": [
-      "I worked as a programmer on Sightline Command during a university group assignment at the University of Gloucestershire. The module was about exploring unusual ways to interact with games, so our team developed a turn-based strategy game in Unity using hand tracking as the main input method and a dual-monitor setup.",
-      "The project was a team effort, and the original project description does not break down which individual systems I programmed. Rather than claiming ownership of the hand tracking, character designs or other team work, I have included a separate video of my own contributions alongside the full game trailer.",
-      "We were invited to demonstrate Sightline Command at Game-X, the university’s game event. I received a 2:1 (68%) for the project."
+      "Collaborated on a university group assignment exploring alternative interaction methods and interface design.",
+      "The game was invited to showcase at Game-X, the university game convention."
     ],
     "videos": [
       {
@@ -331,58 +327,52 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "Turn-based tactical gameplay",
-        "text": "Our team developed a turn-based strategy game with an overhead view of the map, units and available actions. This top-down screenshot is the gameplay view and shows the tactical interface that players interact with.",
+        "heading": "Turn-based strategy and alternative input",
+        "text": "Sightline Command is a university group project combining turn-based strategy with hand-tracking controls and a dual-monitor setup.",
         "image": "/images/gallery/sightline/strategy-map.jpg",
-        "caption": "Actual gameplay: the top-down tactical map and interface.",
+        "caption": "The tactical map and turn-based interaction view.",
         "smallMedia": true
       },
       {
-        "heading": "Hand tracking and the display setup",
-        "text": "The module challenged us to experiment with input and presentation instead of relying on a conventional keyboard-and-mouse game. Sightline Command used a hand-tracking device and two monitors. The team developed these ideas together; my personal work is shown in the contributions video below."
-      },
-      {
-        "heading": "Creature artwork",
-        "text": "This image is artwork from Sightline Command, showing one of the creature designs. It is included to show the look of the project, not as a gameplay screenshot or as art I am claiming I created.",
+        "heading": "Enemy encounters",
+        "text": "The playable game includes a range of opponents. These screenshots show two different enemy designs from the project.",
         "image": "/images/gallery/sightline/creature.jpg",
-        "caption": "Project artwork: creature design, not a gameplay capture.",
+        "caption": "A creature encountered in the game.",
         "smallMedia": true
       },
       {
-        "heading": "Mechanical character artwork",
-        "text": "This is another piece of artwork from the project, showing a mechanical character. I am including it as a visual from the team project rather than evidence of my own programming work.",
+        "heading": "Combat and presentation",
+        "text": "Enemy units are presented in 3D alongside the wider tactical systems and interfaces used by the team.",
         "image": "/images/gallery/sightline/mech.jpg",
-        "caption": "Project artwork: mechanical character, not a gameplay capture.",
+        "caption": "A mechanical enemy from Sightline Command.",
         "smallMedia": true
       },
       {
-        "heading": "Showing the project at Game-X",
-        "text": "Our team was invited to show Sightline Command at Game-X. The full trailer and my individual-contributions video are available below, so it is possible to see the project and my work separately.",
-        "image": "/images/sightline-command-cover.webp",
-        "caption": "Sightline Command title artwork."
+        "heading": "Team project and exhibition",
+        "text": "Sightline Command was invited to showcase at Game-X. The video demonstrations below show the game and my individual contributions.",
+        "image": "/images/sightline-command-cover.jpg",
+        "caption": "Original Sightline Command title artwork."
       }
     ],
-    "source": "Original Wix project description and videos",
+    "source": "Wix project page",
     "gallery": [
       {
         "src": "/images/gallery/sightline/strategy-map.jpg",
-        "caption": "Gameplay screenshot: top-down tactical map and turn-based interface."
+        "caption": "The tactical map and turn-based interaction view."
       },
       {
         "src": "/images/gallery/sightline/creature.jpg",
-        "caption": "Project artwork: creature design (not gameplay)."
+        "caption": "A creature encountered in the game."
       },
       {
         "src": "/images/gallery/sightline/mech.jpg",
-        "caption": "Project artwork: mechanical character (not gameplay)."
+        "caption": "A mechanical enemy from Sightline Command."
       },
       {
-        "src": "/images/sightline-command-cover.webp",
-        "caption": "Sightline Command title art."
+        "src": "/images/sightline-command-cover.jpg",
+        "caption": "Original Sightline Command title artwork."
       }
-    ],
-    "role": "Programmer · university group assignment",
-    "recognition": "Game-X showcase invitation · Project assessment: 2:1 (68%)"
+    ]
   },
   {
     "slug": "bound-in-time",
@@ -390,18 +380,15 @@ export const projects:Project[] = [
     "status": "Completed",
     "featured": false,
     "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3716810/52a3bdf6c5bb74aec27392d0f59d26a103a29336/header.jpg?t=1758823382",
-    "category": "Niagara · Visual Effects",
+    "category": "Game Development · VFX",
     "tech": [
-      "Unreal Engine 5",
-      "Niagara",
-      "Real-Time VFX",
-      "Team Collaboration"
+      "Team Project",
+      "VFX"
     ],
-    "summary": "My Niagara VFX work on a university team game, including laser shots, stun bursts, sword slashes and a self-revive sequence.",
+    "summary": "A collaborative game project with a dedicated visual-effects demonstration.",
     "details": [
-      "For a university assignment, I joined the team developing Bound in Time as a visual effects artist. I worked alongside Level 6 students, and my role was making real-time effects in Unreal Engine using Niagara rather than programming the game’s combat systems.",
-      "This was my first time using Niagara. I started with effects such as laser shots, then worked on stun bursts, sword slashes and a fully sequenced self-revive effect. Along the way I learned to use tools including vortex forces, trail renderers and shape constraints to build more layered effects.",
-      "I worked with the design team to make the effects fit the actions and visual style of the game, and I became more comfortable sequencing and optimising them independently. Bound in Time went on to win Best Game at Game-X. The linked VFX video demonstrates my actual effects; the Steam images show the wider game made by the team."
+      "A university team project. The linked VFX demonstration showcases part of the work.",
+      "Further technical breakdown and individual contributions can be added once confirmed."
     ],
     "videos": [
       {
@@ -417,49 +404,52 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "Creating effects for gameplay",
-        "text": "I used Niagara to create effects such as laser shots, stun bursts and sword slashes. My part of the project was the visual feedback for these actions, not the gameplay code behind the abilities. The screenshot shows the released game, while the video below shows my effects directly.",
+        "heading": "Co-op sci-fi horde shooter",
+        "text": "Bound in Time is a university team game released on Steam. Two players play as a cyborg and a samurai, defending environments against waves of enemies.",
         "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3716810/a0e9923a4b5061b0203f2d4ab40545dc1c3b732c/ss_a0e9923a4b5061b0203f2d4ab40545dc1c3b732c.1920x1080.jpg?t=1758823382",
-        "caption": "Official Steam screenshot showing the wider game, not a claim that every visible asset is mine."
+        "caption": "Official Steam gameplay screenshot showing the split-screen co-op action."
       },
       {
-        "heading": "Learning Niagara and sequencing effects",
-        "text": "I started with simpler particle effects and then moved towards layered work, especially the self-revive sequence. I experimented with vortex forces, trail renderers, shape constraints and timing to get the look and movement I wanted."
+        "heading": "Character abilities and teamwork",
+        "text": "The game uses character-specific abilities and co-operative mechanics, with upgrade choices as players progress. This image comes from the public Steam game listing.",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3716810/a0e9923a4b5061b0203f2d4ab40545dc1c3b732c/ss_a0e9923a4b5061b0203f2d4ab40545dc1c3b732c.1920x1080.jpg?t=1758823382",
+        "caption": "Steam gameplay screenshot showing both players and their ability interface."
       },
       {
-        "heading": "Working with the wider team",
-        "text": "I worked with designers to make the effects feel appropriate for the game’s actions and style. It gave me experience contributing to a larger team in a specialist VFX role. The game later won Best Game at Game-X."
+        "heading": "Visual effects contribution",
+        "text": "The VFX demonstration linked below focuses on work from my contribution to this university team project."
+      },
+      {
+        "heading": "Gameplay trailer and release",
+        "text": "Watch the official gameplay trailer and see additional footage and screenshots on the public Steam page.",
+        "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3716810/52a3bdf6c5bb74aec27392d0f59d26a103a29336/header.jpg?t=1758823382",
+        "caption": "Official Bound in Time Steam artwork."
       }
     ],
-    "source": "Original Wix project description",
+    "source": "Wix project page",
     "steamTrailerUrl": "https://store.steampowered.com/app/3716810/Bound_in_Time/",
     "gallery": [
       {
         "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3716810/a0e9923a4b5061b0203f2d4ab40545dc1c3b732c/ss_a0e9923a4b5061b0203f2d4ab40545dc1c3b732c.1920x1080.jpg?t=1758823382",
         "caption": "Official Steam gameplay screenshot"
       }
-    ],
-    "role": "Niagara VFX artist · university team project",
-    "recognition": "Best Game at Game-X"
+    ]
   },
   {
     "slug": "dijkstra-starmap",
     "title": "Dijkstra's Algorithm StarMap Navigation (C#)",
     "status": "Completed",
     "featured": false,
-    "image": "/images/archive/starmap.webp",
+    "image": "https://static.wixstatic.com/media/220016_f8114ca538e74c6e906f79a8ee1805e7~mv2.png",
     "category": "Algorithms · Pathfinding",
     "tech": [
-      "Unity",
       "C#",
-      "Dijkstra’s Algorithm",
-      "Pathfinding"
+      "Dijkstra’s Algorithm"
     ],
-    "summary": "A Unity/C# university assignment where I implemented Dijkstra’s shortest-path algorithm and movement through a generated star network.",
+    "summary": "A C# navigation demonstration built around Dijkstra’s shortest-path algorithm.",
     "details": [
-      "For a university assignment, I built a star-map navigation simulation in Unity using C#. The main task was to implement Dijkstra’s algorithm to find a route through a connected network of stars.",
-      "I wrote the pathfinding and movement methods used by the simulation. The interface lets you generate a star map, choose where to travel and calculate a route before moving through the selected path.",
-      "This was a chance to put the mathematical and algorithmic techniques from the module into something interactive rather than only solving the problem on paper. I received a 2:1 (64%) for the assignment."
+      "Demonstrates graph navigation and shortest-path calculation in a star-map context.",
+      "See the linked demonstration for the implementation in action."
     ],
     "videos": [
       {
@@ -469,40 +459,37 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "Generating a network and finding a route",
-        "text": "I implemented Dijkstra’s algorithm in C# to calculate a path between selected locations in the connected star map. The screenshot shows the network and the controls for configuring it and calculating a route.",
-        "image": "/images/archive/starmap.webp",
-        "caption": "Generated star network and pathfinding controls from the simulation."
+        "heading": "Shortest-path navigation",
+        "text": "I implemented a star-map navigation demonstration using Dijkstra’s algorithm in C#. It explores graph-based route calculation.",
+        "image": "https://static.wixstatic.com/media/220016_f8114ca538e74c6e906f79a8ee1805e7~mv2.png",
+        "caption": "C# star-map pathfinding demonstration.",
+        "smallMedia": false
       },
       {
-        "heading": "Moving along the calculated path",
-        "text": "After finding a path, I used my own movement methods to travel through the calculated route. The demonstration video shows that route being followed rather than only displaying the algorithm’s result."
+        "heading": "Algorithm demonstration",
+        "text": "The video below shows the navigation behaviour in action."
       }
     ],
-    "source": "Original Wix project description",
+    "source": "Wix project page",
     "smallImage": false,
-    "role": "Solo C# pathfinding and movement assignment",
-    "recognition": "Project assessment: 2:1 (64%)"
+    "fallbackImage": "/images/dijkstra.png"
   },
   {
     "slug": "multiplayer-menu",
     "title": "Main Menu / Multiplayer Networking (Blueprints)",
     "status": "Completed",
     "featured": false,
-    "image": "/images/archive/main-menu.webp",
+    "image": "https://static.wixstatic.com/media/220016_de610a37a04843c9bc4b3e303f7f7932~mv2.png",
     "category": "UI · Networking",
     "tech": [
-      "Unreal Engine 5",
-      "C++",
+      "Unreal Engine",
       "Blueprints",
-      "UI",
-      "Multiplayer"
+      "Networking"
     ],
-    "summary": "An Unreal Engine university assignment where I built a main-menu flow for a multiplayer prototype, including UI transitions, animation and sound.",
+    "summary": "A main-menu and multiplayer networking demonstration made with Unreal Blueprints.",
     "details": [
-      "For a university assignment, I worked on a multiplayer prototype in Unreal Engine 5 using C++ and Blueprints. The main assessed part of my project was building a complete main menu that could lead into the multiplayer experience.",
-      "I created the menu flow with options to host a game, join a game, change settings and quit. I also worked on the interface animations and sound effects. The assignment allowed the gameplay to be a sample scene, so my focus was making the menu and its navigation work properly rather than creating a full standalone game.",
-      "This helped me practise connecting UI elements and game flow in Unreal Engine. I received a First (72%) for the assignment."
+      "A technical prototype demonstrating menu and multiplayer functionality using Blueprint scripting.",
+      "The video walkthrough shows the project in use."
     ],
     "videos": [
       {
@@ -512,39 +499,37 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "Building the main menu",
-        "text": "I created a command-prompt-style menu with Host Game, Settings, Join Game and Quit options. The screenshot shows that menu, which was the focus of the assignment.",
-        "image": "/images/archive/main-menu.webp",
-        "caption": "Main menu showing the four available options."
+        "heading": "Menus and multiplayer flow",
+        "text": "This Unreal Engine Blueprint project demonstrates a main-menu workflow and multiplayer networking functions.",
+        "image": "https://static.wixstatic.com/media/220016_de610a37a04843c9bc4b3e303f7f7932~mv2.png",
+        "caption": "Unreal Blueprint menu and networking prototype.",
+        "smallMedia": false
       },
       {
-        "heading": "Connecting the menu to the multiplayer prototype",
-        "text": "I worked on the navigation loop from the main menu into the multiplayer experience, along with UI animations and sound effects. The demonstration video shows the working menu flow rather than presenting the sample gameplay scene as a complete game."
+        "heading": "Blueprint implementation",
+        "text": "The linked walkthrough shows the interface and network-related functionality in use.",
+        "smallMedia": true
       }
     ],
-    "source": "Original Wix project description",
+    "source": "Wix project page",
     "smallImage": false,
-    "role": "Main-menu and UI developer · university assignment",
-    "recognition": "Project assessment: First (72%)"
+    "fallbackImage": "/images/multiplayer-menu.png"
   },
   {
     "slug": "character-creator",
     "title": "Character Creator (Blueprints)",
     "status": "Completed",
     "featured": false,
-    "image": "/images/archive/character-creator.webp",
+    "image": "https://static.wixstatic.com/media/220016_26ea127c25524f58acf18f1ff42fb2c3~mv2.png",
     "category": "Customisation · UI",
     "tech": [
-      "Unreal Engine 5",
-      "Character Customisation",
-      "UI",
-      "Blueprints / C++"
+      "Unreal Engine",
+      "Blueprints"
     ],
-    "summary": "A university assignment where I built an Unreal Engine character-customisation interface for changing body parts and colours.",
+    "summary": "A character customisation prototype implemented with Unreal Engine Blueprints.",
     "details": [
-      "For a university assignment, I built a character creator mechanic in Unreal Engine 5. The task was to make an interactive customisation system like those used in RPGs, racing games and MMOs.",
-      "I worked on the interface for choosing different character parts and changing appearance settings. The screenshot shows options for the head, torso, legs and feet alongside colour selectors for skin, hair and clothing, with the selected character displayed in the middle.",
-      "The assignment was about implementing the mechanic, not making original character models or clothing. We were allowed to use appropriately credited assets, which let me concentrate on the programming and interface. I received a 2:1 (63%) for the project."
+      "An interactive character-creation prototype with a visual customisation interface.",
+      "Watch the demonstration to see the available controls."
     ],
     "videos": [
       {
@@ -554,61 +539,102 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "Changing character parts",
-        "text": "I worked on the interface that lets users choose different parts of the character, including the head, torso, legs and feet. The preview in the middle shows how the selected options affect the character.",
-        "image": "/images/archive/character-creator.webp",
-        "caption": "Character creator with body-part choices and a preview model."
+        "heading": "Customisation interface",
+        "text": "This Unreal Engine Blueprint prototype demonstrates an interactive character creator, with visible changes controlled through the interface.",
+        "image": "https://static.wixstatic.com/media/220016_26ea127c25524f58acf18f1ff42fb2c3~mv2.png",
+        "caption": "Character customisation interface.",
+        "smallMedia": false
       },
       {
-        "heading": "Appearance controls and asset use",
-        "text": "I also worked on the customisation controls for colours and other appearance options. The focus of the assignment was the interactive system, and the character art itself was not required to be original work."
+        "heading": "Blueprint workflow",
+        "text": "The project video demonstrates the available interactions."
       }
     ],
-    "source": "Original Wix project description",
+    "source": "Wix project page",
     "smallImage": false,
-    "role": "Character-customisation developer · university assignment",
-    "recognition": "Project assessment: 2:1 (63%)"
+    "fallbackImage": "/images/character-creator.png"
   },
   {
     "slug": "3d-boids",
-    "title": "3D Boids (C++)",
+    "title": "3D Boids — Flocking Remaster",
     "status": "Completed",
     "featured": false,
-    "image": "/images/archive/boids.webp",
-    "category": "Simulation · AI",
+    "image": "/images/gallery/boids-remaster/cohesion-test.jpg",
+    "category": "AI · 3D Simulation",
     "tech": [
-      "Unreal Engine 5",
+      "Unreal Engine 5.3",
       "C++",
-      "Steering AI",
-      "Flocking"
+      "Blueprints",
+      "UMG",
+      "Boids AI",
+      "Spatial Partitioning"
     ],
-    "summary": "A C++ flocking simulation I made in Unreal Engine 5 for a university assignment, with adjustable steering behaviours.",
+    "summary": "I returned to an old university flocking simulation, rebuilding its steering behaviour and in-game tools while keeping the original project visible as a before-and-after comparison.",
     "details": [
-      "For a university assignment, I created a 3D boids simulation in Unreal Engine 5 using C++. The task was to use basic steering and flocking behaviour to make groups of agents move around a shared environment.",
-      "I worked on the movement rules, including separation, cohesion and alignment, and provided controls for values such as population size, speed, spacing and wandering. Changing those settings affects how the boids move as a group rather than following a single pre-set animation.",
-      "The assignment also required a code report explaining my implementation. It helped me practise steering behaviour and simulation programming in C++, and I received a First (72%) for the project."
-    ],
-    "videos": [
-      {
-        "label": "Demonstration",
-        "id": "hzgmNK61kY0"
-      }
+      "I originally made this 3D Boids simulation for a university assignment, using C++ for the movement behaviours and Blueprints for the bird actors and player interactions. Years later, I recovered the project in Unreal Engine 5.3 and decided to see how much I could improve it without losing what made the original interesting.",
+      "The remaster focuses on the parts I would approach differently today: more natural steering, a more efficient neighbour search, obstacle and boundary behaviour, and a proper interface for experimenting with the flock. I kept the original screenshot and demonstration here as well, because comparing the two versions tells the story better than replacing the old work."
     ],
     "sections": [
       {
-        "heading": "Steering and flocking behaviour",
-        "text": "I implemented basic flocking rules in C++ so nearby boids influence each other’s movement. The screenshot shows a large group moving around the forest environment.",
-        "image": "/images/archive/boids.webp",
-        "caption": "The boids simulation, with a flock moving through the low-poly forest."
+        "heading": "Where it started — the university assignment",
+        "text": "The first version was a C++/Blueprint project built around a manager that spawned and updated a flock of bird actors. It already allowed me to change separation, cohesion and alignment, use the mouse to influence the flock, and spawn obstacles to test the movement. Looking back at the code revealed a few flaws that were worth fixing rather than covering up. This is the original project before the 2026 changes.",
+        "image": "/images/gallery/boids-remaster/original-university.jpg",
+        "caption": "Original university simulation with the first UI and low-poly forest scene."
       },
       {
-        "heading": "Adjusting simulation settings",
-        "text": "I exposed controls for the spawn count, speed, separation, cohesion, alignment, wandering and boundaries. I used these to change and observe how the flock behaves, rather than relying on one fixed configuration."
+        "heading": "Recovering the original C++ project",
+        "text": "After getting the older C++ project running again in Unreal Engine 5.3, I could inspect the original boid behaviour before changing anything. The bird meshes and flock still rendered, but the simulation and the original UI gave me a clear starting point for a more substantial refactor.",
+        "image": "/images/gallery/boids-remaster/original-recovered.jpg",
+        "caption": "The restored original project running before the 2026 steering and UI changes."
+      },
+      {
+        "heading": "Bringing the flock back in Unreal Engine 5.3",
+        "text": "I recovered the older Unreal C++ project, got it building again, and kept the existing bird Blueprint and scene assets. For the new demonstration I used the forest test map so the flock could be seen moving through a more interesting environment instead of only an empty sky.",
+        "image": "/images/gallery/boids-remaster/forest-gameplay.jpg",
+        "caption": "2026 remaster running in the low-poly forest environment, captured from the new gameplay video."
+      },
+      {
+        "heading": "Reworking the flocking behaviour",
+        "text": "I found a bug in the original cohesion calculation and rewrote how the classic steering forces work together. Separation now responds more strongly to close neighbours, while cohesion and alignment continuously contribute to the direction of travel. I added smoother, turn-rate-limited steering and actual wandering, then tested very different weight combinations using the new live controls.",
+        "image": "/images/gallery/boids-remaster/separation-test.jpg",
+        "caption": "Testing high separation with cohesion and alignment turned down in the remastered simulation."
+      },
+      {
+        "heading": "A more efficient neighbourhood search",
+        "text": "Originally, each boid searched the entire population for nearby birds. I replaced that with a 3D spatial grid and a per-frame snapshot of positions and headings, so the manager can query nearby cells and calculate the flocking forces from consistent data. I also reduced unnecessary per-boid ticking and limited the number of neighbour-debug spheres drawn. These are architectural optimisations; I have not published a controlled before-and-after FPS benchmark.",
+        "image": "/images/gallery/boids-remaster/neighbour-debug.jpg",
+        "caption": "Neighbour-radius and world-boundary debug visualisations. These spheres visualise local sensing, not the internal spatial-grid cells."
+      },
+      {
+        "heading": "Testing movement around obstacles",
+        "text": "I reworked obstacle avoidance to scan ahead with sphere sweeps and consider alternative paths, while spreading scans across frames instead of tracing for every bird at once. I also softened the steering response near the simulation boundary. The pillar test scene lets me inspect the birds around static obstacles while changing the flocking weights live.",
+        "image": "/images/gallery/boids-remaster/cohesion-test.jpg",
+        "caption": "Remastered simulation in the obstacle test scene, with cohesion and alignment increased."
+      },
+      {
+        "heading": "Rebuilding the in-game controls",
+        "text": "The original control panel was a long, tightly packed list of sliders. I built a replacement UMG interface with Population, Flocking and World tabs, live numerical readouts, debug options, and Respawn, Reset and Pause buttons. A C++ widget class connects those controls to the existing Boid Manager, while the original Blueprint player interactions remain available.",
+        "image": "/images/gallery/boids-remaster/ui-closeup.jpg",
+        "caption": "Updated UMG controls for experimenting with speed, sensing radius and flocking weights."
+      },
+      {
+        "heading": "Why I wanted to remaster it",
+        "text": "The interesting part of this project is being able to compare what I built for university with what I would build now. I kept the original demonstration alongside a new gameplay recording rather than presenting the remaster as an entirely new project. It gave me a chance to revisit C++ simulation architecture, debugging, optimisation and tool usability in one place."
       }
     ],
-    "source": "Original Wix project description",
+    "videos": [
+      {
+        "label": "Original university demonstration",
+        "id": "hzgmNK61kY0"
+      }
+    ],
+    "videoFile": {
+      "label": "2026 remaster — forest gameplay and live controls (1:06)",
+      "src": "/videos/boids-remaster-2026.mp4",
+      "poster": "/images/gallery/boids-remaster/video-poster.jpg"
+    },
+    "source": "Original university submission and 2026 Unreal Engine C++ / UMG remaster",
     "smallImage": false,
-    "role": "C++ boids simulation · university assignment",
-    "recognition": "Project assessment: First (72%)"
+    "fallbackImage": "/images/gallery/boids-remaster/forest-gameplay.jpg"
   }
 ];
