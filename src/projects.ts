@@ -1,4 +1,4 @@
-export type Project={slug:string;title:string;status:'Completed'|'In Development'|'On Hold';featured:boolean;image?:string;gallery?:{src:string;caption:string}[];sections?:{heading:string;text:string;image?:string;caption?:string;smallMedia?:boolean}[];category:string;tech:string[];summary:string;details:string[];videos?:{label:string;id:string}[];videoFile?:{label:string;src:string;poster?:string};steamTrailerUrl?:string;smallImage?:boolean;fallbackImage?:string;links?:{label:string;url:string}[];source?:string};
+export type Project={slug:string;title:string;status:'Completed'|'In Development'|'On Hold';featured:boolean;image?:string;gallery?:{src:string;caption:string}[];sections?:{heading:string;text:string;image?:string;caption?:string;smallMedia?:boolean}[];category:string;tech:string[];summary:string;details:string[];videos?:{label:string;id:string}[];videoFile?:{label:string;src:string;poster?:string};steamTrailerUrl?:string;smallImage?:boolean;fallbackImage?:string;links?:{label:string;url:string}[];source?:string;role?:string;recognition?:string};
 export const projects:Project[] = [
   {
     "slug": "fish-evolution",
@@ -67,7 +67,8 @@ export const projects:Project[] = [
         "caption": "On-screen evolution graphs and simulation metrics."
       }
     ],
-    "source": "Games Programmer CV"
+    "source": "Games Programmer CV",
+    "role": "Solo developer · final-year research project"
   },
   {
     "slug": "twisted-guardians",
@@ -143,7 +144,8 @@ export const projects:Project[] = [
         "src": "/images/gallery/twisted-guardians/combat-response.jpg",
         "caption": "Combat response during a gameplay test."
       }
-    ]
+    ],
+    "role": "Enemy and boss AI programmer · university group assignment"
   },
   {
     "slug": "easyfoliage",
@@ -208,7 +210,8 @@ export const projects:Project[] = [
         "text": "EasyFoliage is an editor-only Unity Asset Store package, designed for Unity 2022.3 LTS and Unity 6 with Built-in, URP and HDRP support."
       }
     ],
-    "source": "Wix project page and Games Programmer CV"
+    "source": "Wix project page and Games Programmer CV",
+    "role": "Solo Unity editor-tool developer"
   },
   {
     "slug": "horror-bus",
@@ -290,7 +293,8 @@ export const projects:Project[] = [
         "src": "/images/gallery/horror-bus/questions.jpg",
         "caption": "Inspection and questioning controls in the prototype."
       }
-    ]
+    ],
+    "role": "Solo developer · prototype on hold"
   },
   {
     "slug": "sightline-command",
@@ -372,7 +376,9 @@ export const projects:Project[] = [
         "src": "/images/sightline-command-cover.jpg",
         "caption": "Original Sightline Command title artwork."
       }
-    ]
+    ],
+    "role": "Programmer · university group assignment",
+    "recognition": "Game-X showcase invitation · Project assessment: 2:1 (68%)"
   },
   {
     "slug": "bound-in-time",
@@ -433,7 +439,9 @@ export const projects:Project[] = [
         "src": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3716810/a0e9923a4b5061b0203f2d4ab40545dc1c3b732c/ss_a0e9923a4b5061b0203f2d4ab40545dc1c3b732c.1920x1080.jpg?t=1758823382",
         "caption": "Official Steam gameplay screenshot"
       }
-    ]
+    ],
+    "role": "Niagara VFX artist · university team project",
+    "recognition": "Best Game at Game-X"
   },
   {
     "slug": "dijkstra-starmap",
@@ -472,7 +480,9 @@ export const projects:Project[] = [
     ],
     "source": "Wix project page",
     "smallImage": false,
-    "fallbackImage": "/images/dijkstra.png"
+    "fallbackImage": "/images/dijkstra.png",
+    "role": "Solo C# pathfinding and movement assignment",
+    "recognition": "Project assessment: 2:1 (64%)"
   },
   {
     "slug": "multiplayer-menu",
@@ -513,7 +523,9 @@ export const projects:Project[] = [
     ],
     "source": "Wix project page",
     "smallImage": false,
-    "fallbackImage": "/images/multiplayer-menu.png"
+    "fallbackImage": "/images/multiplayer-menu.png",
+    "role": "Main-menu and UI developer · university assignment",
+    "recognition": "Project assessment: First (72%)"
   },
   {
     "slug": "character-creator",
@@ -552,7 +564,9 @@ export const projects:Project[] = [
     ],
     "source": "Wix project page",
     "smallImage": false,
-    "fallbackImage": "/images/character-creator.png"
+    "fallbackImage": "/images/character-creator.png",
+    "role": "Character-customisation developer · university assignment",
+    "recognition": "Project assessment: 2:1 (63%)"
   },
   {
     "slug": "3d-boids",
@@ -635,6 +649,8 @@ export const projects:Project[] = [
     },
     "source": "Original university submission and 2026 Unreal Engine C++ / UMG remaster",
     "smallImage": false,
-    "fallbackImage": "/images/gallery/boids-remaster/forest-gameplay.jpg"
+    "fallbackImage": "/images/gallery/boids-remaster/forest-gameplay.jpg",
+    "role": "C++ boids simulation · university assignment",
+    "recognition": "Project assessment: First (72%)"
   }
 ];
