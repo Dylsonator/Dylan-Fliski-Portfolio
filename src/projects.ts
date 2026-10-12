@@ -529,19 +529,23 @@ export const projects:Project[] = [
   },
   {
     "slug": "character-creator",
-    "title": "Character Creator (Blueprints)",
-    "status": "Completed",
+    "title": "Character Creator — C++ Remaster",
+    "status": "In Development",
     "featured": false,
     "image": "https://static.wixstatic.com/media/220016_26ea127c25524f58acf18f1ff42fb2c3~mv2.png",
-    "category": "Customisation · UI",
+    "category": "Gameplay Systems · Customisation",
     "tech": [
-      "Unreal Engine",
-      "Blueprints"
+      "Unreal Engine 5.3",
+      "C++",
+      "Blueprints",
+      "UMG",
+      "Data Assets"
     ],
-    "summary": "A character customisation prototype implemented with Unreal Engine Blueprints.",
+    "summary": "Remastering my Blueprint-based university character creator with reusable C++ customisation systems and a redesigned interface.",
     "details": [
-      "An interactive character-creation prototype with a visual customisation interface.",
-      "Watch the demonstration to see the available controls."
+      "The original university version was built primarily with Blueprints, with modular head, torso, legs and feet options presented through a character customisation interface. I have kept its original footage and screenshots here as a reference point for the remaster.",
+      "I am rebuilding the customisation logic around a reusable Unreal C++ component and an automatically generated option catalogue, replacing repeated Blueprint table lookups and manual character-option setup.",
+      "The new UMG interface and presentation scene are still in development. The demonstration below shows the original version, not the completed remaster."
     ],
     "videos": [
       {
@@ -551,18 +555,18 @@ export const projects:Project[] = [
     ],
     "sections": [
       {
-        "heading": "Customisation interface",
-        "text": "This Unreal Engine Blueprint prototype demonstrates an interactive character creator, with visible changes controlled through the interface.",
+        "heading": "Original Blueprint prototype",
+        "text": "The original university character creator uses a Blueprint-driven interface to swap modular character meshes. The image and demonstration show that original prototype, preserved for a before-and-after comparison.",
         "image": "https://static.wixstatic.com/media/220016_26ea127c25524f58acf18f1ff42fb2c3~mv2.png",
         "caption": "Character customisation interface.",
         "smallMedia": false
       },
       {
-        "heading": "Blueprint workflow",
-        "text": "The project video demonstrates the available interactions."
+        "heading": "C++ refactor in progress",
+        "text": "The remaster introduces a reusable character-customisation component and a generated catalogue of meshes and preview images, reducing the manual data setup in the original Blueprint workflow. The next stage is the new UMG interface and connecting the catalogue to the finished customisation flow."
       }
     ],
-    "source": "Wix project page",
+    "source": "Original university project · 2026 C++ remaster in progress",
     "smallImage": false,
     "fallbackImage": "/images/character-creator.png",
     "role": "Character-customisation developer · university assignment",
