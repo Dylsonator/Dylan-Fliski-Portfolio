@@ -38,3 +38,8 @@
 .df-current-work__card-link { text-decoration:none; transition:color .2s ease; }
 .df-current-work__card-link:hover { color:#fff; }
 .df-current-work__card-link:focus-visible { outline:2px solid #e65b72; outline-offset:5px; }
+
+.df-current-work__actions{display:flex;flex-direction:column;gap:13px;}
+.df-current-work__itch-link{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;padding:11px 15px;border-radius:9px;background:#ba354b;border:1px solid #ec566d;color:#fff;text-decoration:none;font-size:12px;font-weight:800;transition:background .2s ease,transform .2s ease;}
+.df-current-work__itch-link:hover{background:#e34355;transform:translateY(-2px);}
+.df-current-work__itch-link:focus-visible{outline:2px solid #fff;outline-offset:3px;}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="The Last Service title illustration showing a night bus stop">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0c101c"/><stop offset="1" stop-color="#23212b"/></linearGradient><radialGradient id="glow" cx=".57" cy=".46" r=".5"><stop stop-color="#d5b17c" stop-opacity=".4"/><stop offset="1" stop-color="#d5b17c" stop-opacity="0"/></radialGradient></defs>
+<rect width="1200" height="675" fill="url(#sky)"/><rect width="1200" height="675" fill="url(#glow)"/>
+<path d="M0 427 L79 366 115 395 154 350 205 403 290 330 335 379 400 326 450 393 515 360 589 400 654 348 728 386 801 328 862 398 910 364 975 402 1037 348 1200 410V675H0Z" fill="#111722"/>
+<path d="M0 465H1200V675H0Z" fill="#24232a"/><path d="M0 535H1200" stroke="#aa9a91" stroke-width="3" stroke-dasharray="48 65" opacity=".34"/>
+<path d="M805 325V524" stroke="#676065" stroke-width="13"/><path d="M772 332H872" stroke="#8a7b6a" stroke-width="17"/><path d="M818 340V530" stroke="#d5b17c" stroke-width="2" opacity=".4"/><circle cx="805" cy="330" r="15" fill="#f5cf90"/>
+<path d="M668 397h290l38 24H638Z" fill="#3e414b" stroke="#aea099" stroke-width="4"/><path d="M671 420V559M964 420V559" stroke="#b1a9a1" stroke-width="10"/><path d="M700 434H935V522H700Z" fill="#2b313d" stroke="#7b7c85" stroke-width="3"/><path d="M753 523H897" stroke="#a7a7a3" stroke-width="10"/><path d="M766 534V566M885 534V566" stroke="#8f8f8b" stroke-width="7"/>
+<path d="M1000 410V560" stroke="#95979e" stroke-width="9"/><rect x="964" y="394" width="70" height="35" rx="5" fill="#bfc3ce"/><text x="999" y="418" text-anchor="middle" font-family="monospace" font-size="22" font-weight="bold" fill="#1d1d22">08</text>
+<rect x="0" y="0" width="1200" height="675" fill="#090d16" opacity=".14"/>
+<text x="95" y="248" font-family="Arial, sans-serif" font-size="24" fill="#e99eb0" letter-spacing="10">NO MORE DEPARTURES</text><text x="87" y="338" font-family="Arial, sans-serif" font-size="88" font-weight="900" fill="#f2eef0" letter-spacing="-3">THE LAST</text><text x="87" y="438" font-family="Arial, sans-serif" font-size="88" font-weight="900" fill="#f2eef0" letter-spacing="-3">SERVICE</text><text x="91" y="482" font-family="Arial, sans-serif" font-size="23" fill="#d7adb0">There is always one more bus.</text>
+<text x="90" y="612" font-family="monospace" font-size="17" fill="#c0a7aa" letter-spacing="3">HORROR HATCH #3  /  OCT 2026</text>
+</svg>

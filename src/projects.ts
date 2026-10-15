@@ -1,6 +1,59 @@
 export type Project={slug:string;title:string;status:'Completed'|'In Development'|'On Hold';featured:boolean;image?:string;gallery?:{src:string;caption:string}[];sections?:{heading:string;text:string;image?:string;caption?:string;smallMedia?:boolean}[];category:string;tech:string[];summary:string;details:string[];videos?:{label:string;id:string}[];videoFile?:{label:string;src:string;poster?:string};steamTrailerUrl?:string;smallImage?:boolean;fallbackImage?:string;links?:{label:string;url:string}[];source?:string;role?:string;recognition?:string};
 export const projects:Project[] = [
   {
+    "slug": "the-last-service",
+    "title": "The Last Service",
+    "status": "Completed",
+    "featured": true,
+    "image": "https://img.itch.zone/aW1nLzMwOTE1MTMzLnBuZw%3D%3D/original/XZiEQA.png",
+    "fallbackImage": "/images/the-last-service-placeholder.svg",
+    "category": "Psychological Horror · Game Jam",
+    "tech": [
+      "Unreal Engine 5.6",
+      "First-Person Gameplay",
+      "Anomaly Systems",
+      "PSX Aesthetic"
+    ],
+    "summary": "A released PSX-style psychological horror game set at an isolated, looping night-bus stop, featuring 41 anomalies and an eight-stamp escape challenge.",
+    "details": [
+      "Created and released as a solo entry for Horror Hatch #3: Liminal Transit, The Last Service transforms one isolated forest-side bus stop into a repeating psychological horror journey. You have finished a late shift and just want to get home, but every route seems to lead back to the same place.",
+      "I designed the observation-and-decision gameplay around two responses: board the night bus if everything looks normal, or take the marked exit when something has changed. The released game contains 41 environmental and supernatural anomalies, with interactive passengers, unsettling details and strange encounters.",
+      "Each correct decision stamps the player’s ticket. Eight correct decisions are needed to complete the journey, while a wrong choice resets the current run. The project was built in Unreal Engine 5.6 and released on itch.io on 15 October 2026, during the five-day jam."
+    ],
+    "sections": [
+      {
+        "heading": "A last bus that never takes you home",
+        "text": "The setting is intentionally compact: one roadside shelter, a dark forest, a marked way out and a night bus that always seems to return. Familiar objects give players a baseline to memorise, while lighting and sound turn small differences into sources of unease."
+      },
+      {
+        "heading": "41 environmental and supernatural anomalies",
+        "text": "The released game features 41 changes to discover, ranging from altered roadside details to unnatural passenger behaviour and other unexpected encounters. Some are subtle observation tests; others use interactive moments and sound to make the location feel increasingly hostile."
+      },
+      {
+        "heading": "Eight stamps, one escape",
+        "text": "Each loop asks the player to make a choice. If nothing seems wrong, speak to the driver and board; if an anomaly is present, take the exit passage. Correct calls earn stamps on an inspectable ticket, and collecting eight completes the journey. An incorrect decision resets the current streak."
+      },
+      {
+        "heading": "Solo five-day jam release",
+        "text": "I was responsible for the game design, programming and level design for this Horror Hatch #3 submission. Built in Unreal Engine 5.6 and styled after PS1-era horror, The Last Service was released on itch.io on 15 October 2026. The game can be downloaded from the link above."
+      }
+    ],
+    "links": [
+      {
+        "label": "Play / download on itch.io",
+        "url": "https://dylsonator.itch.io/the-last-service"
+      },
+      {
+        "label": "Horror Hatch #3 submission",
+        "url": "https://itch.io/jam/horror-hatch-21-day-challenge-3"
+      }
+    ],
+    "role": "Solo developer · game design, programming and level design",
+    "recognition": "Horror Hatch #3 — Liminal Transit · October 2026 release",
+    "source": "Official itch.io release page · released 15 October 2026"
+  },
+
+  {
     "slug": "fish-evolution",
     "title": "IRP — Fish Evolution Simulation",
     "status": "Completed",

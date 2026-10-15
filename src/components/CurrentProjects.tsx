@@ -10,14 +10,14 @@ export default function CurrentProjects() {
     <section className="shell section df-current-work" id="currently-building" aria-labelledby="df-current-work-title">
       <div className="df-current-work__intro">
         <div className="df-current-work__eyebrow"><span className="df-current-work__signal" /> ON THE WORKBENCH</div>
-        <h2 id="df-current-work-title">Currently building<span className="df-current-work__period">.</span></h2>
-        <p>Two projects in development. One is a short game-jam horror project; the other revisits a university project with a more scalable C++ foundation.</p>
+        <h2 id="df-current-work-title">Latest work<span className="df-current-work__period">.</span></h2>
+        <p>A newly released solo horror game and a technical remaster in progress — from shipping a complete experience to rebuilding reusable gameplay systems.</p>
       </div>
 
       <div className="df-current-work__grid">
         <article className="df-current-work__card df-current-work__card--horror">
           <div className="df-current-work__card-top">
-            <span className="df-current-work__tag">GAME JAM · IN DEVELOPMENT</span>
+            <span className="df-current-work__tag">GAME JAM · RELEASED</span>
             <span className="df-current-work__date">OCT 2026</span>
           </div>
           <div className="df-current-work__symbol df-current-work__symbol--bus" aria-hidden="true">08</div>
@@ -25,9 +25,9 @@ export default function CurrentProjects() {
             <p className="df-current-work__kicker">HORROR HATCH #3 · LIMINAL TRANSIT</p>
             <h3>The Last Service</h3>
             <p className="df-current-work__hook">The last bus is due. Your destination isn't.</p>
-            <p className="df-current-work__description">A short PSX-inspired psychological horror game being made for a five-day game jam. A quiet roadside stop, a familiar journey, and a few things that don't seem quite right.</p>
-            <div className="df-current-work__meta"><span>UNREAL ENGINE 5</span><span>C++ / BLUEPRINTS</span><span>PSX HORROR</span></div>
-            <div className="df-current-work__card-foot"><span className="df-current-work__live-dot" /> More to be revealed after the jam</div>
+            <p className="df-current-work__description">A released PSX-style psychological horror game made for Horror Hatch #3. Explore a looping night-bus stop, discover 41 anomalies and collect eight ticket stamps to escape.</p>
+            <div className="df-current-work__meta"><span>UNREAL ENGINE 5.6</span><span>41 ANOMALIES</span><span>SOLO GAME JAM</span></div>
+            <div className="df-current-work__actions"><Link className="df-current-work__card-foot df-current-work__card-link" to="/projects/the-last-service"><span className="df-current-work__live-dot" /> View the project case study<span aria-hidden="true" className="df-current-work__arrow">↗</span></Link><a className="df-current-work__itch-link" href="https://dylsonator.itch.io/the-last-service" target="_blank" rel="noopener noreferrer">Download on itch.io ↗</a></div>
           </div>
         </article>
 
