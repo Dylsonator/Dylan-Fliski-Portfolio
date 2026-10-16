@@ -1,31 +1,790 @@
-import React,{useState,useLayoutEffect} from 'react';import{createRoot}from'react-dom/client';import{BrowserRouter,Link,NavLink,useParams,useLocation}from'react-router-dom';import{ArrowRight,ArrowUpRight,ChevronLeft,ChevronRight,Download,ExternalLink,Gamepad2, Github,Mail,Menu,X,Code2, Cpu,Layers,MapPin,Linkedin,BrainCircuit,Wrench,Blocks,GraduationCap,BriefcaseBusiness,Copy,Check}from'lucide-react';import{projects,Project}from'./projects';import './style.css';
+import React, { useState, useLayoutEffect } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Link, NavLink, useParams, useLocation } from 'react-router-dom';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  ExternalLink,
+  Gamepad2,
+  Github,
+  Mail,
+  Menu,
+  X,
+  Code2,
+  Cpu,
+  Layers,
+  MapPin,
+  Linkedin,
+  BrainCircuit,
+  Wrench,
+  Blocks,
+  GraduationCap,
+  BriefcaseBusiness,
+  Copy,
+  Check
+} from 'lucide-react';
+import { projects, Project } from './projects';
+import './style.css';
 import CurrentProjects from './components/CurrentProjects';
-const featured=projects.filter(p=>p.featured);
-const EMAIL='Dylsonator.b@gmail.com';
-async function copyBusinessEmail():Promise<boolean>{
-  try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(EMAIL);return true;}}catch{}
-  try{
-    const el=document.createElement('textarea');el.value=EMAIL;el.style.position='fixed';el.style.opacity='0';document.body.appendChild(el);el.select();
-    const copied=document.execCommand('copy');document.body.removeChild(el);return copied;
-  }catch{return false;}
+const featured = projects.filter(p => p.featured);
+const EMAIL = 'Dylsonator.b@gmail.com';
+// Email clipboard helper with a fallback for older browsers.
+// Email clipboard helper with a fallback for older browsers.
+async function copyBusinessEmail(): Promise<boolean> {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(EMAIL);
+      return true;
+    }
+  }
+  catch { }
+  try {
+    const el = document.createElement('textarea');
+    el.value = EMAIL;
+    el.style.position = 'fixed';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+    el.select();
+    const copied = document.execCommand('copy');
+    document.body.removeChild(el);
+    return copied;
+  }
+  catch {
+    return false;
+  }
 }
-
-function Header(){const[open,setOpen]=useState(false);return <header className="site-header"><div className="shell nav"><Link className="brand" to="/" onClick={()=>setOpen(false)}><span className="brand-icon brand-logo"><img src="/images/logo-mark.png" alt=""/></span><span>DYLAN<span className="brand-red"> FLISKI</span><small>GAMES PROGRAMMER</small></span></Link><button className="menu-button" aria-label="Toggle menu" onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button><nav className={open?'nav-links show':'nav-links'}>{[['/','Home'],['/projects','Projects'],['/about','About'],['/contact','Contact']].map(([href,label])=><NavLink key={href} end={href==='/'} onClick={()=>setOpen(false)} to={href}>{label}</NavLink>)}</nav><Link className="nav-contact" to="/contact">Get in touch <ArrowUpRight size={15}/></Link></div></header>}
-function Status({value}:{value:Project['status']}){return <span className={'status '+(value==='Completed'?'complete':value==='On Hold'?'hold':'development')}><i/>{value}</span>}
-function Image({project,large=false}:{project:Project;large?:boolean}){
-  const kind=project.smallImage?'archive-preview':project.slug==='twisted-guardians'?'square-brand':'';
-  return <div className={'project-image '+(large?'large ':'')+kind}>{project.image?<img src={project.image} alt={project.title+' project image'} loading="lazy" onError={e=>{const fallback=project.fallbackImage||(project.slug==='bound-in-time'?'/images/bound-in-time.png':undefined);if(fallback&&!e.currentTarget.src.endsWith(fallback))e.currentTarget.src=fallback;}}/>:<div className="missing"><Gamepad2 size={42}/><span>Project imagery coming soon</span></div>}{project.smallImage&&<span className="archive-preview-label">Technical demo · Original screenshot</span>}<div className="image-sheen"/></div>
+// Main site navigation.
+// Main site navigation.
+function Header() {
+  const [open, setOpen] = useState(false);
+  return <header className="site-header">
+    <div className="shell nav">
+      <Link className="brand" to="/" onClick={() => setOpen(false)}>
+        <span className="brand-icon brand-logo">
+          <img src="/images/logo-mark.png" alt="" />
+        </span>
+        <span>DYLAN<span className="brand-red"> FLISKI</span>
+          <small>GAMES PROGRAMMER</small>
+        </span>
+      </Link>
+      <button className="menu-button" aria-label="Toggle menu" onClick={() => setOpen(!open)}>
+        {open ? <X /> : <Menu />}
+      </button>
+      <nav className={open ? 'nav-links show' : 'nav-links'}>
+        {[['/', 'Home'], ['/projects', 'Projects'], ['/about', 'About'], ['/contact', 'Contact']].map(([href, label]) => <NavLink key={href} end={href === '/'} onClick={() => setOpen(false)} to={href}>
+          {label}
+        </NavLink>)}
+      </nav>
+      <Link className="nav-contact" to="/contact">Get in touch <ArrowUpRight size={15} />
+      </Link>
+    </div>
+  </header>;
 }
-function ProjectCard({project}:{project:Project}){return <Link className="project-card" to={'/projects/'+project.slug}><Image project={project}/><div className="project-card-body"><div className="card-top"><span className="eyebrow">{project.category}</span><ArrowUpRight size={18}/></div><h3>{project.title}</h3><p>{project.summary}</p><div className="card-bottom"><Status value={project.status}/><span className="view-label">Explore project <ArrowRight size={15}/></span></div></div></Link>}
-function Heading({eyebrow,title,sub}:{eyebrow:string;title:string;sub?:string}){return <div className="section-heading"><div><span className="eyebrow red-label">{eyebrow}</span><h2>{title}</h2>{sub&&<p>{sub}</p>}</div></div>}
-function Home(){const[slide,setSlide]=useState(0);const current=featured[slide];const previous=()=>setSlide(v=>(v+featured.length-1)%featured.length);const next=()=>setSlide(v=>(v+1)%featured.length);return <><section className="hero shell"><div className="hero-copy"><span className="eyebrow red-label">WELCOME TO MY PORTFOLIO</span><h1>Hi, I'm <em>Dylan!</em></h1><h2 className="hero-subtitle">Games Programmer</h2><p>I'm a recent graduate with a BSc in Computer Games Programming from the University of Gloucestershire. I enjoy developing gameplay systems, artificial intelligence and tools that help bring games to life behind the scenes.</p><p>This portfolio showcases the projects I've worked on, the programming challenges I've tackled and what I've learned along the way.</p><div className="hero-actions"><Link className="btn primary" to="/projects">View my projects <ArrowUpRight size={17}/></Link><Link className="btn secondary" to="/about">About me <ArrowRight size={17}/></Link></div><Link className="release-notice" to="/projects/the-last-service"><span className="release-notice__dot"/> NEW RELEASE · THE LAST SERVICE <ArrowUpRight size={14}/></Link><div className="hero-tags"><span>UNITY / C#</span><span>UNREAL / C++</span><span>GAMEPLAY & AI</span></div></div><div className="hero-aside"><div className="hero-feature"><div className="hero-feature-top"><span className="eyebrow red-label">FEATURED PROJECT</span><span className="hero-counter">{String(slide+1).padStart(2,'0')} / {String(featured.length).padStart(2,'0')}</span></div><Link to={'/projects/'+current.slug} className={'hero-feature-media '+(current.slug==='twisted-guardians'?'brand-art-media ':'')+(current.smallImage?'archive-preview':'')}>{current.image?<img src={current.image} alt={current.title}/>:<div className="hero-feature-placeholder"><Gamepad2 size={48}/><span>Screenshot coming soon</span></div>}</Link><div className="hero-feature-content"><span className="eyebrow">{current.category}</span><h3>{current.title}</h3><p>{current.summary}</p><div className="hero-feature-footer"><Link to={'/projects/'+current.slug} className="hero-feature-link">Explore this project <ArrowUpRight size={16}/></Link><div className="hero-feature-arrows"><button type="button" onClick={previous} aria-label="Previous featured project"><ChevronLeft size={19}/></button><button type="button" onClick={next} aria-label="Next featured project"><ChevronRight size={19}/></button></div></div></div><div className="hero-dots">{featured.map((p,i)=><button key={p.slug} type="button" aria-label={'Show '+p.title} aria-pressed={i===slide} className={i===slide?'active':''} onClick={()=>setSlide(i)}/>)}</div></div></div></section><section className="shell section"><div className="heading-line"><Heading eyebrow="01 / SELECTED WORK" title="Featured projects" sub="Selected projects that showcase my games, simulations and programming work."/><div className="slide-controls"><button aria-label="Previous project" onClick={previous}><ChevronLeft/></button><button aria-label="Next project" onClick={next}><ChevronRight/></button></div></div><div className="featured-grid"><div className="featured-main"><ProjectCard project={featured[slide]}/></div><div className="featured-side">{featured.filter((_,i)=>i!==slide).slice(0,2).map(p=><ProjectCard key={p.slug} project={p}/>)}</div></div><div className="section-link"><Link to="/projects">View all {projects.length} projects <ArrowRight size={17}/></Link></div></section><CurrentProjects/><section className="shell section"><Heading eyebrow="03 / WHAT I DO" title="Skills & specialisms"/><div className="skills-grid">{[{icon:<Gamepad2/>,name:'Gameplay programming',text:'Interactive systems, combat mechanics and data-driven behaviours.'},{icon:<Cpu/>,name:'AI & simulation',text:'Autonomous agents, boss AI, navigation and emergent systems.'},{icon:<Layers/>,name:'Tools & workflows',text:'Unity editor extensions, procedural generation and reusable pipelines.'}].map(s=><div className="skill-card" key={s.name}><div className="skill-icon">{s.icon}</div><h3>{s.name}</h3><p>{s.text}</p></div>)}</div></section><section className="shell cta-section"><div><span className="eyebrow red-label">GET IN TOUCH</span><h2>Interested in my work?</h2><p>Feel free to contact me about programming opportunities or any of the projects shown here.</p></div><Link className="btn primary" to="/contact">Contact me <ArrowUpRight size={17}/></Link></section></>}
-function Projects(){const[q,setQ]=useState('');const[filter,setFilter]=useState('All');const shown=projects.filter(p=>(filter==='All'||p.status===filter)&&`${p.title} ${p.summary} ${p.tech.join(' ')}`.toLowerCase().includes(q.toLowerCase()));return <main className="shell page"><span className="eyebrow red-label">{filter==='All'?'ALL WORK':filter.toUpperCase()} / {shown.length?`001—${String(shown.length).padStart(3,'0')}`:'000'}</span><h1 className="page-title">PROJECT <em>ARCHIVE.</em></h1><p className="page-intro">A collection of games, prototypes, programming experiments and tools — from AI systems to procedural generation.</p><div className="filterbar"><div className="filter-pills">{['All','Completed','In Development','On Hold'].map(f=><button className={filter===f?'active':''} key={f} onClick={()=>setFilter(f)}>{f}</button>)}</div><input aria-label="Search projects" placeholder="Search projects or technologies..." value={q} onChange={e=>setQ(e.target.value)}/></div><div className="projects-grid">{shown.map(p=><ProjectCard project={p} key={p.slug}/>)}</div>{shown.length===0&&<p className="empty">No projects match your filters.</p>}</main>}
-function ProjectDetail(){const{slug}=useParams();const p=projects.find(p=>p.slug===slug);if(!p)return <main className="shell page"><h1>Project not found</h1><Link to="/projects">Back to projects</Link></main>;const index=projects.indexOf(p);const next=projects[(index+1)%projects.length];return <main className="shell detail-page"><Link className="back-link" to="/projects"><ChevronLeft size={16}/> All projects</Link><div className="detail-header"><div><span className="eyebrow red-label">PROJECT / {String(index+1).padStart(2,'0')}</span><h1>{p.title}</h1><p>{p.summary}</p></div><Status value={p.status}/></div><div className={'detail-cover '+(p.slug==='easyfoliage'?'cover-art ':'')+(p.smallImage?'compact-cover ':'')}><Image project={p} large/></div><div className="detail-columns"><article className="overview-copy"><span className="eyebrow red-label">THE BREAKDOWN</span><h2>Behind the project</h2><p>{p.details[0]}</p></article><aside><h3>Project details</h3><div className="aside-line"><span>Category</span><strong>{p.category}</strong></div><div className="aside-line"><span>Status</span><Status value={p.status}/></div><div className="aside-tech">{p.tech.map(t=><span key={t}>{t}</span>)}</div>{p.links?.map(l=><a key={l.url} className="btn secondary aside-btn" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} <ExternalLink size={16}/></a>)}</aside></div><section className="story-section"><Heading eyebrow="PROJECT WALKTHROUGH" title="How it works" sub="Screenshots and explanations together, showing the systems behind the project."/><div className="story-list">{p.sections?.map((section,i)=><section className={'story-row '+(!section.image?'text-only':'')+(i%2===1?' reverse':'')} key={section.heading}><div className="story-copy"><span className="story-index">{String(i+1).padStart(2,'0')} / {String(p.sections?.length??0).padStart(2,'0')}</span><h3>{section.heading}</h3><p>{section.text}</p></div>{section.image&&<figure className={"story-media "+(section.smallMedia?"small-media":"")}><a href={section.image} target="_blank" rel="noopener noreferrer" aria-label={'Open screenshot: '+(section.caption||section.heading)}><img src={section.image} alt={section.caption||section.heading} loading="lazy" onError={e=>{if(p.fallbackImage&&section.image===p.image&&!e.currentTarget.src.endsWith(p.fallbackImage))e.currentTarget.src=p.fallbackImage;}}/></a>{section.caption&&<figcaption>{section.caption}</figcaption>}</figure>}</section>)}</div></section>{p.slug==='easyfoliage'&&<p className="store-media-note">More official product images are available on the <a href="https://assetstore.unity.com/packages/tools/terrain/easyfoliage-321747" target="_blank" rel="noopener noreferrer">Unity Asset Store <ExternalLink size={13}/></a>. The demonstration video is due to be updated.</p>}{(p.videos?.length||p.videoFile||p.steamTrailerUrl)&&<section className="video-section"><Heading eyebrow="WATCH / DEMONSTRATIONS" title="See it in action"/><div className="video-grid">{p.videos?.map(v=><div key={v.id} className="video-item"><div className="video-frame"><iframe src={'https://www.youtube-nocookie.com/embed/'+v.id} title={p.title+' — '+v.label} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/></div><h3>{v.label}</h3></div>)}{p.videoFile&&<div className="video-item"><div className="video-frame"><video controls playsInline preload="metadata" poster={p.videoFile.poster}><source src={p.videoFile.src} type="video/mp4"/>Your browser does not support the video.</video></div><h3>{p.videoFile.label}</h3></div>}{p.steamTrailerUrl&&<a className="video-item steam-video-item" href={p.steamTrailerUrl} target="_blank" rel="noopener noreferrer"><div className="video-frame steam-video-frame"><img src={p.image} alt="Official Bound in Time artwork"/><span><Gamepad2 size={21}/> Watch gameplay trailer on Steam <ArrowUpRight size={18}/></span></div><h3>Official Steam gameplay trailer <ExternalLink size={16}/></h3></a>}</div></section>}<Link className="next-project" to={'/projects/'+next.slug}><span><span className="eyebrow">UP NEXT</span><strong>{next.title}</strong></span><ArrowUpRight size={28}/></Link></main>}
-function About(){const skillGroups=[{title:'Languages & Engines',icon:<Code2/>,items:['C#','C++','Unity','Unreal Engine 5','Unreal Blueprints']},{title:'Gameplay & AI',icon:<BrainCircuit/>,items:['Gameplay Systems','Combat AI','Behaviour Logic','State Machines','Pathfinding','Autonomous Agents','Simulation Systems']},{title:'Tools & Workflows',icon:<Wrench/>,items:['Git','GitHub','Visual Studio','Unity Editor Scripting','Prefab Workflows','Procedural Generation','Data-Driven Systems']},{title:'Engineering Practices',icon:<Blocks/>,items:['Object-Oriented Programming','Modular Architecture','Debugging','Profiling','Optimisation','Reusable Systems','Cross-Discipline Collaboration']}];return <main className="shell page about-page"><span className="eyebrow red-label">A LITTLE ABOUT ME</span><h1 className="page-title">Hello, I'm <em>Dylan!</em></h1><div className="about-layout"><div className="about-copy"><p className="about-lead">Graduate Games Programmer with practical experience building gameplay, AI and editor tools in Unity/C# and Unreal Engine 5/C++. Published a Unity Asset Store tool and developed reusable combat AI, procedural generation systems and autonomous simulation agents. Strong in debugging, modular system design and multidisciplinary teamwork.</p><a className="btn primary" href="/Dylan_Fliski_Games_Programmer_CV.pdf" download>Download my CV <Download size={17}/></a></div><aside className="about-logo-panel"><img src="/images/dylan-full-logo.png" alt="Dylan Fliski — Games Programmer logo"/></aside></div><section className="section about-section"><Heading eyebrow="TOOLKIT" title="Technologies & Skills"/><div className="skill-group-grid">{skillGroups.map(group=><section className="skill-group" key={group.title}><div className="skill-group-heading"><span className="skill-group-icon">{group.icon}</span><h3>{group.title}</h3></div><div className="skill-chips">{group.items.map(t=><span key={t}>{t}</span>)}</div></section>)}</div></section><section className="section about-section"><Heading eyebrow="EXPERIENCE" title="Experience & Leadership"/><div className="experience-list"><div><span>May 2024 – May 2026</span><h3>Gaming & Esports Society President</h3><p className="experience-org">University of Gloucestershire</p><p>Oversaw the running of the society, including taking responsibility for its administration, leading the committee, managing communication with the Student Union, sourcing sponsorships and liaising with companies and other universities regarding events and game tournaments.</p></div><div><span>Oct 2023 – Jan 2026</span><h3>BSc Computer Games Programming Student Representative</h3><p className="experience-org">University of Gloucestershire</p><p>Represented the cohort by collating and sharing peer feedback in meetings surrounding funding, management and opportunities for our course, and provided peers with support for personal and academic queries.</p></div><div><span>Sep 2024 – Sep 2025</span><h3>Jam Coding — Assistant Code Coach</h3><p className="experience-org">Cheltenham schools</p><p>Supported programming and game-development sessions for classes of up to 24 primary-aged children, explaining technical concepts and troubleshooting student projects to encourage their interest in games development and develop their relevant skills.</p></div></div></section><section className="section about-section education-section"><Heading eyebrow="EDUCATION" title="Education"/><div className="education-list"><article><GraduationCap/><div><span>2023 – 2026</span><h3>BSc (Hons) Computer Games Programming</h3><p>University of Gloucestershire</p><strong>Second Class Honours (2:2)</strong></div></article><article><GraduationCap/><div><span>2020 – 2022</span><h3>BTEC Level 3 Extended Diploma in Computing</h3><p>New College Swindon</p><strong>Merit, Pass, Pass</strong></div></article></div></section></main>}
-function Contact(){const [copied,setCopied]=useState(false);const [copyFailed,setCopyFailed]=useState(false);
- const handleCopy=async()=>{const ok=await copyBusinessEmail();setCopied(ok);setCopyFailed(!ok);};
- return <main className="shell page contact-page"><span className="eyebrow red-label">CONTACT</span><h1 className="page-title contact-title">Get in <em>Touch.</em></h1><div className="freelance-available"><span className="pulse"/> Open to freelance work</div><p className="page-intro">Feel free to contact me about programming opportunities, collaborations or any of the projects featured on my portfolio. I'm also always open to freelance work, whether that's helping with gameplay systems, AI, development tools or other programming projects.</p><div className="contact-grid"><div className="contact-card email-card"><Mail/><span>EMAIL</span><strong>{EMAIL}</strong><div className="email-card-actions"><button className="email-copy-btn" type="button" onClick={handleCopy}>{copied?<Check size={15}/>:<Copy size={15}/>} {copied?'Address copied':copyFailed?'Copy failed — select the address':'Copy address'}</button><a href={'mailto:'+EMAIL} className="email-open-btn">Open email app <ArrowUpRight size={14}/></a></div></div><a className="contact-card" href="https://www.linkedin.com/in/dylan-fliski" target="_blank" rel="noopener noreferrer"><Linkedin/><span>LINKEDIN</span><strong>Connect with me</strong><ArrowUpRight className="contact-arrow"/></a><a className="contact-card" href="https://github.com/Dylsonator" target="_blank" rel="noopener noreferrer"><Github/><span>GITHUB</span><strong>View my repositories</strong><ArrowUpRight className="contact-arrow"/></a><a className="contact-card" href="https://dylsonator.itch.io/" target="_blank" rel="noopener noreferrer"><Gamepad2/><span>ITCH.IO</span><strong>Play my games &amp; prototypes</strong><ArrowUpRight className="contact-arrow"/></a></div><p className="location-note"><MapPin size={16}/> Based in Cheltenham, United Kingdom</p></main>}
-function Footer(){const [copied,setCopied]=useState(false);return <footer className="footer"><div className="shell footer-inner"><div><strong>DYLAN<span> FLISKI.</span></strong><small>GAMES PROGRAMMER · CHELTENHAM, UK</small></div><div className="footer-social"><a aria-label="LinkedIn" title="LinkedIn" href="https://www.linkedin.com/in/dylan-fliski" target="_blank" rel="noopener noreferrer"><Linkedin/></a><a aria-label="GitHub" title="GitHub" href="https://github.com/Dylsonator" target="_blank" rel="noopener noreferrer"><Github/></a><button type="button" aria-label={copied?'Email address copied':'Copy business email'} title={copied?'Email copied':'Copy business email'} onClick={async()=>setCopied(await copyBusinessEmail())}>{copied?<Check/>:<Mail/>}</button><a aria-label="Itch.io" title="Itch.io" href="https://dylsonator.itch.io/" target="_blank" rel="noopener noreferrer"><Gamepad2/></a></div><span className="copyright">© {new Date().getFullYear()} Dylan Fliski</span></div></footer>}
-function ScrollToTop(){const {pathname}=useLocation();useLayoutEffect(()=>{window.scrollTo(0,0)},[pathname]);return null}
-function App(){return <BrowserRouter><ScrollToTop/><Header/><div className="route"><React.Suspense fallback={null}/><RoutesWrapper/></div><Footer/></BrowserRouter>}
-import{Routes,Route}from'react-router-dom';function RoutesWrapper(){return <Routes><Route path="/" element={<Home/>}/><Route path="/projects" element={<Projects/>}/><Route path="/projects/:slug" element={<ProjectDetail/>}/><Route path="/about" element={<About/>}/><Route path="/contact" element={<Contact/>}/><Route path="*" element={<Projects/>}/></Routes>};createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
+// Reusable project cards and status displays.
+// Reusable project cards and status displays.
+function Status({ value }: {
+  value: Project['status'];
+}) {
+  return <span className={'status ' + (value === 'Completed' ? 'complete' : value === 'On Hold' ? 'hold' : 'development')}>
+    <i />
+    {value}
+  </span>;
+}
+function Image({ project, large = false }: {
+  project: Project;
+  large?: boolean;
+}) {
+  const kind = project.smallImage ? 'archive-preview' : project.slug === 'twisted-guardians' ? 'square-brand' : '';
+  return <div className={'project-image ' + (large ? 'large ' : '') + kind}>
+    {project.image ? <img
+      src={project.image}
+      alt={project.title + ' project image'}
+      loading="lazy"
+      onError={e => {
+        const fallback = project.fallbackImage || (project.slug === 'bound-in-time' ? '/images/bound-in-time.png' : undefined);
+        if (fallback && !e.currentTarget.src.endsWith(fallback))
+          e.currentTarget.src = fallback;
+      }} /> : <div className="missing">
+      <Gamepad2 size={42} />
+      <span>Project imagery coming soon</span>
+    </div>}
+    {project.smallImage && <span className="archive-preview-label">Technical demo · Original screenshot</span>}
+    <div className="image-sheen" />
+  </div>;
+}
+function ProjectCard({ project }: {
+  project: Project;
+}) {
+  return <Link className="project-card" to={'/projects/' + project.slug}>
+    <Image project={project} />
+    <div className="project-card-body">
+      <div className="card-top">
+        <span className="eyebrow">
+          {project.category}
+        </span>
+        <ArrowUpRight size={18} />
+      </div>
+      <h3>
+        {project.title}
+      </h3>
+      <p>
+        {project.summary}
+      </p>
+      <div className="card-bottom">
+        <Status value={project.status} />
+        <span className="view-label">Explore project <ArrowRight size={15} />
+        </span>
+      </div>
+    </div>
+  </Link>;
+}
+function Heading({ eyebrow, title, sub }: {
+  eyebrow: string;
+  title: string;
+  sub?: string;
+}) {
+  return <div className="section-heading">
+    <div>
+      <span className="eyebrow red-label">
+        {eyebrow}
+      </span>
+      <h2>
+        {title}
+      </h2>
+      {sub && <p>
+        {sub}
+      </p>}
+    </div>
+  </div>;
+}
+// Homepage: introduction, featured projects, and recent work.
+// Homepage: introduction, featured projects, and recent work.
+function Home() {
+  const [slide, setSlide] = useState(0);
+  const current = featured[slide];
+  const previous = () => setSlide(v => (v + featured.length - 1) % featured.length);
+  const next = () => setSlide(v => (v + 1) % featured.length);
+  return <>
+    <section className="hero shell">
+      <div className="hero-copy">
+        <span className="eyebrow red-label">WELCOME TO MY PORTFOLIO</span>
+        <h1>Hi, I'm <em>Dylan!</em>
+        </h1>
+        <h2 className="hero-subtitle">Games Programmer</h2>
+        <p>I'm a recent graduate with a BSc in Computer Games Programming from the University of Gloucestershire. I enjoy developing gameplay systems, artificial intelligence and tools that help bring games to life behind the scenes.</p>
+        <p>This portfolio showcases the projects I've worked on, the programming challenges I've tackled and what I've learned along the way.</p>
+        <div className="hero-actions">
+          <Link className="btn primary" to="/projects">View my projects <ArrowUpRight size={17} />
+          </Link>
+          <Link className="btn secondary" to="/about">About me <ArrowRight size={17} />
+          </Link>
+        </div>
+        <Link className="release-notice" to="/projects/the-last-service">
+          <span className="release-notice__dot" /> NEW RELEASE · THE LAST SERVICE <ArrowUpRight size={14} />
+        </Link>
+        <div className="hero-tags">
+          <span>UNITY / C#</span>
+          <span>UNREAL / C++</span>
+          <span>GAMEPLAY & AI</span>
+        </div>
+      </div>
+      <div className="hero-aside">
+        <div className="hero-feature">
+          <div className="hero-feature-top">
+            <span className="eyebrow red-label">FEATURED PROJECT</span>
+            <span className="hero-counter">
+              {String(slide + 1).padStart(2, '0')} / {String(featured.length).padStart(2, '0')}
+            </span>
+          </div>
+          <Link
+            to={'/projects/' + current.slug}
+            className={'hero-feature-media ' + (current.slug === 'twisted-guardians' ? 'brand-art-media ' : '') + (current.smallImage ? 'archive-preview' : '')}>
+            {current.image ? <img src={current.image} alt={current.title} /> : <div className="hero-feature-placeholder">
+              <Gamepad2 size={48} />
+              <span>Screenshot coming soon</span>
+            </div>}
+          </Link>
+          <div className="hero-feature-content">
+            <span className="eyebrow">
+              {current.category}
+            </span>
+            <h3>
+              {current.title}
+            </h3>
+            <p>
+              {current.summary}
+            </p>
+            <div className="hero-feature-footer">
+              <Link to={'/projects/' + current.slug} className="hero-feature-link">Explore this project <ArrowUpRight size={16} />
+              </Link>
+              <div className="hero-feature-arrows">
+                <button type="button" onClick={previous} aria-label="Previous featured project">
+                  <ChevronLeft size={19} />
+                </button>
+                <button type="button" onClick={next} aria-label="Next featured project">
+                  <ChevronRight size={19} />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="hero-dots">
+            {featured.map((p, i) => <button
+              key={p.slug}
+              type="button"
+              aria-label={'Show ' + p.title}
+              aria-pressed={i === slide}
+              className={i === slide ? 'active' : ''}
+              onClick={() => setSlide(i)} />)}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section className="shell section">
+      <div className="heading-line">
+        <Heading
+          eyebrow="01 / SELECTED WORK"
+          title="Featured projects"
+          sub="Selected projects that showcase my games, simulations and programming work." />
+        <div className="slide-controls">
+          <button aria-label="Previous project" onClick={previous}>
+            <ChevronLeft />
+          </button>
+          <button aria-label="Next project" onClick={next}>
+            <ChevronRight />
+          </button>
+        </div>
+      </div>
+      <div className="featured-grid">
+        <div className="featured-main">
+          <ProjectCard project={featured[slide]} />
+        </div>
+        <div className="featured-side">
+          {featured.filter((_, i) => i !== slide).slice(0, 2).map(p => <ProjectCard key={p.slug} project={p} />)}
+        </div>
+      </div>
+      <div className="section-link">
+        <Link to="/projects">View all {projects.length} projects <ArrowRight size={17} />
+        </Link>
+      </div>
+    </section>
+    <CurrentProjects />
+    <section className="shell section">
+      <Heading eyebrow="03 / WHAT I DO" title="Skills & specialisms" />
+      <div className="skills-grid">
+        {[
+          {
+            icon: <Gamepad2 />,
+            name: 'Gameplay programming',
+            text: 'Interactive systems, combat mechanics and data-driven behaviours.'
+          },
+          { icon: <Cpu />, name: 'AI & simulation', text: 'Autonomous agents, boss AI, navigation and emergent systems.' },
+          {
+            icon: <Layers />,
+            name: 'Tools & workflows',
+            text: 'Unity editor extensions, procedural generation and reusable pipelines.'
+          }
+        ].map(s => <div className="skill-card" key={s.name}>
+          <div className="skill-icon">
+            {s.icon}
+          </div>
+          <h3>
+            {s.name}
+          </h3>
+          <p>
+            {s.text}
+          </p>
+        </div>)}
+      </div>
+    </section>
+    <section className="shell cta-section">
+      <div>
+        <span className="eyebrow red-label">GET IN TOUCH</span>
+        <h2>Interested in my work?</h2>
+        <p>Feel free to contact me about programming opportunities or any of the projects shown here.</p>
+      </div>
+      <Link className="btn primary" to="/contact">Contact me <ArrowUpRight size={17} />
+      </Link>
+    </section>
+  </>;
+}
+// Projects listing and search/status filters.
+// Projects listing and search/status filters.
+function Projects() {
+  const [q, setQ] = useState('');
+  const [filter, setFilter] = useState('All');
+  const shown = projects.filter(p => (filter === 'All' || p.status === filter) && `${p.title} ${p.summary} ${p.tech.join(' ')}`.toLowerCase().includes(q.toLowerCase()));
+  return <main className="shell page">
+    <span className="eyebrow red-label">
+      {filter === 'All' ? 'ALL WORK' : filter.toUpperCase()} / {shown.length ? `001—${String(shown.length).padStart(3, '0')}` : '000'}
+    </span>
+    <h1 className="page-title">PROJECT <em>ARCHIVE.</em>
+    </h1>
+    <p className="page-intro">A collection of games, prototypes, programming experiments and tools — from AI systems to procedural generation.</p>
+    <div className="filterbar">
+      <div className="filter-pills">
+        {['All', 'Completed', 'In Development', 'On Hold'].map(f => <button className={filter === f ? 'active' : ''} key={f} onClick={() => setFilter(f)}>
+          {f}
+        </button>)}
+      </div>
+      <input
+        aria-label="Search projects"
+        placeholder="Search projects or technologies..."
+        value={q}
+        onChange={e => setQ(e.target.value)} />
+    </div>
+    <div className="projects-grid">
+      {shown.map(p => <ProjectCard project={p} key={p.slug} />)}
+    </div>
+    {shown.length === 0 && <p className="empty">No projects match your filters.</p>}
+  </main>;
+}
+// Individual project case study pages.
+// Individual project case study pages.
+function ProjectDetail() {
+  const { slug } = useParams();
+  const p = projects.find(p => p.slug === slug);
+  if (!p)
+    return <main className="shell page">
+      <h1>Project not found</h1>
+      <Link to="/projects">Back to projects</Link>
+    </main>;
+  const index = projects.indexOf(p);
+  const next = projects[(index + 1) % projects.length];
+  return <main className="shell detail-page">
+    <Link className="back-link" to="/projects">
+      <ChevronLeft size={16} /> All projects</Link>
+    <div className="detail-header">
+      <div>
+        <span className="eyebrow red-label">PROJECT / {String(index + 1).padStart(2, '0')}
+        </span>
+        <h1>
+          {p.title}
+        </h1>
+        <p>
+          {p.summary}
+        </p>
+      </div>
+      <Status value={p.status} />
+    </div>
+    <div className={'detail-cover ' + (p.slug === 'easyfoliage' ? 'cover-art ' : '') + (p.smallImage ? 'compact-cover ' : '')}>
+      <Image project={p} large />
+    </div>
+    <div className="detail-columns">
+      <article className="overview-copy">
+        <span className="eyebrow red-label">THE BREAKDOWN</span>
+        <h2>Behind the project</h2>
+        <p>
+          {p.details[0]}
+        </p>
+      </article>
+      <aside>
+        <h3>Project details</h3>
+        <div className="aside-line">
+          <span>Category</span>
+          <strong>
+            {p.category}
+          </strong>
+        </div>
+        <div className="aside-line">
+          <span>Status</span>
+          <Status value={p.status} />
+        </div>
+        <div className="aside-tech">
+          {p.tech.map(t => <span key={t}>
+            {t}
+          </span>)}
+        </div>
+        {p.links?.map(l => <a
+          key={l.url}
+          className="btn secondary aside-btn"
+          href={l.url}
+          target="_blank"
+          rel="noopener noreferrer">
+          {l.label} <ExternalLink size={16} />
+        </a>)}
+      </aside>
+    </div>
+    <section className="story-section">
+      <Heading
+        eyebrow="PROJECT WALKTHROUGH"
+        title="How it works"
+        sub="Screenshots and explanations together, showing the systems behind the project." />
+      <div className="story-list">
+        {p.sections?.map((section, i) => <section
+          className={'story-row ' + (!section.image ? 'text-only' : '') + (i % 2 === 1 ? ' reverse' : '')}
+          key={section.heading}>
+          <div className="story-copy">
+            <span className="story-index">
+              {String(i + 1).padStart(2, '0')} / {String(p.sections?.length ?? 0).padStart(2, '0')}
+            </span>
+            <h3>
+              {section.heading}
+            </h3>
+            <p>
+              {section.text}
+            </p>
+          </div>
+          {section.image && <figure className={"story-media " + (section.smallMedia ? "small-media" : "")}>
+            <a
+              href={section.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={'Open screenshot: ' + (section.caption || section.heading)}>
+              <img
+                src={section.image}
+                alt={section.caption || section.heading}
+                loading="lazy"
+                onError={e => {
+                  if (p.fallbackImage && section.image === p.image && !e.currentTarget.src.endsWith(p.fallbackImage))
+                    e.currentTarget.src = p.fallbackImage;
+                }} />
+            </a>
+            {section.caption && <figcaption>
+              {section.caption}
+            </figcaption>}
+          </figure>}
+        </section>)}
+      </div>
+    </section>
+    {p.slug === 'easyfoliage' && <p className="store-media-note">More official product images are available on the <a
+      href="https://assetstore.unity.com/packages/tools/terrain/easyfoliage-321747"
+      target="_blank"
+      rel="noopener noreferrer">Unity Asset Store <ExternalLink size={13} />
+    </a>. The demonstration video is due to be updated.</p>}
+    {(p.videos?.length || p.videoFile || p.steamTrailerUrl) && <section className="video-section">
+      <Heading eyebrow="WATCH / DEMONSTRATIONS" title="See it in action" />
+      <div className="video-grid">
+        {p.videos?.map(v => <div key={v.id} className="video-item">
+          <div className="video-frame">
+            <iframe
+              src={'https://www.youtube-nocookie.com/embed/' + v.id}
+              title={p.title + ' — ' + v.label}
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen />
+          </div>
+          <h3>
+            {v.label}
+          </h3>
+        </div>)}
+        {p.videoFile && <div className="video-item">
+          <div className="video-frame">
+            <video controls playsInline preload="metadata" poster={p.videoFile.poster}>
+              <source src={p.videoFile.src} type="video/mp4" />Your browser does not support the video.</video>
+          </div>
+          <h3>
+            {p.videoFile.label}
+          </h3>
+        </div>}
+        {p.steamTrailerUrl && <a
+          className="video-item steam-video-item"
+          href={p.steamTrailerUrl}
+          target="_blank"
+          rel="noopener noreferrer">
+          <div className="video-frame steam-video-frame">
+            <img src={p.image} alt="Official Bound in Time artwork" />
+            <span>
+              <Gamepad2 size={21} /> Watch gameplay trailer on Steam <ArrowUpRight size={18} />
+            </span>
+          </div>
+          <h3>Official Steam gameplay trailer <ExternalLink size={16} />
+          </h3>
+        </a>}
+      </div>
+    </section>}
+    <Link className="next-project" to={'/projects/' + next.slug}>
+      <span>
+        <span className="eyebrow">UP NEXT</span>
+        <strong>
+          {next.title}
+        </strong>
+      </span>
+      <ArrowUpRight size={28} />
+    </Link>
+  </main>;
+}
+// About page: skills, experience, and education.
+// About page: skills, experience, and education.
+function About() {
+  const skillGroups = [
+    {
+      title: 'Languages & Engines',
+      icon: <Code2 />,
+      items: ['C#', 'C++', 'Unity', 'Unreal Engine 5', 'Unreal Blueprints']
+    },
+    {
+      title: 'Gameplay & AI',
+      icon: <BrainCircuit />,
+      items: [
+        'Gameplay Systems',
+        'Combat AI',
+        'Behaviour Logic',
+        'State Machines',
+        'Pathfinding',
+        'Autonomous Agents',
+        'Simulation Systems'
+      ]
+    },
+    {
+      title: 'Tools & Workflows',
+      icon: <Wrench />,
+      items: [
+        'Git',
+        'GitHub',
+        'Visual Studio',
+        'Unity Editor Scripting',
+        'Prefab Workflows',
+        'Procedural Generation',
+        'Data-Driven Systems'
+      ]
+    },
+    {
+      title: 'Engineering Practices',
+      icon: <Blocks />,
+      items: [
+        'Object-Oriented Programming',
+        'Modular Architecture',
+        'Debugging',
+        'Profiling',
+        'Optimisation',
+        'Reusable Systems',
+        'Cross-Discipline Collaboration'
+      ]
+    }
+  ];
+  return <main className="shell page about-page">
+    <span className="eyebrow red-label">A LITTLE ABOUT ME</span>
+    <h1 className="page-title">Hello, I'm <em>Dylan!</em>
+    </h1>
+    <div className="about-layout">
+      <div className="about-copy">
+        <p className="about-lead">Graduate Games Programmer with practical experience building gameplay, AI and editor tools in Unity/C# and Unreal Engine 5/C++. Published a Unity Asset Store tool and developed reusable combat AI, procedural generation systems and autonomous simulation agents. Strong in debugging, modular system design and multidisciplinary teamwork.</p>
+        <a className="btn primary" href="/Dylan_Fliski_Games_Programmer_CV.pdf" download>Download my CV <Download size={17} />
+        </a>
+      </div>
+      <aside className="about-logo-panel">
+        <img src="/images/dylan-full-logo.png" alt="Dylan Fliski — Games Programmer logo" />
+      </aside>
+    </div>
+    <section className="section about-section">
+      <Heading eyebrow="TOOLKIT" title="Technologies & Skills" />
+      <div className="skill-group-grid">
+        {skillGroups.map(group => <section className="skill-group" key={group.title}>
+          <div className="skill-group-heading">
+            <span className="skill-group-icon">
+              {group.icon}
+            </span>
+            <h3>
+              {group.title}
+            </h3>
+          </div>
+          <div className="skill-chips">
+            {group.items.map(t => <span key={t}>
+              {t}
+            </span>)}
+          </div>
+        </section>)}
+      </div>
+    </section>
+    <section className="section about-section">
+      <Heading eyebrow="EXPERIENCE" title="Experience & Leadership" />
+      <div className="experience-list">
+        <div>
+          <span>May 2024 – May 2026</span>
+          <h3>Gaming & Esports Society President</h3>
+          <p className="experience-org">University of Gloucestershire</p>
+          <p>Oversaw the running of the society, including taking responsibility for its administration, leading the committee, managing communication with the Student Union, sourcing sponsorships and liaising with companies and other universities regarding events and game tournaments.</p>
+        </div>
+        <div>
+          <span>Oct 2023 – Jan 2026</span>
+          <h3>BSc Computer Games Programming Student Representative</h3>
+          <p className="experience-org">University of Gloucestershire</p>
+          <p>Represented the cohort by collating and sharing peer feedback in meetings surrounding funding, management and opportunities for our course, and provided peers with support for personal and academic queries.</p>
+        </div>
+        <div>
+          <span>Sep 2024 – Sep 2025</span>
+          <h3>Jam Coding — Assistant Code Coach</h3>
+          <p className="experience-org">Cheltenham schools</p>
+          <p>Supported programming and game-development sessions for classes of up to 24 primary-aged children, explaining technical concepts and troubleshooting student projects to encourage their interest in games development and develop their relevant skills.</p>
+        </div>
+      </div>
+    </section>
+    <section className="section about-section education-section">
+      <Heading eyebrow="EDUCATION" title="Education" />
+      <div className="education-list">
+        <article>
+          <GraduationCap />
+          <div>
+            <span>2023 – 2026</span>
+            <h3>BSc (Hons) Computer Games Programming</h3>
+            <p>University of Gloucestershire</p>
+            <strong>Second Class Honours (2:2)</strong>
+          </div>
+        </article>
+        <article>
+          <GraduationCap />
+          <div>
+            <span>2020 – 2022</span>
+            <h3>BTEC Level 3 Extended Diploma in Computing</h3>
+            <p>New College Swindon</p>
+            <strong>Merit, Pass, Pass</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>;
+}
+// Contact page and copy-email action.
+// Contact page and copy-email action.
+function Contact() {
+  const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
+  const handleCopy = async () => {
+    const ok = await copyBusinessEmail();
+    setCopied(ok);
+    setCopyFailed(!ok);
+  };
+  return <main className="shell page contact-page">
+    <span className="eyebrow red-label">CONTACT</span>
+    <h1 className="page-title contact-title">Get in <em>Touch.</em>
+    </h1>
+    <div className="freelance-available">
+      <span className="pulse" /> Open to freelance work</div>
+    <p className="page-intro">Feel free to contact me about programming opportunities, collaborations or any of the projects featured on my portfolio. I'm also always open to freelance work, whether that's helping with gameplay systems, AI, development tools or other programming projects.</p>
+    <div className="contact-grid">
+      <div className="contact-card email-card">
+        <Mail />
+        <span>EMAIL</span>
+        <strong>
+          {EMAIL}
+        </strong>
+        <div className="email-card-actions">
+          <button className="email-copy-btn" type="button" onClick={handleCopy}>
+            {copied ? <Check size={15} /> : <Copy size={15} />} {copied ? 'Address copied' : copyFailed ? 'Copy failed — select the address' : 'Copy address'}
+          </button>
+          <a href={'mailto:' + EMAIL} className="email-open-btn">Open email app <ArrowUpRight size={14} />
+          </a>
+        </div>
+      </div>
+      <a
+        className="contact-card"
+        href="https://www.linkedin.com/in/dylan-fliski"
+        target="_blank"
+        rel="noopener noreferrer">
+        <Linkedin />
+        <span>LINKEDIN</span>
+        <strong>Connect with me</strong>
+        <ArrowUpRight className="contact-arrow" />
+      </a>
+      <a
+        className="contact-card"
+        href="https://github.com/Dylsonator"
+        target="_blank"
+        rel="noopener noreferrer">
+        <Github />
+        <span>GITHUB</span>
+        <strong>View my repositories</strong>
+        <ArrowUpRight className="contact-arrow" />
+      </a>
+      <a
+        className="contact-card"
+        href="https://dylsonator.itch.io/"
+        target="_blank"
+        rel="noopener noreferrer">
+        <Gamepad2 />
+        <span>ITCH.IO</span>
+        <strong>Play my games &amp; prototypes</strong>
+        <ArrowUpRight className="contact-arrow" />
+      </a>
+    </div>
+    <p className="location-note">
+      <MapPin size={16} /> Based in Cheltenham, United Kingdom</p>
+  </main>;
+}
+// Site footer and navigation helpers.
+// Site footer and navigation helpers.
+function Footer() {
+  const [copied, setCopied] = useState(false);
+  return <footer className="footer">
+    <div className="shell footer-inner">
+      <div>
+        <strong>DYLAN<span> FLISKI.</span>
+        </strong>
+        <small>GAMES PROGRAMMER · CHELTENHAM, UK</small>
+      </div>
+      <div className="footer-social">
+        <a
+          aria-label="LinkedIn"
+          title="LinkedIn"
+          href="https://www.linkedin.com/in/dylan-fliski"
+          target="_blank"
+          rel="noopener noreferrer">
+          <Linkedin />
+        </a>
+        <a
+          aria-label="GitHub"
+          title="GitHub"
+          href="https://github.com/Dylsonator"
+          target="_blank"
+          rel="noopener noreferrer">
+          <Github />
+        </a>
+        <button
+          type="button"
+          aria-label={copied ? 'Email address copied' : 'Copy business email'}
+          title={copied ? 'Email copied' : 'Copy business email'}
+          onClick={async () => setCopied(await copyBusinessEmail())}>
+          {copied ? <Check /> : <Mail />}
+        </button>
+        <a
+          aria-label="Itch.io"
+          title="Itch.io"
+          href="https://dylsonator.itch.io/"
+          target="_blank"
+          rel="noopener noreferrer">
+          <Gamepad2 />
+        </a>
+      </div>
+      <span className="copyright">© {new Date().getFullYear()} Dylan Fliski</span>
+    </div>
+  </footer>;
+}
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+// Application layout and routes.
+// Application layout and routes.
+function App() {
+  return <BrowserRouter>
+    <ScrollToTop />
+    <Header />
+    <div className="route">
+      <React.Suspense fallback={null} />
+      <RoutesWrapper />
+    </div>
+    <Footer />
+  </BrowserRouter>;
+}
+import { Routes, Route } from 'react-router-dom';
+function RoutesWrapper() {
+  return <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/projects" element={<Projects />} />
+    <Route path="/projects/:slug" element={<ProjectDetail />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/contact" element={<Contact />} />
+    <Route path="*" element={<Projects />} />
+  </Routes>;
+}
+;
+createRoot(document.getElementById('root')!).render(<React.StrictMode>
+  <App />
+</React.StrictMode>);

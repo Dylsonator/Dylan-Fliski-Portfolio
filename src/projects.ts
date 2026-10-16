@@ -1,5 +1,53 @@
-export type Project={slug:string;title:string;status:'Completed'|'In Development'|'On Hold';featured:boolean;image?:string;gallery?:{src:string;caption:string}[];sections?:{heading:string;text:string;image?:string;caption?:string;smallMedia?:boolean}[];category:string;tech:string[];summary:string;details:string[];videos?:{label:string;id:string}[];videoFile?:{label:string;src:string;poster?:string};steamTrailerUrl?:string;smallImage?:boolean;fallbackImage?:string;links?:{label:string;url:string}[];source?:string;role?:string;recognition?:string};
-export const projects:Project[] = [
+// Shared portfolio project model and content.
+// To edit a project, find its slug in the array below.
+
+// Shared portfolio project model and content.
+// To edit a project, find its slug in the array below.
+
+export type Project = {
+  slug: string;
+  title: string;
+  status: 'Completed' | 'In Development' | 'On Hold';
+  featured: boolean;
+  image?: string;
+  gallery?: {
+    src: string;
+    caption: string;
+  }[];
+  sections?: {
+    heading: string;
+    text: string;
+    image?: string;
+    caption?: string;
+    smallMedia?: boolean;
+  }[];
+  category: string;
+  tech: string[];
+  summary: string;
+  details: string[];
+  videos?: {
+    label: string;
+    id: string;
+  }[];
+  videoFile?: {
+    label: string;
+    src: string;
+    poster?: string;
+  };
+  steamTrailerUrl?: string;
+  smallImage?: boolean;
+  fallbackImage?: string;
+  links?: {
+    label: string;
+    url: string;
+  }[];
+  source?: string;
+  role?: string;
+  recognition?: string;
+};
+// Project entries are the source of truth for the homepage and case studies.
+// Project entries are the source of truth for the homepage and case studies.
+export const projects: Project[] = [
   {
     "slug": "the-last-service",
     "title": "The Last Service",
@@ -52,7 +100,6 @@ export const projects:Project[] = [
     "recognition": "Horror Hatch #3 — Liminal Transit · October 2026 release",
     "source": "Official itch.io release page · released 15 October 2026"
   },
-
   {
     "slug": "fish-evolution",
     "title": "IRP — Fish Evolution Simulation",
