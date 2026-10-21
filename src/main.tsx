@@ -29,7 +29,11 @@ import {
 import { projects, Project } from './projects';
 import './style.css';
 import CurrentProjects from './components/CurrentProjects';
-const featured = projects.filter(p => p.featured);
+import Services, { FreelanceTeaser } from './components/Services';
+
+// Client projects stay private until permission to showcase them has been confirmed.
+const publishedProjects = projects.filter(p => p.workType !== 'Client' || p.clientApproved === true);
+const featured = publishedProjects.filter(p => p.featured);
 const EMAIL = 'Dylsonator.b@gmail.com';
 // Email clipboard helper with a fallback for older browsers.
 // Email clipboard helper with a fallback for older browsers.
@@ -74,7 +78,7 @@ function Header() {
         {open ? <X /> : <Menu />}
       </button>
       <nav className={open ? 'nav-links show' : 'nav-links'}>
-        {[['/', 'Home'], ['/projects', 'Projects'], ['/about', 'About'], ['/contact', 'Contact']].map(([href, label]) => <NavLink key={href} end={href === '/'} onClick={() => setOpen(false)} to={href}>
+        {[['/', 'Home'], ['/projects', 'Projects'], ['/services', 'Services'], ['/about', 'About'], ['/contact', 'Contact']].map(([href, label]) => <NavLink key={href} end={href === '/'} onClick={() => setOpen(false)} to={href}>
           {label}
         </NavLink>)}
       </nav>
@@ -127,6 +131,7 @@ function ProjectCard({ project }: {
         </span>
         <ArrowUpRight size={18} />
       </div>
+      {project.workType === 'Client' && <span className="project-kind-label">FREELANCE / CLIENT WORK</span>}
       <h3>
         {project.title}
       </h3>
@@ -266,10 +271,11 @@ function Home() {
         </div>
       </div>
       <div className="section-link">
-        <Link to="/projects">View all {projects.length} projects <ArrowRight size={17} />
+        <Link to="/projects">View all {publishedProjects.length} projects <ArrowRight size={17} />
         </Link>
       </div>
     </section>
+    <FreelanceTeaser />
     <CurrentProjects />
     <section className="shell section">
       <Heading eyebrow="03 / WHAT I DO" title="Skills & specialisms" />
@@ -315,7 +321,12 @@ function Home() {
 function Projects() {
   const [q, setQ] = useState('');
   const [filter, setFilter] = useState('All');
-  const shown = projects.filter(p => (filter === 'All' || p.status === filter) && `${p.title} ${p.summary} ${p.tech.join(' ')}`.toLowerCase().includes(q.toLowerCase()));
+  const [workType, setWorkType] = useState<'All' | 'Personal' | 'Client'>('All');
+  const shown = publishedProjects.filter(p =>
+    (filter === 'All' || p.status === filter) &&
+    (workType === 'All' || (p.workType ?? 'Personal') === workType) &&
+    `${p.title} ${p.summary} ${p.tech.join(' ')}`.toLowerCase().includes(q.toLowerCase())
+  );
   return <main className="shell page">
     <span className="eyebrow red-label">
       {filter === 'All' ? 'ALL WORK' : filter.toUpperCase()} / {shown.length ? `001—${String(shown.length).padStart(3, '0')}` : '000'}
@@ -335,24 +346,43 @@ function Projects() {
         value={q}
         onChange={e => setQ(e.target.value)} />
     </div>
+    <div className="project-work-tabs" role="group" aria-label="Project origin">
+      {([['All', 'All work'], ['Personal', 'Personal projects'], ['Client', 'Freelance / client work']] as const).map(([value, label]) => (
+        <button
+          key={value}
+          type="button"
+          className={workType === value ? 'active' : ''}
+          aria-pressed={workType === value}
+          onClick={() => setWorkType(value)}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
     <div className="projects-grid">
       {shown.map(p => <ProjectCard project={p} key={p.slug} />)}
     </div>
-    {shown.length === 0 && <p className="empty">No projects match your filters.</p>}
+    {shown.length === 0 && (
+      <p className="empty">
+        {workType === 'Client' && !publishedProjects.some(p => p.workType === 'Client')
+          ? 'No client projects published yet. Completed work will appear here when I have permission to showcase it.'
+          : 'No projects match your filters.'}
+      </p>
+    )}
   </main>;
 }
 // Individual project case study pages.
 // Individual project case study pages.
 function ProjectDetail() {
   const { slug } = useParams();
-  const p = projects.find(p => p.slug === slug);
+  const p = publishedProjects.find(p => p.slug === slug);
   if (!p)
     return <main className="shell page">
       <h1>Project not found</h1>
       <Link to="/projects">Back to projects</Link>
     </main>;
-  const index = projects.indexOf(p);
-  const next = projects[(index + 1) % projects.length];
+  const index = publishedProjects.indexOf(p);
+  const next = publishedProjects[(index + 1) % publishedProjects.length];
   return <main className="shell detail-page">
     <Link className="back-link" to="/projects">
       <ChevronLeft size={16} /> All projects</Link>
@@ -387,6 +417,10 @@ function ProjectDetail() {
           <strong>
             {p.category}
           </strong>
+        </div>
+        <div className="aside-line">
+          <span>Project type</span>
+          <strong>{p.workType === 'Client' ? 'Freelance / Client Work' : 'Personal Project'}</strong>
         </div>
         <div className="aside-line">
           <span>Status</span>
@@ -779,6 +813,7 @@ function RoutesWrapper() {
     <Route path="/" element={<Home />} />
     <Route path="/projects" element={<Projects />} />
     <Route path="/projects/:slug" element={<ProjectDetail />} />
+    <Route path="/services" element={<Services />} />
     <Route path="/about" element={<About />} />
     <Route path="/contact" element={<Contact />} />
     <Route path="*" element={<Projects />} />
