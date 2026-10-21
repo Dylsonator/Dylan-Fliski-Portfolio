@@ -133,7 +133,7 @@ export default function Services() {
         <div className="section-heading">
           <span className="eyebrow red-label">02 / WORK WITH ME</span>
           <h2 id="freelance-platforms-title">Find me online</h2>
-          <p>Prefer working through a freelance platform? You'll find my profiles here once linked.</p>
+          <p>Prefer working through a freelance platform? You can view my Upwork service below or contact me directly.</p>
         </div>
         <div className="freelance-platform-grid">
           {freelanceProfiles.map((profile) => {
@@ -144,7 +144,7 @@ export default function Services() {
                 </span>
                 <span className="freelance-platform__details">
                   <strong>{profile.name}</strong>
-                  <small>{profile.url ? 'View my freelance profile' : 'Profile link coming soon'}</small>
+                  <small>{profile.description}</small>
                 </span>
                 {profile.url && <ExternalLink size={18} aria-hidden="true" />}
               </>
