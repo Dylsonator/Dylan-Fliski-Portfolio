@@ -60,9 +60,18 @@ export const freelanceServices: FreelanceService[] = [
 export type FreelanceProfile = {
   name: 'Upwork' | 'Fiverr';
   url: string | null;
+  description: string;
 };
 
 export const freelanceProfiles: FreelanceProfile[] = [
-  { name: 'Upwork', url: null },
-  { name: 'Fiverr', url: null }
+  {
+    name: 'Upwork',
+    url: 'https://www.upwork.com/services/product/development-it-a-modern-responsive-portfolio-website-tailored-to-your-needs-2111189356567039620?ref=project_share',
+    description: 'View my portfolio website service'
+  },
+  {
+    name: 'Fiverr',
+    url: null,
+    description: 'Public gig links coming soon'
+  }
 ];
