@@ -9,6 +9,10 @@ export type Project = {
   title: string;
   status: 'Completed' | 'In Development' | 'On Hold';
   featured: boolean;
+  /** Defaults to Personal for existing projects. */
+  workType?: 'Personal' | 'Client';
+  /** Client work is hidden from all public pages until explicitly approved. */
+  clientApproved?: boolean;
   image?: string;
   gallery?: {
     src: string;
