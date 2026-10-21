@@ -2161,3 +2161,24 @@ button {
   object-fit: contain;
   background: #101013;
 }
+
+/* Keep the five-link navigation comfortable on tablet widths. */
+@media (min-width: 701px) and (max-width: 1020px) {
+  .nav {
+    gap: 18px;
+  }
+
+  .nav-links {
+    gap: 17px;
+  }
+
+  .nav-contact {
+    padding: 10px 12px;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 820px) {
+  .nav-contact {
+    display: none;
+  }
+}
