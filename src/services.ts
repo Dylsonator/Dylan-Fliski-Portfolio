@@ -71,7 +71,7 @@ export const freelanceProfiles: FreelanceProfile[] = [
   },
   {
     name: 'Fiverr',
-    url: null,
-    description: 'Public gig links coming soon'
+    url: 'https://www.fiverr.com/dylsonator?public_mode=true',
+    description: 'View my Fiverr freelancer profile'
   }
 ];
