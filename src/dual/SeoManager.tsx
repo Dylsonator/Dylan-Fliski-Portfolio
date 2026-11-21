@@ -10,8 +10,8 @@ type PageMeta = { title: string; description: string; image?: string; type?: str
 
 const META: Record<string, PageMeta> = {
   '/': {
-    title: 'Dylan Fliski | Games Programmer & Freelance Web Developer',
-    description: 'Explore Dylan Fliski’s two portfolios: games programming in Unreal Engine and Unity, and affordable web development for small businesses in Gloucestershire.',
+    title: 'Dylan Fliski | Games Programmer',
+    description: 'Dylan Fliski’s Games Programming portfolio, featuring released games, AI simulations and technical projects made with Unreal Engine, Unity, C++ and C#.',
   },
   '/games': {
     title: 'Games Programmer | Dylan Fliski',
@@ -76,7 +76,8 @@ export function SeoManager() {
       if (project) meta = { title: `${project.title} | Dylan Fliski Web`, description: project.summary, image: project.coverImage, type: 'article' };
     }
     meta ||= { title: 'Page Not Found | Dylan Fliski', description: 'Explore the games programming and web development portfolios of Dylan Fliski.' };
-    const canonical = `${SITE}${normalised}`;
+    // Root and /games both show the game homepage; avoid duplicate canonical URLs.
+    const canonical = `${SITE}${normalised === '/games' ? '/' : normalised}`;
     document.title = meta.title;
     setMeta('meta[name="description"]', () => {
       const el = document.createElement('meta'); el.name = 'description'; return el;
@@ -102,7 +103,7 @@ export function SeoManager() {
 
     let ld = document.head.querySelector<HTMLScriptElement>('script[data-dual-portfolio-ld]');
     if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.dataset.dualPortfolioLd = 'true'; document.head.appendChild(ld); }
-    const provider = { '@type': 'Person', name: 'Dylan Fliski', url: SITE, jobTitle: 'Games Programmer and Freelance Web Developer', address: { '@type': 'PostalAddress', addressLocality: 'Cheltenham', addressCountry: 'GB' } };
+    const provider = { '@type': 'Person', name: 'Dylan Fliski', url: SITE, jobTitle: normalised.startsWith('/web') ? 'Freelance Web Developer' : 'Games Programmer', address: { '@type': 'PostalAddress', addressLocality: 'Cheltenham', addressCountry: 'GB' } };
     if (normalised === '/') {
       ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': [provider, { '@type': 'WebSite', name: 'Dylan Fliski', url: SITE }] });
     } else if (normalised === '/web/services') {
