@@ -62,6 +62,8 @@ export const projects: Project[] = [
     "category": "Psychological Horror · Game Jam",
     "tech": [
       "Unreal Engine 5.6",
+      "C++",
+      "Blueprints",
       "First-Person Gameplay",
       "Anomaly Systems",
       "PSX Aesthetic"
@@ -74,20 +76,34 @@ export const projects: Project[] = [
     ],
     "sections": [
       {
-        "heading": "A last bus that never takes you home",
-        "text": "The setting is intentionally compact: one roadside shelter, a dark forest, a marked way out and a night bus that always seems to return. Familiar objects give players a baseline to memorise, while lighting and sound turn small differences into sources of unease."
+        "heading": "A bus stop you learn to recognise",
+        "text": "I kept the setting deliberately contained: a roadside shelter, a bus, a forest edge and the few landmarks players encounter repeatedly. Establishing that normal baseline makes small changes noticeable — without needing a large map.",
+        "image": "/images/gallery/last-service/bus-stop.webp",
+        "caption": "In-game capture: isolated bus stop and the final night service."
       },
       {
-        "heading": "41 environmental and supernatural anomalies",
-        "text": "The released game features 41 changes to discover, ranging from altered roadside details to unnatural passenger behaviour and other unexpected encounters. Some are subtle observation tests; others use interactive moments and sound to make the location feel increasingly hostile."
+        "heading": "Observation and decision systems",
+        "text": "Each loop asks for one decision: if the scene is unchanged, speak to the driver and board; if something is wrong, leave through the exit passage. I built the game in Unreal Engine 5.6 with C++ and Blueprints, combining environmental changes, player interaction and the repeating journey logic.",
+        "image": "/images/gallery/last-service/bus-interior.webp",
+        "caption": "In-game capture: the bus interior and interactive passengers."
       },
       {
-        "heading": "Eight stamps, one escape",
-        "text": "Each loop asks the player to make a choice. If nothing seems wrong, speak to the driver and board; if an anomaly is present, take the exit passage. Correct calls earn stamps on an inspectable ticket, and collecting eight completes the journey. An incorrect decision resets the current streak."
+        "heading": "Eight stamps to reach the ending",
+        "text": "Correct calls earn a stamp on the inspectable ticket. Eight correct decisions complete the journey; one mistake resets the current streak. The ticket gives the player clear progress without a large HUD, keeping attention on the environment.",
+        "image": "/images/gallery/last-service/ticket.webp",
+        "caption": "In-game capture: the inspectable ticket used for the eight-stamp challenge."
       },
       {
-        "heading": "Solo five-day jam release",
-        "text": "I was responsible for the game design, programming and level design for this Horror Hatch #3 submission. Built in Unreal Engine 5.6 and styled after PS1-era horror, The Last Service was released on itch.io on 15 October 2026. The game can be downloaded from the link above."
+        "heading": "41 anomalies without revealing the surprises",
+        "text": "The release includes 41 environmental and supernatural anomalies, with interactive passengers, sound and strange encounters. I vary familiar scenery and player expectations rather than relying only on jumpscares. The screenshots here intentionally avoid revealing the full anomaly list.",
+        "image": "/images/gallery/last-service/fire-wide.webp",
+        "caption": "In-game capture: environmental lighting and atmosphere."
+      },
+      {
+        "heading": "From five-day jam to post-release fixes",
+        "text": "I handled the game design, programming and level design for the Horror Hatch #3: Liminal Transit entry, releasing it for Windows on 15 October 2026. The v1.0.1 update on 26 October addressed foliage, several anomaly issues and audio/interaction bugs. Larger atmosphere and immersion ideas remain future work, not finished features.",
+        "image": "/images/gallery/last-service/fire-detail.webp",
+        "caption": "In-game capture: a warm light source against the otherwise dark scene."
       }
     ],
     "links": [
@@ -96,13 +112,17 @@ export const projects: Project[] = [
         "url": "https://dylsonator.itch.io/the-last-service"
       },
       {
+        "label": "v1.0.1 update notes",
+        "url": "https://dylsonator.itch.io/the-last-service/devlog/1731049/the-last-service-v101-bug-fixes"
+      },
+      {
         "label": "Horror Hatch #3 submission",
         "url": "https://itch.io/jam/horror-hatch-21-day-challenge-3"
       }
     ],
     "role": "Solo developer · game design, programming and level design",
     "recognition": "Horror Hatch #3 — Liminal Transit · October 2026 release",
-    "source": "Official itch.io release page · released 15 October 2026"
+    "source": "Official itch.io release · 15 October 2026 · v1.0.1 bug fixes published 26 October"
   },
   {
     "slug": "fish-evolution",
