@@ -37,7 +37,7 @@ export default function CurrentProjects() {
           <div className="df-current-work__actions">
             <Link
               className="df-current-work__card-foot df-current-work__card-link"
-              to="/projects/the-last-service">
+              to="/games/projects/the-last-service">
               <span className="df-current-work__live-dot" /> View the project case study<span aria-hidden="true" className="df-current-work__arrow">↗</span>
             </Link>
             <a
@@ -70,7 +70,7 @@ export default function CurrentProjects() {
           </div>
           <Link
             className="df-current-work__card-foot df-current-work__card-link"
-            to="/projects/character-creator">
+            to="/games/projects/character-creator">
             <span className="df-current-work__live-dot" /> View original project &amp; remaster notes<span aria-hidden="true" className="df-current-work__arrow">↗</span>
           </Link>
         </div>
