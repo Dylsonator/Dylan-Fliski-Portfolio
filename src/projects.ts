@@ -57,8 +57,8 @@ export const projects: Project[] = [
     "title": "The Last Service",
     "status": "Completed",
     "featured": true,
-    "image": "https://img.itch.zone/aW1nLzMwOTE1MTMzLnBuZw%3D%3D/original/XZiEQA.png",
-    "fallbackImage": "/images/the-last-service-placeholder.svg",
+    "image": "/images/gallery/last-service/bus-stop.webp",
+    "fallbackImage": "/images/gallery/last-service/bus-interior.webp",
     "category": "Psychological Horror · Game Jam",
     "tech": [
       "Unreal Engine 5.6",
