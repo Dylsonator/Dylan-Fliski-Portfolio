@@ -1,10 +1,10 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import {
   ArrowLeft, ArrowRight, ArrowUpRight, Check, CheckCircle2, ChevronRight,
   Code2, ExternalLink, Globe2, LayoutTemplate, Mail, MapPin, Menu,
   MonitorSmartphone, ShieldCheck, Wrench, X,
 } from 'lucide-react';
-import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { freelanceProfiles } from '../services';
 import { publishedWebProjects, websitePackages } from './data';
 import { carePlans, extraServices, quotePath } from './offerings';
@@ -14,6 +14,20 @@ const EMAIL = 'dylsonator.b@gmail.com';
 
 function WebHeader() {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [open]);
   const links = [
     ['/web', 'Home'],
     ['/web/services', 'Services & Pricing'],
@@ -32,7 +46,7 @@ function WebHeader() {
           <span>Dylan Fliski <small>WEB DEVELOPMENT</small></span>
         </Link>
         <button
-          className="web-menu-button" type="button" aria-label={open ? 'Close navigation' : 'Open navigation'}
+          ref={menuButton} className="web-menu-button" type="button" aria-label={open ? 'Close navigation' : 'Open navigation'}
           aria-controls="web-primary-nav" aria-expanded={open} onClick={() => setOpen(!open)}
         >{open ? <X size={23} /> : <Menu size={23} />}</button>
         <nav id="web-primary-nav" className={`web-navigation${open ? ' web-navigation--open' : ''}`} aria-label="Web development navigation">
@@ -105,15 +119,15 @@ export function WebHome() {
         <div className="web-container web-hero__layout">
           <div className="web-hero__copy">
             <span className="web-eyebrow"><span className="web-signal" /> INDEPENDENT WEB DEVELOPER · CHELTENHAM</span>
-            <h1>Modern Websites.<br /><em>Affordable Prices.</em><br />Built for Your Business.</h1>
-            <p>I'm a Cheltenham-based freelance web developer helping local businesses build modern, mobile-friendly websites without expensive agency prices.</p>
+            <h1>Small Business Websites.<br /><em>Clear Prices.</em><br />Made for Mobile.</h1>
+            <p>I build mobile-friendly websites and improve existing pages for businesses around Cheltenham. Whether it's a new site or a focused fix, we'll agree the scope before work starts.</p>
             <div className="web-actions">
               <Link className="web-button web-button--primary" to="/web/contact">Get a Free Quote <ArrowUpRight size={18} aria-hidden="true" /></Link>
               <Link className="web-button web-button--outline" to="/web/services">View Services & Pricing <ArrowRight size={17} aria-hidden="true" /></Link>
             </div>
             <div className="web-hero__micro"><CheckCircle2 size={17} aria-hidden="true" /> Clear scope, upfront pricing and a site built around your business.</div>
           </div>
-          <div className="web-hero-visual" aria-label="Concept illustration of a responsive business website">
+          <div className="web-hero-visual" aria-hidden="true">
             <div className="web-hero-visual__orbit" />
             <div className="web-mock-browser">
               <div className="web-mock-browser__top"><span /><span /><span /><i>yourbusiness.co.uk</i></div>
@@ -207,7 +221,7 @@ export function WebProjects() {
         {publishedWebProjects.length > 0 ? (
           <div className="web-project-grid">{publishedWebProjects.map(project => <Link to={`/web/projects/${project.slug}`} key={project.slug} className="web-project-card">{project.coverImage && <img src={project.coverImage} alt={`${project.title} website`} loading="lazy" />}<span>{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span><h2>{project.title}</h2><p>{project.summary}</p><strong>View case study <ArrowUpRight size={17} /></strong></Link>)}</div>
         ) : (
-          <div className="web-empty-state"><div className="web-empty-state__graphic" aria-hidden="true"><div className="web-empty-state__browser"><span /><span /><span /><div /><i /><i /></div></div><span className="web-eyebrow">THE WORK IS COMING</span><h2>Building the portfolio properly.</h2><p>I'm currently getting my web development work off the ground, so there are no client case studies to show yet. I'll add finished projects here when I have permission to share them. No made-up testimonials or projects.</p><Link className="web-button web-button--primary" to="/web/contact">Let's Work Together <ArrowRight size={17} aria-hidden="true" /></Link></div>
+          <div className="web-empty-state"><div className="web-empty-state__graphic" aria-hidden="true"><div className="web-empty-state__browser"><span /><span /><span /><div /><i /><i /></div></div><span className="web-eyebrow">SELECTED WEB WORK</span><h2>Web projects are on the way.</h2><p>I'm building my collection of published website projects. Completed examples will appear here when they're ready to share and, where applicable, approved by the client.</p><Link className="web-button web-button--primary" to="/web/contact">Let's Work Together <ArrowRight size={17} aria-hidden="true" /></Link></div>
         )}
       </section>
       <CallToAction />
@@ -251,10 +265,16 @@ type FormState = 'idle' | 'submitting' | 'success' | 'error';
 export function WebContact() {
   const [state, setState] = useState<FormState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const query = new URLSearchParams(window.location.search);
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
   // Legacy links with ?package= remain compatible. All identifiers are allowlisted.
   const candidate = query.get('service') ?? query.get('package') ?? '';
   const defaultService = serviceChoices.some(choice => choice.value === candidate) ? candidate : '';
+  const [selectedService, setSelectedService] = useState(defaultService);
+  useEffect(() => setSelectedService(defaultService), [defaultService]);
+  const serviceName = defaultService ? serviceChoices.find(choice => choice.value === defaultService)?.name : null;
+  const emailSubject = serviceName ? 'Website enquiry: ' + serviceName : 'Website project enquiry';
+  const emailHref = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(emailSubject);
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -321,12 +341,16 @@ export function WebContact() {
             </div>
           ) : (
             <>
-              <div className="web-contact-form__intro"><h2>Project enquiry</h2><span>Fields marked * are required.</span></div>
-              {!formEnabled && (
-                <div className="web-form-unconfigured" role="status"><ShieldCheck size={19} aria-hidden="true" />
-                  <p><strong>Online form setup pending.</strong> Submission is disabled until Netlify form detection, spam handling and email delivery are verified. Please <a href={`mailto:${EMAIL}`}>email me directly</a> instead.</p>
-                </div>
-              )}
+              <div className="web-contact-form__intro"><h2>Project enquiry</h2>{formEnabled && <span>Fields marked * are required.</span>}</div>
+              {!formEnabled ? (
+                <section className="web-email-fallback" aria-label="Email enquiry">
+                  <span className="web-eyebrow">EMAIL ENQUIRIES</span>
+                  <h3>Tell me what your website needs.</h3>
+                  <p>The online form is being set up. For now, email me about your business, the work you're considering and any budget or deadline. I'll reply when I'm available.</p>
+                  <a className="web-button web-button--primary" href={emailHref}><Mail size={18} aria-hidden="true" /> Start an Email</a>
+                  <p className="web-email-fallback__address">Or write to <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
+                </section>
+              ) : (
               <form name="web-enquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="web-contact-form" onSubmit={submit}>
                 <input type="hidden" name="form-name" value="web-enquiry" />
                 <p className="web-honeypot"><label>Leave this field empty <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
@@ -340,7 +364,7 @@ export function WebContact() {
                 </div>
                 <label>Existing website <span>(optional)</span><input name="website" type="url" maxLength={260} placeholder="https://..." inputMode="url" /></label>
                 <div className="web-form-two">
-                  <label>Service of interest *<select name="service" defaultValue={defaultService} required>{serviceChoices.map(choice => <option value={choice.value} key={choice.value}>{choice.name}</option>)}</select></label>
+                  <label>Service of interest *<select name="service" value={selectedService} onChange={event => setSelectedService(event.target.value)} required>{serviceChoices.map(choice => <option value={choice.value} key={choice.value}>{choice.name}</option>)}</select></label>
                   <label>Approximate budget <span>(optional)</span><select name="budget" defaultValue=""><option value="">Prefer not to say</option><option value="under-150">Under £150</option><option value="150-250">£150–£250</option><option value="250-350">£250–£350</option><option value="350-plus">Over £350</option><option value="unsure">Not sure yet</option></select></label>
                 </div>
                 <label>Preferred contact method <span>(optional)</span><select name="contact-method" defaultValue="email"><option value="email">Email</option><option value="phone">Phone (if provided)</option><option value="either">Either</option></select></label>
@@ -350,6 +374,7 @@ export function WebContact() {
                 {state === 'error' && <p className="web-form-feedback--error" role="alert">{errorMessage}</p>}
                 <p className="web-contact-form__disclaimer">Please don't send passwords, payment details or sensitive personal information.</p>
               </form>
+              )}
             </>
           )}
         </div>

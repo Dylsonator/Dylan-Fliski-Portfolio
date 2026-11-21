@@ -45,6 +45,9 @@ for (const input of ['name','business','email','phone','website','service','budg
 check(web.includes("import.meta.env.VITE_WEB_FORM_PROVIDER === 'netlify'"), 'Form disabled unless explicitly configured');
 check(html.includes('name="submitted-at"') && web.includes("body.set('submitted-at'"), 'Submission timestamp sent to Netlify');
 check(web.includes("query.get('service') ?? query.get('package')") && web.includes('serviceChoices.some'), 'Service selection is allowlisted and accepts legacy package links');
+check(web.includes('value={selectedService}') && web.includes('setSelectedService(defaultService)'), 'Service choice updates when contact URL changes');
+check(web.includes('web-email-fallback') && web.includes('emailHref'), 'Disabled form has an actionable email enquiry instead');
+check(routes.includes('aria-pressed={filter === f}'), 'Game archive filters expose selected state');
 check(web.includes("state === 'submitting'") && web.includes('disabled={!formEnabled'), 'Submission feedback and disabled state');
 check(web.includes("method: 'POST'") && web.includes("headers: { 'Content-Type': 'application/x-www-form-urlencoded' }"), 'Hosted form submission uses URL encoded POST');
 check(web.includes('role="alert"') && web.includes('role="status"'), 'Form feedback is announced accessibly');
