@@ -24,7 +24,9 @@ function WebHeader() {
     <header className="web-header">
       <div className="web-container web-header__inner">
         <Link className="web-brand" to="/web" onClick={() => setOpen(false)}>
-          <span className="web-brand__mark">df<span>.</span></span>
+          <span className="web-brand__mark">
+            <img src="/images/logo-mark.png" alt="" width={400} height={400} />
+          </span>
           <span>Dylan Fliski <small>WEB DEVELOPMENT</small></span>
         </Link>
         <button
@@ -61,10 +63,10 @@ function WebFooter() {
           <Link to="/web/contact">Get a Quote</Link>
           <Link to="/web/privacy">Privacy</Link>
         </nav>
-        <div className="web-footer__switch">
-          <span>OTHER PORTFOLIO</span>
-          <Link to="/games">Game Development <ArrowUpRight size={16} aria-hidden="true" /></Link>
-          <Link to="/">Choose portfolio</Link>
+        <div className="web-footer__contact">
+          <span>START A WEBSITE PROJECT</span>
+          <Link to="/web/contact">Get a Free Quote <ArrowUpRight size={16} aria-hidden="true" /></Link>
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
         </div>
       </div>
     </footer>
@@ -74,13 +76,6 @@ function WebFooter() {
 export function WebLayout() {
   return (
     <div className="web-site">
-      <div className="web-context-bar">
-        <div className="web-container web-context-bar__inner">
-          <Link to="/">DYLAN FLISKI / PORTFOLIOS</Link>
-          <span>WEB DEVELOPMENT</span>
-          <Link to="/games">Switch to Game Development <ArrowUpRight size={13} aria-hidden="true" /></Link>
-        </div>
-      </div>
       <WebHeader />
       <Outlet />
       <WebFooter />
@@ -227,7 +222,7 @@ export function WebProjectDetail() {
 }
 
 export function WebAbout() {
-  return <main><section className="web-page-lead web-container"><span className="web-eyebrow">ABOUT / INDEPENDENT DEVELOPER</span><h1>A developer, not<br /><em>an agency.</em></h1><p>I'm Dylan — a Cheltenham-based Games Programming graduate who also builds responsive websites with React, TypeScript, JavaScript, HTML and CSS.</p></section><section className="web-section web-container web-about"><div><span className="web-eyebrow">WHY I DO THIS</span><h2>Good websites shouldn't be out of reach.</h2><p>I'm starting my freelance web development work with local small businesses in mind. Whether you need a first website or a better existing one, I focus on clear communication, usable design and a realistic scope.</p><p>My programming background gives me experience with problem-solving, interactive systems and debugging. I'm putting those skills to work in web development too, without pretending I've already got a long list of commercial website clients.</p><Link className="web-button web-button--primary" to="/web/contact">Talk About Your Website <ArrowRight size={17} /></Link></div><aside><span className="web-eyebrow">TOOLKIT</span><h3>What I work with</h3><div className="web-about__skills">{['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Responsive Design', 'Frontend Development', 'Accessibility Basics', 'Git / GitHub', 'Bug Fixing'].map(s => <span key={s}>{s}</span>)}</div><div className="web-about__location"><MapPin size={18} /> Cheltenham, Gloucestershire, UK</div></aside></section><CallToAction /></main>;
+  return <main><section className="web-page-lead web-container"><span className="web-eyebrow">ABOUT / INDEPENDENT DEVELOPER</span><h1>A developer, not<br /><em>an agency.</em></h1><p>I'm Dylan — a Cheltenham-based freelance developer building responsive websites with React, TypeScript, JavaScript, HTML and CSS.</p></section><section className="web-section web-container web-about"><div><span className="web-eyebrow">WHY I DO THIS</span><h2>Good websites shouldn't be out of reach.</h2><p>I'm starting my freelance web development work with local small businesses in mind. Whether you need a first website or a better existing one, I focus on clear communication, usable design and a realistic scope.</p><p>My programming background gives me experience with problem-solving, interactive systems and debugging. I'm putting those skills to work in web development too, without pretending I've already got a long list of commercial website clients.</p><Link className="web-button web-button--primary" to="/web/contact">Talk About Your Website <ArrowRight size={17} /></Link></div><aside><span className="web-eyebrow">TOOLKIT</span><h3>What I work with</h3><div className="web-about__skills">{['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Responsive Design', 'Frontend Development', 'Accessibility Basics', 'Git / GitHub', 'Bug Fixing'].map(s => <span key={s}>{s}</span>)}</div><div className="web-about__location"><MapPin size={18} /> Cheltenham, Gloucestershire, UK</div></aside></section><CallToAction /></main>;
 }
 
 const formEnabled = import.meta.env.VITE_WEB_FORM_PROVIDER === 'netlify';
@@ -307,4 +302,19 @@ export function WebContact() {
 
 export function WebPrivacy() {
   return <main className="web-container web-privacy"><Link className="web-back-link" to="/web/contact"><ArrowLeft size={16} /> Back to enquiries</Link><span className="web-eyebrow">PRIVACY / WEB ENQUIRIES</span><h1>Privacy information.</h1><div className="web-privacy__content"><h2>Who handles your enquiry?</h2><p>Dylan Fliski, an independent developer based in Cheltenham, United Kingdom. Contact: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p><h2>What do you send?</h2><p>When the website enquiry form is enabled, it asks for your name, business name, email, optional website, selected service, optional budget and a description of what you need. It also asks for consent to follow up about that enquiry.</p><h2>Why and where?</h2><p>I use this information to respond to your enquiry, discuss a possible project and maintain relevant correspondence. The planned form provider is Netlify Forms, which may process and store submissions on its infrastructure when enabled. Delivery integration is not currently guaranteed until tested. If you email me, your email provider and mine process those messages.</p><h2>Retention and your choices</h2><p>I intend to keep enquiry details only for as long as reasonably necessary for the conversation, any agreed work and applicable record-keeping requirements. You can request access, correction or deletion of your enquiry information by emailing me. Requests will be assessed against any legal obligations to retain information.</p><h2>Before submitting</h2><p>Do not include passwords, payment information or sensitive personal details. If the form is disabled, use the direct email option instead.</p></div></main>;
+}
+
+/** Unmatched web URLs stay in the web design without linking to the games portfolio. */
+export function WebNotFound() {
+  return (
+    <main className="web-section web-container web-project-notfound">
+      <span className="web-eyebrow">404 / PAGE NOT FOUND</span>
+      <h1>That page isn't here.</h1>
+      <p>Return to my web development homepage or explore the available website packages.</p>
+      <div className="web-actions">
+        <Link className="web-button web-button--primary" to="/web">Web Development Home</Link>
+        <Link className="web-button web-button--outline" to="/web/services">Services &amp; Pricing</Link>
+      </div>
+    </main>
+  );
 }
