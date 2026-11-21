@@ -108,7 +108,7 @@
 .web-section-heading h2 { font-size: clamp(33px, 4.5vw, 51px); line-height: 1.13; margin: 12px 0 15px; }
 .web-section-heading p { max-width: 620px; font-size: 16px; color: var(--web-muted); line-height: 1.75; }
 .web-benefit-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
-.web-benefit { padding: 31px; border: 1px solid var(--web-line); border-radius: 15px; background: #fff; transition: transform .2s, box-shadow .2s; }
+.web-benefit { padding: 31px; border: 1px solid var(--web-line); border-radius: 16px; background: #fff; transition: border-color .2s; }
 .web-benefit:hover { border-color: #bccfc5; }
 .web-benefit > span { display: grid; place-items: center; background: #e8f2eb; width: 46px; height: 46px; border-radius: 12px; color: #316e5e; }
 .web-benefit h3 { margin: 22px 0 13px; font-size: 20px; }
@@ -143,10 +143,10 @@
 .web-page-lead > p { font-size: clamp(16px, 1.6vw, 19px); color: var(--web-muted); max-width: 750px; line-height: 1.75; }
 .web-pricing-section { padding-top: 50px; }
 .web-pricing-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; align-items: stretch; }
-.web-package { display: flex; flex-direction: column; position: relative; background: #fff; border: 1px solid #d9e3dd; border-radius: 17px; padding: 25px 22px; min-height: 520px; scroll-margin-top: 28px; }
+.web-package { display: flex; flex-direction: column; position: relative; background: #fff; border: 1px solid #d9e3dd; border-radius: 16px; padding: 25px 22px; min-height: 520px; scroll-margin-top: 28px; }
 .web-package--featured { border: 2px solid #358371; box-shadow: 0 13px 37px #2b6f5b17; padding: 24px 21px; }
-.web-package__tag { position: absolute; top: -15px; right: 15px; padding: 6px 11px; background: #245d50; color: #fff; font-size: 9px; font-weight: 800; letter-spacing: .07em; border-radius: 6px; }
-.web-package__label { color: #45816e; font-size: 9px; letter-spacing: .15em; font-weight: 800; }
+.web-package__tag { position: absolute; top: -15px; right: 15px; padding: 6px 11px; background: #245d50; color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .07em; border-radius: 6px; }
+.web-package__label { color: #45816e; font-size: 11px; letter-spacing: .12em; font-weight: 800; }
 .web-package h2 { margin: 11px 0 12px; font-size: 23px; line-height: 1.15; min-height: 52px; }
 .web-package > p { font-size: 13px; color: #60746b; min-height: 64px; line-height: 1.6; }
 .web-package__price { margin: 17px 0 22px; font: 700 38px 'Space Grotesk',sans-serif; letter-spacing: -.04em; white-space: nowrap; }
@@ -230,9 +230,12 @@
 .web-contact-form__intro { display: flex; justify-content: space-between; align-items: baseline; gap: 15px; margin-bottom: 22px; }
 .web-contact-form__intro h2 { font-size: 29px; margin: 0; }
 .web-contact-form__intro span { color: #819286; font-size: 11px; }
-.web-form-unconfigured { display: flex; align-items: flex-start; gap: 12px; background: #f0f4df; border: 1px solid #dce2b4; color: #4c602b; padding: 16px; border-radius: 9px; margin: 0 0 23px; font-size: 12px; line-height: 1.6; }
-.web-form-unconfigured svg { flex: 0 0 auto; margin-top: 1px; }
-.web-form-unconfigured a { text-decoration: underline; font-weight: 800; }
+.web-email-fallback { display: grid; justify-items: start; gap: 16px; padding: clamp(20px, 4vw, 34px); border: 1px solid #d7e5dc; border-radius: 16px; background: var(--web-soft); }
+.web-email-fallback h3 { margin: 0; font: 700 clamp(23px, 2.2vw, 30px)/1.2 'Space Grotesk', sans-serif; letter-spacing: -.025em; color: var(--web-ink); }
+.web-email-fallback > p { margin: 0; max-width: 54ch; color: #466257; font-size: 14px; line-height: 1.7; }
+.web-email-fallback .web-button { min-width: 185px; }
+.web-email-fallback__address { overflow-wrap: anywhere; }
+.web-email-fallback__address a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .web-contact-form { display: grid; gap: 20px; }
 .web-form-two { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
 .web-contact-form label { display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 800; color: #304f43; }

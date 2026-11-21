@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes, useParams, useLocation } from 'react-router-dom';
 import {
@@ -66,6 +66,20 @@ async function copyBusinessEmail(): Promise<boolean> {
 // Game portfolio navigation (independent of the web development site).
 function Header() {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [open]);
   return <header className="site-header">
     <div className="shell nav">
       <Link className="brand" to="/games" onClick={() => setOpen(false)}>
@@ -76,7 +90,7 @@ function Header() {
           <small>GAMES PROGRAMMER</small>
         </span>
       </Link>
-      <button className="menu-button" type="button" aria-label={open ? "Close game navigation" : "Open game navigation"} aria-controls="games-primary-nav" aria-expanded={open} onClick={() => setOpen(!open)}>
+      <button ref={menuButton} className="menu-button" type="button" aria-label={open ? "Close game navigation" : "Open game navigation"} aria-controls="games-primary-nav" aria-expanded={open} onClick={() => setOpen(!open)}>
         {open ? <X /> : <Menu />}
       </button>
       <nav id="games-primary-nav" aria-label="Games portfolio navigation" className={open ? 'nav-links show' : 'nav-links'}>
@@ -106,7 +120,7 @@ function Image({ project, large = false }: {
   return <div className={'project-image ' + (large ? 'large ' : '') + kind}>
     {project.image ? <img
       src={project.image}
-      alt={project.title + ' project image'}
+      alt={project.title + ' project preview'}
       loading="lazy"
       onError={e => {
         const fallback = project.fallbackImage || (project.slug === 'bound-in-time' ? '/images/bound-in-time.png' : undefined);
@@ -253,21 +267,13 @@ function Home() {
           eyebrow="01 / SELECTED WORK"
           title="Featured projects"
           sub="Selected projects that showcase my games, simulations and programming work." />
-        <div className="slide-controls">
-          <button aria-label="Previous project" onClick={previous}>
-            <ChevronLeft />
-          </button>
-          <button aria-label="Next project" onClick={next}>
-            <ChevronRight />
-          </button>
-        </div>
       </div>
       <div className="featured-grid">
         <div className="featured-main">
-          <ProjectCard project={featured[slide]} />
+          <ProjectCard project={featured[0]} />
         </div>
         <div className="featured-side">
-          {featured.filter((_, i) => i !== slide).slice(0, 2).map(p => <ProjectCard key={p.slug} project={p} />)}
+          {featured.slice(1, 3).map(p => <ProjectCard key={p.slug} project={p} />)}
         </div>
       </div>
       <div className="section-link">
@@ -334,7 +340,7 @@ function Projects() {
     <p className="page-intro">A collection of games, prototypes, programming experiments and tools — from AI systems to procedural generation.</p>
     <div className="filterbar">
       <div className="filter-pills">
-        {['All', 'Completed', 'In Development', 'On Hold'].map(f => <button className={filter === f ? 'active' : ''} key={f} onClick={() => setFilter(f)}>
+        {['All', 'Completed', 'In Development', 'On Hold'].map(f => <button type="button" aria-pressed={filter === f} className={filter === f ? 'active' : ''} key={f} onClick={() => setFilter(f)}>
           {f}
         </button>)}
       </div>
@@ -816,7 +822,9 @@ function ScrollToTop() {
   const { pathname, hash } = useLocation();
   useLayoutEffect(() => {
     if (hash) {
-      const id = decodeURIComponent(hash.substring(1));
+      // Malformed URL fragments should never crash the portfolio.
+      let id = hash.substring(1);
+      try { id = decodeURIComponent(id); } catch { return; }
       requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'auto' }));
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
