@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Link, NavLink, useParams, useLocation } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Navigate, Outlet, Route, Routes, useParams, useLocation } from 'react-router-dom';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -29,13 +29,16 @@ import {
 import { projects, Project } from './projects';
 import './style.css';
 import CurrentProjects from './components/CurrentProjects';
-import Services, { FreelanceTeaser } from './components/Services';
+import { PortfolioChooser } from './dual/PortfolioChooser';
+import { SeoManager } from './dual/SeoManager';
+import { WebLayout, WebHome, WebServices, WebProjects, WebProjectDetail, WebAbout, WebContact, WebPrivacy } from './web/WebPortfolio';
+import './dual/dual.css';
+import './web/web.css';
 
 // Client projects stay private until permission to showcase them has been confirmed.
 const publishedProjects = projects.filter(p => p.workType !== 'Client' || p.clientApproved === true);
 const featured = publishedProjects.filter(p => p.featured);
 const EMAIL = 'Dylsonator.b@gmail.com';
-// Email clipboard helper with a fallback for older browsers.
 // Email clipboard helper with a fallback for older browsers.
 async function copyBusinessEmail(): Promise<boolean> {
   try {
@@ -60,13 +63,12 @@ async function copyBusinessEmail(): Promise<boolean> {
     return false;
   }
 }
-// Main site navigation.
-// Main site navigation.
+// Game portfolio navigation (independent of the web development site).
 function Header() {
   const [open, setOpen] = useState(false);
   return <header className="site-header">
     <div className="shell nav">
-      <Link className="brand" to="/" onClick={() => setOpen(false)}>
+      <Link className="brand" to="/games" onClick={() => setOpen(false)}>
         <span className="brand-icon brand-logo">
           <img src="/images/logo-mark.png" alt="" />
         </span>
@@ -74,21 +76,20 @@ function Header() {
           <small>GAMES PROGRAMMER</small>
         </span>
       </Link>
-      <button className="menu-button" aria-label="Toggle menu" onClick={() => setOpen(!open)}>
+      <button className="menu-button" type="button" aria-label={open ? "Close game navigation" : "Open game navigation"} aria-controls="games-primary-nav" aria-expanded={open} onClick={() => setOpen(!open)}>
         {open ? <X /> : <Menu />}
       </button>
-      <nav className={open ? 'nav-links show' : 'nav-links'}>
-        {[['/', 'Home'], ['/projects', 'Projects'], ['/services', 'Services'], ['/about', 'About'], ['/contact', 'Contact']].map(([href, label]) => <NavLink key={href} end={href === '/'} onClick={() => setOpen(false)} to={href}>
+      <nav id="games-primary-nav" aria-label="Games portfolio navigation" className={open ? 'nav-links show' : 'nav-links'}>
+        {[['/games', 'Home'], ['/games/projects', 'Projects'], ['/games/about', 'About'], ['/games/contact', 'Contact']].map(([href, label]) => <NavLink key={href} end={href === '/games'} onClick={() => setOpen(false)} to={href}>
           {label}
         </NavLink>)}
       </nav>
-      <Link className="nav-contact" to="/contact">Get in touch <ArrowUpRight size={15} />
+      <Link className="nav-contact" to="/games/contact">Get in touch <ArrowUpRight size={15} />
       </Link>
     </div>
   </header>;
 }
-// Reusable project cards and status displays.
-// Reusable project cards and status displays.
+// Reusable game project cards and status displays.
 function Status({ value }: {
   value: Project['status'];
 }) {
@@ -122,7 +123,7 @@ function Image({ project, large = false }: {
 function ProjectCard({ project }: {
   project: Project;
 }) {
-  return <Link className="project-card" to={'/projects/' + project.slug}>
+  return <Link className="project-card" to={'/games/projects/' + project.slug}>
     <Image project={project} />
     <div className="project-card-body">
       <div className="card-top">
@@ -165,8 +166,7 @@ function Heading({ eyebrow, title, sub }: {
     </div>
   </div>;
 }
-// Homepage: introduction, featured projects, and recent work.
-// Homepage: introduction, featured projects, and recent work.
+// Game homepage: introduction, featured projects and recent work.
 function Home() {
   const [slide, setSlide] = useState(0);
   const current = featured[slide];
@@ -182,12 +182,12 @@ function Home() {
         <p>I'm a recent graduate with a BSc in Computer Games Programming from the University of Gloucestershire. I enjoy developing gameplay systems, artificial intelligence and tools that help bring games to life behind the scenes.</p>
         <p>This portfolio showcases the projects I've worked on, the programming challenges I've tackled and what I've learned along the way.</p>
         <div className="hero-actions">
-          <Link className="btn primary" to="/projects">View my projects <ArrowUpRight size={17} />
+          <Link className="btn primary" to="/games/projects">View my projects <ArrowUpRight size={17} />
           </Link>
-          <Link className="btn secondary" to="/about">About me <ArrowRight size={17} />
+          <Link className="btn secondary" to="/games/about">About me <ArrowRight size={17} />
           </Link>
         </div>
-        <Link className="release-notice" to="/projects/the-last-service">
+        <Link className="release-notice" to="/games/projects/the-last-service">
           <span className="release-notice__dot" /> NEW RELEASE · THE LAST SERVICE <ArrowUpRight size={14} />
         </Link>
         <div className="hero-tags">
@@ -205,7 +205,7 @@ function Home() {
             </span>
           </div>
           <Link
-            to={'/projects/' + current.slug}
+            to={'/games/projects/' + current.slug}
             className={'hero-feature-media ' + (current.slug === 'twisted-guardians' ? 'brand-art-media ' : '') + (current.smallImage ? 'archive-preview' : '')}>
             {current.image ? <img src={current.image} alt={current.title} /> : <div className="hero-feature-placeholder">
               <Gamepad2 size={48} />
@@ -223,7 +223,7 @@ function Home() {
               {current.summary}
             </p>
             <div className="hero-feature-footer">
-              <Link to={'/projects/' + current.slug} className="hero-feature-link">Explore this project <ArrowUpRight size={16} />
+              <Link to={'/games/projects/' + current.slug} className="hero-feature-link">Explore this project <ArrowUpRight size={16} />
               </Link>
               <div className="hero-feature-arrows">
                 <button type="button" onClick={previous} aria-label="Previous featured project">
@@ -271,11 +271,10 @@ function Home() {
         </div>
       </div>
       <div className="section-link">
-        <Link to="/projects">View all {publishedProjects.length} projects <ArrowRight size={17} />
+        <Link to="/games/projects">View all {publishedProjects.length} projects <ArrowRight size={17} />
         </Link>
       </div>
     </section>
-    <FreelanceTeaser />
     <CurrentProjects />
     <section className="shell section">
       <Heading eyebrow="03 / WHAT I DO" title="Skills & specialisms" />
@@ -311,13 +310,12 @@ function Home() {
         <h2>Interested in my work?</h2>
         <p>Feel free to contact me about programming opportunities or any of the projects shown here.</p>
       </div>
-      <Link className="btn primary" to="/contact">Contact me <ArrowUpRight size={17} />
+      <Link className="btn primary" to="/games/contact">Contact me <ArrowUpRight size={17} />
       </Link>
     </section>
   </>;
 }
-// Projects listing and search/status filters.
-// Projects listing and search/status filters.
+// Game projects listing and search/status filters.
 function Projects() {
   const [q, setQ] = useState('');
   const [filter, setFilter] = useState('All');
@@ -371,20 +369,19 @@ function Projects() {
     )}
   </main>;
 }
-// Individual project case study pages.
-// Individual project case study pages.
+// Individual game project case studies.
 function ProjectDetail() {
   const { slug } = useParams();
   const p = publishedProjects.find(p => p.slug === slug);
   if (!p)
     return <main className="shell page">
       <h1>Project not found</h1>
-      <Link to="/projects">Back to projects</Link>
+      <Link to="/games/projects">Back to projects</Link>
     </main>;
   const index = publishedProjects.indexOf(p);
   const next = publishedProjects[(index + 1) % publishedProjects.length];
   return <main className="shell detail-page">
-    <Link className="back-link" to="/projects">
+    <Link className="back-link" to="/games/projects">
       <ChevronLeft size={16} /> All projects</Link>
     <div className="detail-header">
       <div>
@@ -530,7 +527,7 @@ function ProjectDetail() {
         </a>}
       </div>
     </section>}
-    <Link className="next-project" to={'/projects/' + next.slug}>
+    <Link className="next-project" to={'/games/projects/' + next.slug}>
       <span>
         <span className="eyebrow">UP NEXT</span>
         <strong>
@@ -739,8 +736,7 @@ function Contact() {
       <MapPin size={16} /> Based in Cheltenham, United Kingdom</p>
   </main>;
 }
-// Site footer and navigation helpers.
-// Site footer and navigation helpers.
+// Game footer and navigation helpers.
 function Footer() {
   const [copied, setCopied] = useState(false);
   return <footer className="footer">
@@ -794,32 +790,94 @@ function ScrollToTop() {
   }, [pathname]);
   return null;
 }
-// Application layout and routes.
-// Application layout and routes.
-function App() {
-  return <BrowserRouter>
-    <ScrollToTop />
-    <Header />
-    <div className="route">
-      <React.Suspense fallback={null} />
-      <RoutesWrapper />
+// A small switcher is the only intentionally shared navigation element.
+function GamePortfolioLayout() {
+  return (
+    <div className="games-site">
+      <div className="dual-context-bar">
+        <div className="shell dual-context-bar__inner">
+          <Link to="/" aria-label="Return to portfolio selection">Dylan Fliski / Portfolios</Link>
+          <span>GAME DEVELOPMENT</span>
+          <Link to="/web">Switch to Web Development <ArrowUpRight size={13} aria-hidden="true" /></Link>
+        </div>
+      </div>
+      <Header />
+      <div className="route"><Outlet /></div>
+      <Footer />
     </div>
-    <Footer />
-  </BrowserRouter>;
+  );
 }
-import { Routes, Route } from 'react-router-dom';
-function RoutesWrapper() {
-  return <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/projects" element={<Projects />} />
-    <Route path="/projects/:slug" element={<ProjectDetail />} />
-    <Route path="/services" element={<Services />} />
-    <Route path="/about" element={<About />} />
-    <Route path="/contact" element={<Contact />} />
-    <Route path="*" element={<Projects />} />
-  </Routes>;
+
+function LegacyProjectRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/games/projects/${slug ?? ''}`} replace />;
 }
-;
-createRoot(document.getElementById('root')!).render(<React.StrictMode>
-  <App />
-</React.StrictMode>);
+
+function NotFound() {
+  return (
+    <main className="dual-not-found">
+      <span className="dual-kicker">404 / NOT FOUND</span>
+      <h1>Wrong turn?</h1>
+      <p>That page doesn't exist. Choose the portfolio you're looking for.</p>
+      <div className="dual-not-found__links">
+        <Link to="/games">Game Development</Link>
+        <Link to="/web">Web Development</Link>
+      </div>
+    </main>
+  );
+}
+
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+  useLayoutEffect(() => {
+    if (hash) {
+      const id = decodeURIComponent(hash.substring(1));
+      requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'auto' }));
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+  }, [pathname, hash]);
+  return null;
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <SeoManager />
+      <Routes>
+        <Route path="/" element={<PortfolioChooser />} />
+
+        <Route path="/games" element={<GamePortfolioLayout />}>
+          <Route index element={<Home />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="projects/:slug" element={<ProjectDetail />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+
+        <Route path="/web" element={<WebLayout />}>
+          <Route index element={<WebHome />} />
+          <Route path="services" element={<WebServices />} />
+          <Route path="projects" element={<WebProjects />} />
+          <Route path="projects/:slug" element={<WebProjectDetail />} />
+          <Route path="about" element={<WebAbout />} />
+          <Route path="contact" element={<WebContact />} />
+          <Route path="privacy" element={<WebPrivacy />} />
+        </Route>
+
+        {/* Client-side fallbacks in addition to the host redirects. */}
+        <Route path="/projects" element={<Navigate to="/games/projects" replace />} />
+        <Route path="/projects/:slug" element={<LegacyProjectRedirect />} />
+        <Route path="/about" element={<Navigate to="/games/about" replace />} />
+        <Route path="/contact" element={<Navigate to="/games/contact" replace />} />
+        <Route path="/services" element={<Navigate to="/web/services" replace />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+createRoot(document.getElementById('root')!).render(
+  <React.StrictMode><App /></React.StrictMode>
+);
