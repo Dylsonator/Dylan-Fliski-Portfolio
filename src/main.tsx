@@ -29,10 +29,9 @@ import {
 import { projects, Project } from './projects';
 import './style.css';
 import CurrentProjects from './components/CurrentProjects';
-import { PortfolioChooser } from './dual/PortfolioChooser';
 import { SeoManager } from './dual/SeoManager';
-import { WebLayout, WebHome, WebServices, WebProjects, WebProjectDetail, WebAbout, WebContact, WebPrivacy } from './web/WebPortfolio';
-import './dual/dual.css';
+import { WebLayout, WebHome, WebServices, WebProjects, WebProjectDetail, WebAbout, WebContact, WebPrivacy, WebNotFound } from './web/WebPortfolio';
+import './dual/not-found.css';
 import './web/web.css';
 
 // Client projects stay private until permission to showcase them has been confirmed.
@@ -783,17 +782,10 @@ function Footer() {
     </div>
   </footer>;
 }
-// A small switcher is the only intentionally shared navigation element.
+// Standalone Games Programming portfolio; no link to the separate web business.
 function GamePortfolioLayout() {
   return (
     <div className="games-site">
-      <div className="dual-context-bar">
-        <div className="shell dual-context-bar__inner">
-          <Link to="/" aria-label="Return to portfolio selection">Dylan Fliski / Portfolios</Link>
-          <span>GAME DEVELOPMENT</span>
-          <Link to="/web">Switch to Web Development <ArrowUpRight size={13} aria-hidden="true" /></Link>
-        </div>
-      </div>
       <Header />
       <div className="route"><Outlet /></div>
       <Footer />
@@ -811,10 +803,9 @@ function NotFound() {
     <main className="dual-not-found">
       <span className="dual-kicker">404 / NOT FOUND</span>
       <h1>Wrong turn?</h1>
-      <p>That page doesn't exist. Choose the portfolio you're looking for.</p>
+      <p>That page doesn't exist. Head back to my games portfolio.</p>
       <div className="dual-not-found__links">
-        <Link to="/games">Game Development</Link>
-        <Link to="/web">Web Development</Link>
+        <Link to="/games">Back to Games Programming</Link>
       </div>
     </main>
   );
@@ -839,7 +830,10 @@ function App() {
       <ScrollToTop />
       <SeoManager />
       <Routes>
-        <Route path="/" element={<PortfolioChooser />} />
+        {/* The original domain homepage remains the Games Programming portfolio. */}
+        <Route path="/" element={<GamePortfolioLayout />}>
+          <Route index element={<Home />} />
+        </Route>
 
         <Route path="/games" element={<GamePortfolioLayout />}>
           <Route index element={<Home />} />
@@ -857,6 +851,7 @@ function App() {
           <Route path="about" element={<WebAbout />} />
           <Route path="contact" element={<WebContact />} />
           <Route path="privacy" element={<WebPrivacy />} />
+          <Route path="*" element={<WebNotFound />} />
         </Route>
 
         {/* Client-side fallbacks in addition to the host redirects. */}
