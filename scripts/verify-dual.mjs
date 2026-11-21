@@ -74,6 +74,8 @@ for (const name of ['bus-stop.webp','bus-interior.webp','ticket.webp','fire-wide
   check(existsSync(join(root, gameMedia, name)) && projects.includes(`/images/gallery/last-service/${name}`), `Authentic Last Service screenshot: ${name}`);
 }
 check(projects.includes('v1.0.1 bug fixes published 26 October') && projects.includes('"C++"') && projects.includes('"Blueprints"'), 'Last Service technically accurate release update');
+check(projects.includes('"image": "/images/gallery/last-service/bus-stop.webp"'), 'Last Service cover uses genuine in-game bus-stop screenshot');
+check(projects.includes('"fallbackImage": "/images/gallery/last-service/bus-interior.webp"'), 'Last Service fallback is also an in-game screenshot');
 
 
 console.log(`\n${failures ? `${failures} failure(s)` : 'All architecture smoke checks passed'}.`);
