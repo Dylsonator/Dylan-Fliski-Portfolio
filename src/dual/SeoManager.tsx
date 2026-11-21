@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { projects } from '../projects';
 import { publishedWebProjects, websitePackages } from '../web/data';
+import { extraServices } from '../web/offerings';
 
 const SITE = 'https://dylanfliski.com';
 const DEFAULT_OG = `${SITE}/images/dylan-full-logo.png`;
@@ -37,6 +38,10 @@ const META: Record<string, PageMeta> = {
     title: 'Web Design Prices & Packages | Dylan Fliski Cheltenham',
     description: 'Introductory website packages from £79 to £349, from single-page refreshes to five-page business websites. Clear scope and straightforward pricing.',
   },
+  '/web/maintenance': {
+    title: 'Monthly Website Care Plans | Dylan Fliski Cheltenham',
+    description: 'Clear monthly website maintenance and small editing allowances: Essential £15, Business £29 and Priority £49 per month. No unlimited support.',
+  },
   '/web/projects': {
     title: 'Web Development Work | Dylan Fliski',
     description: 'Explore real web-development projects and case studies as they are completed and approved for publication.',
@@ -70,6 +75,10 @@ export function SeoManager() {
     if (normalised.startsWith('/games/projects/')) {
       const project = projects.find(p => p.slug === normalised.split('/').pop() && (p.workType !== 'Client' || p.clientApproved === true));
       if (project) meta = { title: `${project.title} | Dylan Fliski Games`, description: project.summary, image: project.image ?? undefined, type: 'article' };
+    }
+    if (normalised.startsWith('/web/services/')) {
+      const service = extraServices.find(item => item.id === normalised.split('/').pop());
+      if (service) meta = { title: `${service.name} | Dylan Fliski Web`, description: service.seoDescription };
     }
     if (normalised.startsWith('/web/projects/')) {
       const project = publishedWebProjects.find(p => p.slug === normalised.split('/').pop());
