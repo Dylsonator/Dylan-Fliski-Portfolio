@@ -31,6 +31,7 @@ import './style.css';
 import CurrentProjects from './components/CurrentProjects';
 import { SeoManager } from './dual/SeoManager';
 import { WebLayout, WebHome, WebServices, WebProjects, WebProjectDetail, WebAbout, WebContact, WebPrivacy, WebNotFound } from './web/WebPortfolio';
+import { ExtraServiceDetail, WebMaintenance } from './web/ServiceCatalog';
 import './dual/not-found.css';
 import './web/web.css';
 
@@ -846,6 +847,8 @@ function App() {
         <Route path="/web" element={<WebLayout />}>
           <Route index element={<WebHome />} />
           <Route path="services" element={<WebServices />} />
+          <Route path="services/:slug" element={<ExtraServiceDetail />} />
+          <Route path="maintenance" element={<WebMaintenance />} />
           <Route path="projects" element={<WebProjects />} />
           <Route path="projects/:slug" element={<WebProjectDetail />} />
           <Route path="about" element={<WebAbout />} />

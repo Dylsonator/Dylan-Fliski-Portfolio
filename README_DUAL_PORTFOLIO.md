@@ -22,7 +22,9 @@ The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with
 | `/games/about` | Games background, skills and CV |
 | `/games/contact` | Existing games contact options |
 | `/web` | Local small-business web development homepage |
-| `/web/services` | Four introductory-rate website packages |
+| `/web/services` | Four website packages, six optional improvements and care-plan overview |
+| `/web/maintenance` | Three monthly website care plans |
+| `/web/services/:slug` | Individual details for six optional improvement services |
 | `/web/projects` | Empty state until authentic work can be shown |
 | `/web/projects/:slug` | Extensible approved web case studies |
 | `/web/about` | Independent web developer background and skills |
@@ -33,7 +35,7 @@ The Netlify-style `public/_redirects` preserves historic public URLs: `/projects
 
 ### Prices — introductory rates
 
-Edit `src/web/data.ts` to change the packages, terms and web projects.
+Edit `src/web/data.ts` to change the original website packages and web project entries. The **six additional services and three monthly care plans** are configured separately in `src/web/offerings.ts` so their pricing and scopes are kept in one place.
 
 - Website Refresh — **£79**, one existing page, one revision.
 - Starter Website — **£149**, one responsive page, one revision.
@@ -41,6 +43,8 @@ Edit `src/web/data.ts` to change the packages, terms and web projects.
 - Complete Business Website — **£349**, five pages, two revision rounds.
 
 The page explicitly excludes hosting, domain registration, premium plugins, ecommerce and advanced booking systems. No SEO ranking or lead-generation guarantees are made.
+
+The new service catalogue shows indicative rates of £49–£99 (speed), £59–£119 (local SEO), £39–£69 (Google Business Profile assistance), £29–£59 (contact forms), £39–£79 (galleries), and £79–£149 (booking integration). These are individually quoted, not guaranteed fixed prices. Care plans are Essential £15/month, Business £29/month and Priority £49/month, with clear time allowances and exclusions. Full terms are in `src/web/offerings.ts` and `README_WEB_SERVICES_UPDATE.md`.
 
 ### Publishing future web work
 
@@ -52,13 +56,13 @@ The initial Web Projects page is deliberately empty; it has no fabricated client
 
 The repository already used `public/_redirects` for Netlify-style SPA routing. This is consistent with Netlify deployment but **the hosting account, form detection setting, notification recipient, and real delivery have not been independently verified**.
 
-The Web Contact UI implements an accessible form with name, business name, email, optional site URL, package, optional budget, description, consent and a honeypot. `index.html` contains the matching static form blueprint required for Netlify's build-time form detection. React submits URL-encoded POST data to Netlify's form service when enabled. It handles success and network/server errors without exposing credentials. Netlify offers provider-managed spam filtering, in addition to the honeypot; whether it is active on this site must be verified.
+The Web Contact UI implements an accessible form with required name, email, service of interest and project description; optional business name, phone, website URL, budget and preferred contact method; a consent checkbox and honeypot. Every service, care plan and website package can preselect a value using `?service=<id>`; old `?package=<id>` links also work. The selection is allowlisted. `index.html` contains the matching static form blueprint required for Netlify's build-time form detection. React submits URL-encoded POST data to Netlify's form service when enabled. It handles success and network/server errors without exposing credentials. Netlify offers provider-managed spam filtering, in addition to the honeypot; whether it is active on this site must be verified.
 
 **Safe default:** the submit button is disabled and visitors see a clear explanation plus a functional `mailto:` fallback until the hosted form is configured. `src/web/WebPortfolio.tsx` reads `VITE_WEB_FORM_PROVIDER=netlify` at **build** time. `src/vite-env.d.ts` enables Vite's TypeScript environment types. Never put secrets in any `VITE_` variable.
 
 To enable **after deploying to a non-production preview with explicit approval**:
 
-1. Confirm the host is Netlify; enable form detection in the site settings if necessary.
+1. Hosting is confirmed as Netlify by the site owner; enable form detection in the site settings if necessary.
 2. Deploy a preview and confirm Netlify's **Forms** dashboard detects `web-enquiry` with the expected input names.
 3. Configure Netlify's submission notification recipient as `dylsonator.b@gmail.com` in its dashboard (not the frontend).
 4. Set `VITE_WEB_FORM_PROVIDER=netlify` for the **preview environment only**, redeploy, then submit one harmless test enquiry.
@@ -69,7 +73,7 @@ If the site is hosted somewhere other than Netlify, the form and redirects requi
 
 ## SEO and limitations
 
-`src/dual/SeoManager.tsx` manages page titles, descriptions, Open Graph tags, canonical URLs, theme colour and relevant Person/WebSite/Service schema on the client. Root metadata is games-only, and `/games` canonicalises to `/`. `public/sitemap.xml` lists **21** canonical public routes, including all 11 game projects and the separate web pages. `public/robots.txt` links to it. Update the sitemap when publishing new approved work.
+`src/dual/SeoManager.tsx` manages page titles, descriptions, Open Graph tags, canonical URLs, theme colour and relevant Person/WebSite/Service schema on the client. Root metadata is games-only, and `/games` canonicalises to `/`. `public/sitemap.xml` lists **28** canonical public routes, including all 11 game projects and the separate web pages. `public/robots.txt` links to it. Update the sitemap when publishing new approved work.
 
 **Known limitation:** this remains a Vite **client-rendered SPA**, not an SSR/prerendered site. Some crawlers and social sharing bots may not run JavaScript, so route-specific OG metadata might not be visible to all crawlers. For stricter per-route SEO, enable safe build-time prerendering or SSR in a separate reviewed change and verify the output with link-preview tools. No performance or search results are guaranteed.
 
@@ -82,16 +86,16 @@ npm run build
 npm run dev
 ```
 
-Local static checks completed: TypeScript/TSX parsing, PostCSS parsing, sitemap XML parsing, route/redirect/field checks, package prices, and game project preservation. A new read-only GitHub Actions pull-request check runs `npm ci`, `npm run test:routes`, and `npm run build` against the branch on a normal npm-enabled runner. **The complete production build and rendered desktop/tablet/mobile QA could not be run in the isolated environment because `npm ci --offline` was missing a cached npm package.** Run those checks using an environment with normal npm access before merging.
+Local static checks completed: TypeScript/TSX parsing, PostCSS parsing, sitemap XML parsing, route/redirect/field checks, package prices, and game project preservation. A new read-only GitHub Actions pull-request check runs `npm ci`, `npm run test:routes`, and `npm run build` against the branch on a normal npm-enabled runner. The local environment does not have the complete npm dependency cache. The PR GitHub Actions workflow performs dependency install, route/content checks and production build using a normal runner. Run and verify its latest result before merging, and complete manual rendered desktop/tablet/mobile QA.
 
 Manual review checklist:
 
 - Root `/`: game portfolio immediately opens. No selection screen, visible web links or portfolio switcher.
 - Web header: existing red computer/gear logo appears instead of “df”, and web-only footer actions appear.
 - Shareable independent URLs: `/games` and `/web`, without links between them.
-- Games: featured carousel, 11 projects, all case studies, images/videos, About, CV, contact and mobile nav.
+- Games: featured carousel, 11 projects, all case studies, images/videos, About, CV, contact and mobile nav. The Last Service now has five optimised genuine gameplay screenshots and an up-to-date 2026 release/patch case study.
 - Legacy URLs: each redirects to its matching new game page (or `/web/services`).
-- Web: each page and mobile menu, accurate package prices, no fabricated client projects, real Upwork/Fiverr links.
+- Web: six detail routes, maintenance page, each service CTA preselecting the correct form choice, no fabricated client projects, real Upwork/Fiverr links.
 - Contact: disabled before configuration; complete consent, validation and hosted delivery tests before enabling.
 - SEO: page metadata, sitemap, redirects, direct URL refreshes, no unpublished work.
 - Accessibility: keyboard navigation, focus styles, headings, contrast and reduced-motion.
@@ -99,10 +103,12 @@ Manual review checklist:
 
 ## Changed files
 
-- `src/main.tsx`: independent routing shells, game-link migration, games-first `/` and legacy redirects (no switcher).
+- `src/main.tsx`: additional web-service/maintenance routes; original games-first root and old links preserved.
 - `src/components/CurrentProjects.tsx`: migrated game project URLs only.
 - `src/dual/SeoManager.tsx`, `not-found.css`: standalone routing SEO and fallback styling. Removed the unneeded portfolio selector and switcher stylesheet.
-- `src/web/WebPortfolio.tsx`, `web.css`, `data.ts`: independent web portfolio, logo-mark branding, pricing, guarded project model and hosted enquiry UX.
+- `src/web/WebPortfolio.tsx` and `web.css`: service catalogue integration and guarded contact improvements; existing web identity preserved. `src/web/data.ts` fixed website packages unchanged.
+- `src/web/offerings.ts`, `ServiceCatalog.tsx`, `service-catalog.css`: six optional services, detail pages, three care plans and scoped responsive styling.
+- `src/projects.ts`, `public/images/gallery/last-service/*.webp`: updated game programming breakdown with five genuine in-game captures, compressed for the web.
 - `src/services.ts`: previously supplied public Upwork and Fiverr links brought in from the live `main` branch.
 - `index.html`: static hosted form blueprint and default meta tags.
 - `public/_redirects`, `robots.txt`, `sitemap.xml`: routing compatibility and discovery.

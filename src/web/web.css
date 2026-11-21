@@ -25,7 +25,7 @@
 .web-site a:focus-visible, .web-site button:focus-visible, .web-site input:focus-visible,
 .web-site select:focus-visible, .web-site textarea:focus-visible { outline: 3px solid #e4a866; outline-offset: 3px; }
 .web-container { width: min(1180px, calc(100% - 64px)); margin-inline: auto; }
-.web-header { position: relative; z-index: 20; background: #f9faf6ef; border-bottom: 1px solid var(--web-line); backdrop-filter: blur(15px); }
+.web-header { position: relative; z-index: 20; background: #f9faf6; border-bottom: 1px solid var(--web-line); }
 .web-header__inner { min-height: 90px; display: flex; align-items: center; gap: 24px; }
 .web-brand { display: inline-flex; align-items: center; gap: 12px; flex: 0 0 auto; font: 800 15px 'Space Grotesk', sans-serif; letter-spacing: -.025em; line-height: 1.05; }
 .web-brand__mark {
@@ -52,19 +52,19 @@
 .web-navigation a:hover, .web-navigation a.active { color: var(--web-green); }
 .web-navigation a.active { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
 .web-header__quote { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 0 0 auto; padding: 13px 16px; background: var(--web-green); color: #fff !important; border-radius: 9px; font-size: 12px; font-weight: 800; transition: background .2s, transform .2s; }
-.web-header__quote:hover { background: var(--web-green-dark); transform: translateY(-2px); }
+.web-header__quote:hover { background: var(--web-green-dark); }
 .web-menu-button { display: none; border: 0; background: transparent; color: var(--web-ink); padding: 8px; margin-left: auto; cursor: pointer; }
 .web-eyebrow { display: inline-flex; align-items: center; gap: 9px; color: #3d7b6b; font-size: 10px; font-weight: 800; letter-spacing: .15em; line-height: 1.55; }
 .web-site h1, .web-site h2, .web-site h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -.045em; }
 .web-site h1 em, .web-site h2 em { font-style: normal; color: #34816b; }
 .web-site p { margin: 0; }
 .web-button { display: inline-flex; align-items: center; justify-content: center; gap: 11px; min-height: 49px; padding: 13px 19px; border-radius: 10px; font-size: 13px; font-weight: 800; border: 1px solid transparent; cursor: pointer; transition: background .2s, border-color .2s, transform .2s; text-align: center; }
-.web-button:hover:not(:disabled) { transform: translateY(-2px); }
 .web-button--primary { color: #fff !important; background: var(--web-green); }
 .web-button--primary:hover:not(:disabled) { background: #123e35; }
 .web-button--outline { color: var(--web-green) !important; border-color: #b8d0c5; background: #fff9; }
 .web-button--outline:hover:not(:disabled) { border-color: #2a7764; background: #fff; }
 .web-button--light { background: #f8faf3; color: #194a41 !important; }
+.web-button--light:hover:not(:disabled) { background: #e8eee7; }
 .web-button:disabled { opacity: .52; cursor: not-allowed; }
 .web-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 21px; }
 .web-signal { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #34816b; box-shadow: 0 0 0 5px #34816b1a; }
@@ -109,7 +109,7 @@
 .web-section-heading p { max-width: 620px; font-size: 16px; color: var(--web-muted); line-height: 1.75; }
 .web-benefit-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
 .web-benefit { padding: 31px; border: 1px solid var(--web-line); border-radius: 15px; background: #fff; transition: transform .2s, box-shadow .2s; }
-.web-benefit:hover { transform: translateY(-4px); box-shadow: 0 15px 32px #183c2e0a; }
+.web-benefit:hover { border-color: #bccfc5; }
 .web-benefit > span { display: grid; place-items: center; background: #e8f2eb; width: 46px; height: 46px; border-radius: 12px; color: #316e5e; }
 .web-benefit h3 { margin: 22px 0 13px; font-size: 20px; }
 .web-benefit p { color: var(--web-muted); font-size: 14px; line-height: 1.7; }
@@ -167,7 +167,7 @@
 .web-steps p { font-size: 13px; color: var(--web-muted); line-height: 1.7; }
 .web-platforms { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
 .web-platforms > a { display: flex; align-items: center; gap: 13px; padding: 19px; min-width: 0; border-radius: 12px; background: #fff; border: 1px solid #dde5de; transition: transform .2s, border-color .2s; }
-.web-platforms > a:hover { transform: translateY(-3px); border-color: #559c85; }
+.web-platforms > a:hover { border-color: #559c85; }
 .web-platforms > a > svg:first-child { color: #307361; }
 .web-platforms > a > svg:last-child { margin-left: auto; flex: 0 0 auto; }
 .web-platforms strong, .web-platforms small { display: block; }

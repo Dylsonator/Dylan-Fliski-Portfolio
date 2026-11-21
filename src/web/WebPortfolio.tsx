@@ -7,6 +7,8 @@ import {
 import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
 import { freelanceProfiles } from '../services';
 import { publishedWebProjects, websitePackages } from './data';
+import { carePlans, extraServices, quotePath } from './offerings';
+import { AdditionalWebsiteServices, CarePlanTeaser } from './ServiceCatalog';
 
 const EMAIL = 'dylsonator.b@gmail.com';
 
@@ -59,6 +61,7 @@ function WebFooter() {
         </div>
         <nav aria-label="Web portfolio footer">
           <Link to="/web/services">Services & Pricing</Link>
+          <Link to="/web/maintenance">Monthly Care</Link>
           <Link to="/web/projects">Projects</Link>
           <Link to="/web/contact">Get a Quote</Link>
           <Link to="/web/privacy">Privacy</Link>
@@ -168,7 +171,7 @@ export function WebServices() {
       <section className="web-page-lead web-container">
         <span className="web-eyebrow">SERVICES / SIMPLE PRICING</span>
         <h1>Websites without<br /><em>the agency price tag.</em></h1>
-        <p>Four starting points, from polishing a single webpage to giving your business a full five-page website. These are limited introductory rates.</p>
+        <p>Choose a fixed-scope website package, targeted improvements for an existing site or optional monthly care. All prices are introductory and clearly scoped.</p>
       </section>
       <section className="web-section web-container web-pricing-section" aria-label="Website packages">
         <div className="web-pricing-grid">
@@ -181,12 +184,14 @@ export function WebServices() {
               <div className="web-package__price">£{pkg.priceGBP}<span> / project</span></div>
               <ul>{pkg.deliverables.map(item => <li key={item}><Check size={16} aria-hidden="true" />{item}</li>)}</ul>
               <div className="web-package__revisions"><CheckCircle2 size={17} aria-hidden="true" /> {pkg.revisions}</div>
-              <Link className={`web-button ${pkg.featured ? 'web-button--primary' : 'web-button--outline'}`} to={`/web/contact?package=${encodeURIComponent(pkg.id)}`}>Ask About This Package <ArrowUpRight size={17} aria-hidden="true" /></Link>
+              <Link className={`web-button ${pkg.featured ? 'web-button--primary' : 'web-button--outline'}`} to={quotePath(pkg.id)}>Ask About This Package <ArrowUpRight size={17} aria-hidden="true" /></Link>
             </article>
           ))}
         </div>
         <div className="web-pricing-fine-print"><ShieldCheck size={23} aria-hidden="true" /><div><strong>What's included — and what's not</strong><p>These are limited introductory rates. Hosting, domain registration, premium plugins, ecommerce, advanced booking systems and third-party subscription costs are not included. Scope and any extra costs will be agreed before work starts. Basic SEO means on-page setup, not a promise of search rankings or customers.</p></div></div>
       </section>
+      <AdditionalWebsiteServices />
+      <CarePlanTeaser />
       <section className="web-section web-section--tinted"><div className="web-container"><SectionIntro eyebrow="HOW IT WORKS" title="Straightforward from the start." /><div className="web-steps"><div><span>01</span><h3>Tell me the idea</h3><p>Share your business, goals and what needs building or fixing.</p></div><div><span>02</span><h3>Agree the scope</h3><p>We'll confirm pages, features, revisions and the price before work starts.</p></div><div><span>03</span><h3>Build and review</h3><p>I'll build the agreed site and work through the included revisions with you.</p></div></div></div></section>
       <section className="web-section web-container web-platform-section"><SectionIntro eyebrow="ALSO AVAILABLE" title="Find me on freelance platforms." /><div className="web-platforms">{freelanceProfiles.filter(p => p.url).map(p => <a key={p.name} target="_blank" rel="noopener noreferrer" href={p.url!}><Globe2 size={20} aria-hidden="true" /><span><strong>{p.name}</strong><small>{p.description}</small></span><ExternalLink size={19} aria-hidden="true" /></a>)}<Link to="/web/contact"><Mail size={20} aria-hidden="true" /><span><strong>Contact directly</strong><small>Tell me about your project</small></span><ArrowRight size={19} aria-hidden="true" /></Link></div></section>
       <CallToAction />
@@ -226,44 +231,54 @@ export function WebAbout() {
 }
 
 const formEnabled = import.meta.env.VITE_WEB_FORM_PROVIDER === 'netlify';
-const packageChoices = [
-  { value: '', name: 'Select a service or package' },
-  ...websitePackages.map(p => ({ value: p.id, name: `${p.name} — £${p.priceGBP}` })),
-  { value: 'unsure', name: 'Not sure yet / something else' },
+
+/** One list for package, additional service and monthly-care enquiries. */
+const serviceChoices = [
+  { value: '', name: 'Select a service' },
+  ...websitePackages.map(pkg => ({ value: pkg.id, name: `${pkg.name} — £${pkg.priceGBP}` })),
+  ...extraServices.map(item => ({ value: item.id, name: `${item.name} — £${item.minGBP}–£${item.maxGBP}` })),
+  ...carePlans.map(plan => ({ value: plan.id, name: `${plan.name} — £${plan.monthlyGBP}/month` })),
+  { value: 'unsure', name: 'Other / Not Sure' },
 ];
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
 /**
- * Netlify Forms is enabled ONLY with VITE_WEB_FORM_PROVIDER=netlify.
- * The matching HTML form in index.html must be present in the deployed build,
- * and delivery/anti-spam must be verified via a real preview submission.
+ * Netlify Forms submission is deliberately off by default. Enable it only after
+ * form detection, provider spam controls and delivery notifications are tested.
+ * React validation improves UX but does not replace provider-side checks.
  */
 export function WebContact() {
   const [state, setState] = useState<FormState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  const query = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
-  const preferred = query.get('package') ?? '';
-  const defaultPackage = packageChoices.some(choice => choice.value === preferred) ? preferred : '';
+  const query = new URLSearchParams(window.location.search);
+  // Legacy links with ?package= remain compatible. All identifiers are allowlisted.
+  const candidate = query.get('service') ?? query.get('package') ?? '';
+  const defaultService = serviceChoices.some(choice => choice.value === candidate) ? candidate : '';
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formElement = event.currentTarget;
     if (!formEnabled || state === 'submitting') return;
-    setState('submitting');
-    setErrorMessage('');
-    const data = new FormData(formElement);
-    // Never attempt a network submission for bot-filled requests.
-    if (String(data.get('bot-field') || '').trim()) {
+    const element = event.currentTarget;
+    const data = new FormData(element);
+    if (String(data.get('bot-field') ?? '').trim()) {
       setState('error');
-      setErrorMessage('Please retry the form.');
+      setErrorMessage('Please try again or contact me by email.');
       return;
     }
+    // An allowlist here guards against accidental or modified values in the UI.
+    const selected = String(data.get('service') ?? '');
+    if (!serviceChoices.some(choice => choice.value === selected && selected !== '')) {
+      setState('error');
+      setErrorMessage('Please select a valid service.');
+      return;
+    }
+    setState('submitting');
+    setErrorMessage('');
     const body = new URLSearchParams();
-    data.forEach((value, key) => {
-      if (typeof value === 'string') body.append(key, value);
-    });
+    data.forEach((value, key) => { if (typeof value === 'string') body.append(key, value); });
     body.set('form-name', 'web-enquiry');
+    body.set('submitted-at', new Date().toISOString()); // Netlify also records its own receipt timestamp.
 
     try {
       const response = await fetch('/', {
@@ -271,37 +286,80 @@ export function WebContact() {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString(),
       });
-      if (!response.ok) throw new Error(`Enquiry service returned ${response.status}`);
+      if (!response.ok) throw new Error(`Form provider returned ${response.status}`);
       setState('success');
-      formElement.reset();
+      element.reset();
     } catch {
       setState('error');
-      setErrorMessage('Your enquiry could not be confirmed. Please email me directly instead.');
+      setErrorMessage('Submission could not be confirmed. Please email me directly instead.');
     }
   };
 
-  return <main><section className="web-page-lead web-container"><span className="web-eyebrow">CONTACT / FREE QUOTE</span><h1>Tell me what<br /><em>you have in mind.</em></h1><p>Just a few details about your business and the website you need. I'll use them to understand the scope and get back to you.</p></section><section className="web-section web-container web-contact-layout"><div className="web-contact-side"><span className="web-eyebrow">LET'S TALK ABOUT IT</span><h2>A good project starts with a conversation.</h2><p>Have a website that needs improving? Starting fresh? Not sure which package fits? That's all fine.</p><div className="web-contact-side__item"><Mail size={20} /><div><strong>Email me directly</strong><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div></div><div className="web-contact-side__item"><MapPin size={20} /><div><strong>Based in Cheltenham</strong><span>Working with local UK businesses</span></div></div><p className="web-contact-side__note">No obligation to book. Packages are starting points; final scope and pricing are agreed before any work starts.</p></div>
-    <div className="web-contact-form-wrap">
-      {state === 'success' ? <div className="web-form-feedback web-form-feedback--success" role="status"><CheckCircle2 size={34} /><h2>Enquiry submitted</h2><p>The form provider accepted your submission. You'll receive a reply by email if delivery is configured correctly.</p><button type="button" className="web-button web-button--outline" onClick={() => setState('idle')}>Send another enquiry</button></div> : <>
-      <div className="web-contact-form__intro"><h2>Project enquiry</h2><span>Fields marked * are required.</span></div>
-      {!formEnabled && <div className="web-form-unconfigured" role="status"><ShieldCheck size={19} /><p><strong>Online form setup pending.</strong> Enquiry delivery has not been verified yet. You can review the fields below, but submissions are disabled until the hosted form is configured. Please <a href={`mailto:${EMAIL}`}>email me directly</a> instead.</p></div>}
-      <form name="web-enquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="web-contact-form" onSubmit={submit}>
-        <input type="hidden" name="form-name" value="web-enquiry" />
-        <p className="web-honeypot"><label>Leave this field empty <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
-        <div className="web-form-two"><label>Your name *<input name="name" type="text" autoComplete="name" maxLength={120} required placeholder="Your name" /></label><label>Business name *<input name="business" type="text" autoComplete="organization" maxLength={120} required placeholder="Business name" /></label></div>
-        <div className="web-form-two"><label>Email address *<input name="email" type="email" autoComplete="email" maxLength={160} required placeholder="you@business.co.uk" /></label><label>Existing website <span>(optional)</span><input name="website" type="url" placeholder="https://..." maxLength={260} inputMode="url" /></label></div>
-        <div className="web-form-two"><label>Service or package *<select name="package" defaultValue={defaultPackage} required>{packageChoices.map(c => <option value={c.value} key={c.value}>{c.name}</option>)}</select></label><label>Approximate budget <span>(optional)</span><select name="budget" defaultValue=""><option value="">Prefer not to say</option><option value="under-150">Under £150</option><option value="150-250">£150–£250</option><option value="250-350">£250–£350</option><option value="350-plus">Over £350</option><option value="unsure">Not sure yet</option></select></label></div>
-        <label>Tell me about your project *<textarea name="description" rows={6} minLength={15} maxLength={5000} required placeholder="What does your business do? What would you like the website to achieve? Any existing pages, features or deadlines I should know about?" /></label>
-        <label className="web-consent"><input type="checkbox" name="consent" value="yes" required /><span>I agree to be contacted about this enquiry and understand that the information I submit will be used to respond to my request. See the <Link to="/web/privacy">privacy information</Link>. *</span></label>
-        <button className="web-button web-button--primary web-contact-submit" type="submit" disabled={!formEnabled || state === 'submitting'}>{state === 'submitting' ? 'Sending…' : 'Send Enquiry'} <ArrowUpRight size={18} /></button>
-        {state === 'error' && <p className="web-form-feedback--error" role="alert">{errorMessage}</p>}
-        <p className="web-contact-form__disclaimer">Please don't send passwords, payment details or sensitive personal information.</p>
-      </form></>}
-    </div></section></main>;
+  return (
+    <main>
+      <section className="web-page-lead web-container">
+        <span className="web-eyebrow">CONTACT / FREE QUOTE</span>
+        <h1>Tell me what<br /><em>you have in mind.</em></h1>
+        <p>A few details about your business and the work you need help with. I'll confirm the scope and price before you commit to anything.</p>
+      </section>
+      <section className="web-section web-container web-contact-layout">
+        <div className="web-contact-side">
+          <span className="web-eyebrow">LET'S TALK ABOUT IT</span>
+          <h2>A good project starts with a conversation.</h2>
+          <p>Need a website from scratch, a small improvement or ongoing help? Tell me what you're working with.</p>
+          <div className="web-contact-side__item"><Mail size={20} aria-hidden="true" /><div><strong>Email me directly</strong><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div></div>
+          <div className="web-contact-side__item"><MapPin size={20} aria-hidden="true" /><div><strong>Based in Cheltenham</strong><span>Working with local UK businesses</span></div></div>
+          <p className="web-contact-side__note">No obligation to book. A personalised quote depends on your site and what needs doing.</p>
+        </div>
+        <div className="web-contact-form-wrap">
+          {state === 'success' ? (
+            <div className="web-form-feedback web-form-feedback--success" role="status">
+              <CheckCircle2 size={34} aria-hidden="true" />
+              <h2>Enquiry received by the form service</h2>
+              <p>Netlify accepted your submission. Email notifications depend on the hosting configuration, so this is not an email-delivery guarantee.</p>
+              <button type="button" className="web-button web-button--outline" onClick={() => setState('idle')}>Send another enquiry</button>
+            </div>
+          ) : (
+            <>
+              <div className="web-contact-form__intro"><h2>Project enquiry</h2><span>Fields marked * are required.</span></div>
+              {!formEnabled && (
+                <div className="web-form-unconfigured" role="status"><ShieldCheck size={19} aria-hidden="true" />
+                  <p><strong>Online form setup pending.</strong> Submission is disabled until Netlify form detection, spam handling and email delivery are verified. Please <a href={`mailto:${EMAIL}`}>email me directly</a> instead.</p>
+                </div>
+              )}
+              <form name="web-enquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="web-contact-form" onSubmit={submit}>
+                <input type="hidden" name="form-name" value="web-enquiry" />
+                <p className="web-honeypot"><label>Leave this field empty <input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
+                <div className="web-form-two">
+                  <label>Full name *<input name="name" type="text" autoComplete="name" maxLength={120} required placeholder="Your name" /></label>
+                  <label>Business name <span>(optional)</span><input name="business" type="text" autoComplete="organization" maxLength={120} placeholder="Business name" /></label>
+                </div>
+                <div className="web-form-two">
+                  <label>Email address *<input name="email" type="email" autoComplete="email" maxLength={160} required placeholder="you@business.co.uk" /></label>
+                  <label>Phone number <span>(optional)</span><input name="phone" type="tel" autoComplete="tel" maxLength={40} placeholder="Optional" /></label>
+                </div>
+                <label>Existing website <span>(optional)</span><input name="website" type="url" maxLength={260} placeholder="https://..." inputMode="url" /></label>
+                <div className="web-form-two">
+                  <label>Service of interest *<select name="service" defaultValue={defaultService} required>{serviceChoices.map(choice => <option value={choice.value} key={choice.value}>{choice.name}</option>)}</select></label>
+                  <label>Approximate budget <span>(optional)</span><select name="budget" defaultValue=""><option value="">Prefer not to say</option><option value="under-150">Under £150</option><option value="150-250">£150–£250</option><option value="250-350">£250–£350</option><option value="350-plus">Over £350</option><option value="unsure">Not sure yet</option></select></label>
+                </div>
+                <label>Preferred contact method <span>(optional)</span><select name="contact-method" defaultValue="email"><option value="email">Email</option><option value="phone">Phone (if provided)</option><option value="either">Either</option></select></label>
+                <label>Tell me about your project *<textarea name="description" rows={6} minLength={15} maxLength={5000} required placeholder="What does your business do? What needs building, improving or fixing? Any deadlines I should know about?" /></label>
+                <label className="web-consent"><input type="checkbox" name="consent" value="yes" required /><span>I agree to be contacted about this enquiry and understand that my details will be used to respond. See the <Link to="/web/privacy">privacy information</Link>. *</span></label>
+                <button className="web-button web-button--primary web-contact-submit" type="submit" disabled={!formEnabled || state === 'submitting'}>{state === 'submitting' ? 'Sending…' : 'Send Enquiry'} <ArrowUpRight size={18} aria-hidden="true" /></button>
+                {state === 'error' && <p className="web-form-feedback--error" role="alert">{errorMessage}</p>}
+                <p className="web-contact-form__disclaimer">Please don't send passwords, payment details or sensitive personal information.</p>
+              </form>
+            </>
+          )}
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export function WebPrivacy() {
-  return <main className="web-container web-privacy"><Link className="web-back-link" to="/web/contact"><ArrowLeft size={16} /> Back to enquiries</Link><span className="web-eyebrow">PRIVACY / WEB ENQUIRIES</span><h1>Privacy information.</h1><div className="web-privacy__content"><h2>Who handles your enquiry?</h2><p>Dylan Fliski, an independent developer based in Cheltenham, United Kingdom. Contact: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p><h2>What do you send?</h2><p>When the website enquiry form is enabled, it asks for your name, business name, email, optional website, selected service, optional budget and a description of what you need. It also asks for consent to follow up about that enquiry.</p><h2>Why and where?</h2><p>I use this information to respond to your enquiry, discuss a possible project and maintain relevant correspondence. The planned form provider is Netlify Forms, which may process and store submissions on its infrastructure when enabled. Delivery integration is not currently guaranteed until tested. If you email me, your email provider and mine process those messages.</p><h2>Retention and your choices</h2><p>I intend to keep enquiry details only for as long as reasonably necessary for the conversation, any agreed work and applicable record-keeping requirements. You can request access, correction or deletion of your enquiry information by emailing me. Requests will be assessed against any legal obligations to retain information.</p><h2>Before submitting</h2><p>Do not include passwords, payment information or sensitive personal details. If the form is disabled, use the direct email option instead.</p></div></main>;
+  return <main className="web-container web-privacy"><Link className="web-back-link" to="/web/contact"><ArrowLeft size={16} /> Back to enquiries</Link><span className="web-eyebrow">PRIVACY / WEB ENQUIRIES</span><h1>Privacy information.</h1><div className="web-privacy__content"><h2>Who handles your enquiry?</h2><p>Dylan Fliski, an independent developer based in Cheltenham, United Kingdom. Contact: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p><h2>What do you send?</h2><p>When the website enquiry form is enabled, it asks for your name, email, service of interest and project description, plus optional business name, phone, existing website, budget and preferred contact method. It also asks for consent to follow up about that enquiry.</p><h2>Why and where?</h2><p>I use this information to respond to your enquiry, discuss a possible project and maintain relevant correspondence. The planned form provider is Netlify Forms, which may process and store submissions on its infrastructure when enabled. Delivery integration is not currently guaranteed until tested. If you email me, your email provider and mine process those messages.</p><h2>Retention and your choices</h2><p>I intend to keep enquiry details only for as long as reasonably necessary for the conversation, any agreed work and applicable record-keeping requirements. You can request access, correction or deletion of your enquiry information by emailing me. Requests will be assessed against any legal obligations to retain information.</p><h2>Before submitting</h2><p>Do not include passwords, payment information or sensitive personal details. If the form is disabled, use the direct email option instead.</p></div></main>;
 }
 
 /** Unmatched web URLs stay in the web design without linking to the games portfolio. */
