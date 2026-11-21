@@ -1,19 +1,22 @@
 # Dylan Fliski — Dual Portfolio Upgrade
 
-**Status:** Git branch / review preparation. **Do not merge to `main` or deploy without Dylan's approval.**
+**Status:** Draft PR on a feature branch. **Do not merge to `main` or deploy without Dylan's approval.**
 
 ## What changed and why
 
-The original game portfolio remains intact: all **11** game projects, case studies, screenshots, videos, demos, GitHub/itch links, the featured project carousel, the latest-work cards, CV, About page, and game contact options are preserved. Game pages now live under `/games` rather than sharing navigation and content with web development.
+**Share separate links:** `https://dylanfliski.com/games` for games programming and `https://dylanfliski.com/web` for local web-development clients. `https://dylanfliski.com/` also displays games programming. No visitor-facing selection or cross-links exist; no second domain is required.
 
-The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with **no new runtime dependencies**. The existing game CSS is unchanged; new styles are scoped to `.portfolio-choice` (dual landing) and `.web-site` (light, green-accent web portfolio). The games section keeps its existing dark/red visual identity. There is a small portfolio switcher above both sites.
+
+The original game portfolio remains intact: all **11** game projects, case studies, screenshots, videos, demos, GitHub/itch links, the featured project carousel, the latest-work cards, CV, About page, and game contact options are preserved. The original games portfolio is shown at `/` and `/games`; the independent web business is available at `/web`. Visitors can be sent one URL without encountering a portfolio selector.
+
+The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with **no new runtime dependencies**. The existing game CSS is unchanged; new web styles are scoped to `.web-site` (light, green-accent web portfolio). The games section keeps its existing dark/red visual identity. There is **no chooser, cross-portfolio navigation, or switcher**; the web header now reuses the actual existing logo asset (`/images/logo-mark.png`).
 
 ### Routes
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Two-panel developer selection landing page |
-| `/games` | Existing game portfolio homepage |
+| `/` | Existing Games Programming homepage, no chooser |
+| `/games` | Games Programming homepage alias for sharing (canonical `/`) |
 | `/games/projects` | Existing 11-project games archive |
 | `/games/projects/:slug` | Existing game case studies |
 | `/games/about` | Games background, skills and CV |
@@ -26,7 +29,7 @@ The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with
 | `/web/contact` | Website project enquiry form / direct email fallback |
 | `/web/privacy` | Enquiry privacy information |
 
-The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The existing root homepage is intentionally replaced by the choice landing, **not** redirected.
+The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The original Games Programming homepage is **preserved at `/`**, with `/games` offering a shareable alias; its canonical URL is `/` to avoid duplicate indexing. The Web portfolio is only linked within its own `/web/*` pages, and there is no visible cross-navigation or shared selection page. Both use the **same domain**, so this is URL/path and interface separation, not separate domains or technical isolation.
 
 ### Prices — introductory rates
 
@@ -66,7 +69,7 @@ If the site is hosted somewhere other than Netlify, the form and redirects requi
 
 ## SEO and limitations
 
-`src/dual/SeoManager.tsx` manages page titles, descriptions, Open Graph tags, canonical URLs, theme colour and relevant Person/WebSite/Service schema on the client. `public/sitemap.xml` lists **22** public routes, including all 11 game projects. `public/robots.txt` links to it. Update the sitemap when publishing new approved work.
+`src/dual/SeoManager.tsx` manages page titles, descriptions, Open Graph tags, canonical URLs, theme colour and relevant Person/WebSite/Service schema on the client. Root metadata is games-only, and `/games` canonicalises to `/`. `public/sitemap.xml` lists **21** canonical public routes, including all 11 game projects and the separate web pages. `public/robots.txt` links to it. Update the sitemap when publishing new approved work.
 
 **Known limitation:** this remains a Vite **client-rendered SPA**, not an SSR/prerendered site. Some crawlers and social sharing bots may not run JavaScript, so route-specific OG metadata might not be visible to all crawlers. For stricter per-route SEO, enable safe build-time prerendering or SSR in a separate reviewed change and verify the output with link-preview tools. No performance or search results are guaranteed.
 
@@ -83,7 +86,9 @@ Local static checks completed: TypeScript/TSX parsing, PostCSS parsing, sitemap 
 
 Manual review checklist:
 
-- Landing: both panels keyboard clickable and visually distinct on mobile and desktop.
+- Root `/`: game portfolio immediately opens. No selection screen, visible web links or portfolio switcher.
+- Web header: existing red computer/gear logo appears instead of “df”, and web-only footer actions appear.
+- Shareable independent URLs: `/games` and `/web`, without links between them.
 - Games: featured carousel, 11 projects, all case studies, images/videos, About, CV, contact and mobile nav.
 - Legacy URLs: each redirects to its matching new game page (or `/web/services`).
 - Web: each page and mobile menu, accurate package prices, no fabricated client projects, real Upwork/Fiverr links.
@@ -94,10 +99,10 @@ Manual review checklist:
 
 ## Changed files
 
-- `src/main.tsx`: new routing shells, game-link migration, contextual portfolio switcher, legacy redirects.
+- `src/main.tsx`: independent routing shells, game-link migration, games-first `/` and legacy redirects (no switcher).
 - `src/components/CurrentProjects.tsx`: migrated game project URLs only.
-- `src/dual/PortfolioChooser.tsx`, `dual.css`, `SeoManager.tsx`: landing page, switcher styling, SEO.
-- `src/web/WebPortfolio.tsx`, `web.css`, `data.ts`: independent web portfolio, pricing, guarded project model and hosted enquiry UX.
+- `src/dual/SeoManager.tsx`, `not-found.css`: standalone routing SEO and fallback styling. Removed the unneeded portfolio selector and switcher stylesheet.
+- `src/web/WebPortfolio.tsx`, `web.css`, `data.ts`: independent web portfolio, logo-mark branding, pricing, guarded project model and hosted enquiry UX.
 - `src/services.ts`: previously supplied public Upwork and Fiverr links brought in from the live `main` branch.
 - `index.html`: static hosted form blueprint and default meta tags.
 - `public/_redirects`, `robots.txt`, `sitemap.xml`: routing compatibility and discovery.
