@@ -1,1 +1,9 @@
+# Preserve existing public game portfolio URLs.
+/projects/:slug /games/projects/:slug 301
+/projects /games/projects 301
+/about /games/about 301
+/contact /games/contact 301
+/services /web/services 301
+
+# React Router handles the new dual-portfolio routes.
 /* /index.html 200
