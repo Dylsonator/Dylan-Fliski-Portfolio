@@ -751,6 +751,12 @@ function Footer() {
         <strong>DYLAN<span> FLISKI.</span>
         </strong>
         <small>GAMES PROGRAMMER · CHELTENHAM, UK</small>
+        <div className="footer-other-portfolio">
+          <span>ALSO BY DYLAN</span>
+          <Link to="/web" className="footer-other-portfolio__link">
+            Web development <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
       <div className="footer-social">
         <a
@@ -789,7 +795,7 @@ function Footer() {
     </div>
   </footer>;
 }
-// Standalone Games Programming portfolio; no link to the separate web business.
+// Standalone Games Programming portfolio, with a discreet footer link to web development.
 function GamePortfolioLayout() {
   return (
     <div className="games-site">

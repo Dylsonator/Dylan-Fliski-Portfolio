@@ -4,7 +4,7 @@
 
 ## Scope
 
-The existing Games Programming homepage and website project archive are preserved. The Web Development section remains visually separate, keeps the existing green/cream palette and computer-and-gear logo, and never links to Games Programming. No fake reviews, clients or client case studies have been added.
+The existing Games Programming homepage and website project archive are preserved. The Web Development section remains visually separate, keeps the existing green/cream palette and computer-and-gear logo, and only links to Games Programming through a discreet reciprocal footer link. No fake reviews, clients or client case studies have been added.
 
 ### Existing prices unchanged
 
