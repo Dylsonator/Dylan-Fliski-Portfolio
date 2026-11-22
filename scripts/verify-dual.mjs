@@ -41,6 +41,11 @@ check(routes.includes('path="/projects/:slug"') && redirects.includes('/projects
 check(redirects.includes('/* /index.html 200'), 'SPA fallback configured');
 check(web.includes('publishedWebProjects') && data.includes('clientPermission === true'), 'Client approval gating');
 check(data.includes('webProjects: WebProject[] = []'), 'No invented client projects');
+check(web.includes("import { projects as gameProjects } from '../projects'"), 'Programming preview uses actual project data, not fabricated website work');
+check(web.includes("project.slug === 'the-last-service'") && web.includes("project.slug === 'fish-evolution'"), 'Programming preview links to real game and simulation projects');
+check(web.includes("project.workType !== 'Client' || project.clientApproved === true"), 'Programming previews preserve client approval gating');
+check(web.includes('to="/games/projects"') && web.includes('web-programming-work__cards'), 'Web projects page clearly links to a separate programming portfolio');
+check(web.includes('aria-label="Website projects"') && web.includes('aria-labelledby="programming-work-title"'), 'Website and programming work are separately labelled');
 for (const p of [79, 149, 249, 349]) check(data.includes(`priceGBP: ${p}`), `Introductory rate £${p}`);
 check(html.includes('data-netlify="true"') && html.includes('name="web-enquiry"'), 'Static hosted form blueprint detected');
 for (const input of ['name','business','email','phone','website','service','budget','contact-method','description','consent','bot-field']) check(html.includes(`name="${input}"`) && web.includes(`name="${input}"`), `Form field present in HTML blueprint and React: ${input}`);
