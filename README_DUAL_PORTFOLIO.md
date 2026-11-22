@@ -25,13 +25,13 @@ The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with
 | `/web/services` | Four website packages, six optional improvements and care-plan overview |
 | `/web/maintenance` | Three monthly website care plans |
 | `/web/services/:slug` | Individual details for six optional improvement services |
-| `/web/projects` | Empty state until authentic work can be shown |
+| `/web/projects` | Two genuine self-initiated website projects with live links and code |
 | `/web/projects/:slug` | Extensible approved web case studies |
 | `/web/about` | Independent web developer background and skills |
 | `/web/contact` | Website project enquiry form / direct email fallback |
 | `/web/privacy` | Enquiry privacy information |
 
-The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The original Games Programming homepage is **preserved at `/`**, with `/games` offering a shareable alias; its canonical URL is `/` to avoid duplicate indexing. The web portfolio stays under its own `/web/*` routes, with reciprocal footer links. The `/web/projects` page also distinguishes website case studies from a small preview of genuine, separately linked games/software projects. There is no shared selection page or mixed navigation menus. Both use the **same domain**, so this is URL/path and interface separation, not separate domains or technical isolation.
+The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The original Games Programming homepage is **preserved at `/`**, with `/games` offering a shareable alias; its canonical URL is `/` to avoid duplicate indexing. The web portfolio stays under its own `/web/*` routes, with reciprocal footer links. The `/web/projects` page showcases two self-initiated portfolio websites: the Games Programming portfolio and the Web Development services portfolio, which share the same React/TypeScript source code. There is no shared selection page or mixed navigation menus. Both use the **same domain**, so this is URL/path and interface separation, not separate domains or technical isolation.
 
 ### Prices — introductory rates
 
@@ -50,7 +50,7 @@ The new service catalogue shows indicative rates of £49–£99 (speed), £59–
 
 Use `src/web/data.ts` `webProjects` to add genuine case studies. A `type: 'Client'` item remains invisible until **both** `clientPermission: true` and `status: 'Completed'` are set. Obtain permission before using client names, images, screenshots or site links. The existing game projects remain in `src/projects.ts` and are never mixed into the web portfolio.
 
-The initial Web Projects page is deliberately empty; it has no fabricated clients, reviews, ratings or testimonials.
+The Web Projects page contains two real personal portfolio websites, not paid client commissions. Both link to their live routes and the same public GitHub repository. No client projects, reviews, ratings or testimonials have been fabricated.
 
 ## Netlify-hosted enquiry form — verification required
 
