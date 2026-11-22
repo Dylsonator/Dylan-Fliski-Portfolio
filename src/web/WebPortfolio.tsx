@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { freelanceProfiles } from '../services';
+import { projects as gameProjects } from '../projects';
 import { publishedWebProjects, websitePackages } from './data';
 import { carePlans, extraServices, quotePath } from './offerings';
 import { AdditionalWebsiteServices, CarePlanTeaser } from './ServiceCatalog';
@@ -219,17 +220,58 @@ export function WebServices() {
   );
 }
 
+// Only genuine personal or approved work is linked into the separate programming portfolio.
+const programmingHighlights = gameProjects.filter(project =>
+  (project.slug === 'the-last-service' || project.slug === 'fish-evolution') &&
+  (project.workType !== 'Client' || project.clientApproved === true)
+);
+
 export function WebProjects() {
   return (
     <main>
-      <section className="web-page-lead web-container"><span className="web-eyebrow">WEB DEVELOPMENT / WORK</span><h1>Work worth<br /><em>showing.</em></h1><p>Real websites and case studies will appear here as they're finished and cleared for public display.</p></section>
-      <section className="web-section web-container">
+      <section className="web-page-lead web-container">
+        <span className="web-eyebrow">WEB DEVELOPMENT / WORK</span>
+        <h1>Work worth<br /><em>showing.</em></h1>
+        <p>Website case studies appear here when they're ready to share. I also have a separate <Link className="web-projects-inline-link" to="/games/projects">games and software programming portfolio <ArrowUpRight size={16} aria-hidden="true" /></Link> further down this page.</p>
+      </section>
+
+      <section className="web-section web-container" aria-label="Website projects">
         {publishedWebProjects.length > 0 ? (
           <div className="web-project-grid">{publishedWebProjects.map(project => <Link to={`/web/projects/${project.slug}`} key={project.slug} className="web-project-card">{project.coverImage && <img src={project.coverImage} alt={`${project.title} website`} loading="lazy" />}<span>{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span><h2>{project.title}</h2><p>{project.summary}</p><strong>View case study <ArrowUpRight size={17} /></strong></Link>)}</div>
         ) : (
-          <div className="web-empty-state"><div className="web-empty-state__graphic" aria-hidden="true"><div className="web-empty-state__browser"><span /><span /><span /><div /><i /><i /></div></div><span className="web-eyebrow">SELECTED WEB WORK</span><h2>Web projects are on the way.</h2><p>I'm building my collection of published website projects. Completed examples will appear here when they're ready to share and, where applicable, approved by the client.</p><Link className="web-button web-button--primary" to="/web/contact">Let's Work Together <ArrowRight size={17} aria-hidden="true" /></Link></div>
+          <div className="web-empty-state"><div className="web-empty-state__graphic" aria-hidden="true"><div className="web-empty-state__browser"><span /><span /><span /><div /><i /><i /></div></div><span className="web-eyebrow">WEBSITE PROJECTS</span><h2>Web projects are on the way.</h2><p>I'm building my collection of published website projects. Completed examples will appear here when they're ready to share and, where applicable, approved by the client.</p><Link className="web-button web-button--primary" to="/web/contact">Let's Work Together <ArrowRight size={17} aria-hidden="true" /></Link></div>
         )}
       </section>
+
+      {programmingHighlights.length > 0 && (
+        <section id="programming-work" className="web-section web-section--tinted web-programming-work" aria-labelledby="programming-work-title">
+          <div className="web-container web-programming-work__layout">
+            <div className="web-programming-work__intro">
+              <span className="web-eyebrow">ALSO BY DYLAN / SEPARATE PORTFOLIO</span>
+              <h2 id="programming-work-title">Games &amp; software programming.</h2>
+              <p>Outside website development, I build games, simulations and technical systems using Unreal Engine, Unity, C++ and C#. These are programming projects, not website client case studies.</p>
+              <Link className="web-button web-button--outline" to="/games/projects">View Programming Portfolio <ArrowUpRight size={17} aria-hidden="true" /></Link>
+            </div>
+            <div className="web-programming-work__cards" aria-label="Selected programming projects">
+              {programmingHighlights.map(project => (
+                <Link className="web-programming-work__card" key={project.slug} to={`/games/projects/${project.slug}`}>
+                  {project.image && (
+                    <div className="web-programming-work__image">
+                      <img src={project.image} alt={`${project.title} project screenshot`} loading="lazy" />
+                    </div>
+                  )}
+                  <div className="web-programming-work__card-copy">
+                    <span className="web-eyebrow">{project.tech.slice(0, 2).join(' · ')}</span>
+                    <h3>{project.title}</h3>
+                    <p>{project.summary}</p>
+                    <strong>See programming case study <ArrowUpRight size={16} aria-hidden="true" /></strong>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
       <CallToAction />
     </main>
   );

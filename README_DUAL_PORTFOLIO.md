@@ -31,7 +31,7 @@ The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with
 | `/web/contact` | Website project enquiry form / direct email fallback |
 | `/web/privacy` | Enquiry privacy information |
 
-The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The original Games Programming homepage is **preserved at `/`**, with `/games` offering a shareable alias; its canonical URL is `/` to avoid duplicate indexing. The web portfolio stays under its own `/web/*` routes, with only a small reciprocal footer link to the games homepage. There is no shared selection page or mixed navigation menus. Both use the **same domain**, so this is URL/path and interface separation, not separate domains or technical isolation.
+The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The original Games Programming homepage is **preserved at `/`**, with `/games` offering a shareable alias; its canonical URL is `/` to avoid duplicate indexing. The web portfolio stays under its own `/web/*` routes, with reciprocal footer links. The `/web/projects` page also distinguishes website case studies from a small preview of genuine, separately linked games/software projects. There is no shared selection page or mixed navigation menus. Both use the **same domain**, so this is URL/path and interface separation, not separate domains or technical isolation.
 
 ### Prices — introductory rates
 
