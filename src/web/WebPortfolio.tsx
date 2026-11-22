@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { freelanceProfiles } from '../services';
-import { projects as gameProjects } from '../projects';
 import { publishedWebProjects, websitePackages } from './data';
 import { carePlans, extraServices, quotePath } from './offerings';
 import { AdditionalWebsiteServices, CarePlanTeaser } from './ServiceCatalog';
@@ -220,58 +219,66 @@ export function WebServices() {
   );
 }
 
-// Only genuine personal or approved work is linked into the separate programming portfolio.
-const programmingHighlights = gameProjects.filter(project =>
-  (project.slug === 'the-last-service' || project.slug === 'fish-evolution') &&
-  (project.workType !== 'Client' || project.clientApproved === true)
-);
+/** Decorative style previews, not screenshots or client-site mockups. */
+function PortfolioSitePreview({ slug }: { slug: string }) {
+  if (slug === 'games-programming-portfolio') {
+    return (
+      <div className="web-portfolio-preview web-portfolio-preview--games" aria-hidden="true">
+        <div className="web-portfolio-preview__top"><span>DYLAN <em>FLISKI</em></span><small>GAMES PROGRAMMER</small></div>
+        <div className="web-portfolio-preview__body">
+          <span className="web-portfolio-preview__eyebrow">PORTFOLIO / SELECTED WORK</span>
+          <strong>Games <em>Programmer.</em></strong>
+          <small>Unreal Engine · Unity · C++ · C#</small>
+          <div className="web-portfolio-preview__chips"><span>PROJECTS</span><span>TECHNICAL WORK</span></div>
+        </div>
+        <span className="web-portfolio-preview__note">STYLE PREVIEW · PERSONAL WEBSITE</span>
+      </div>
+    );
+  }
+  if (slug === 'web-development-portfolio') {
+    return (
+      <div className="web-portfolio-preview web-portfolio-preview--web" aria-hidden="true">
+        <div className="web-portfolio-preview__top"><span>Dylan Fliski</span><small>WEB DEVELOPMENT</small></div>
+        <div className="web-portfolio-preview__body">
+          <span className="web-portfolio-preview__eyebrow">INDEPENDENT WEB DEVELOPER</span>
+          <strong>Small Business <em>Websites.</em></strong>
+          <small>Clear prices. Made for mobile.</small>
+          <div className="web-portfolio-preview__chips"><span>VIEW SERVICES</span><span>GET A QUOTE</span></div>
+        </div>
+        <span className="web-portfolio-preview__note">STYLE PREVIEW · THIS WEBSITE</span>
+      </div>
+    );
+  }
+  return null;
+}
 
 export function WebProjects() {
   return (
     <main>
       <section className="web-page-lead web-container">
-        <span className="web-eyebrow">WEB DEVELOPMENT / WORK</span>
-        <h1>Work worth<br /><em>showing.</em></h1>
-        <p>Website case studies appear here when they're ready to share. I also have a separate <Link className="web-projects-inline-link" to="/games/projects">games and software programming portfolio <ArrowUpRight size={16} aria-hidden="true" /></Link> further down this page.</p>
+        <span className="web-eyebrow">WEB DEVELOPMENT / REAL WORK</span>
+        <h1>Websites I've<br /><em>built.</em></h1>
+        <p>Two websites you can explore right now: my Games Programming portfolio and this Web Development portfolio. They're distinct sections of the same website, built and maintained by me.</p>
       </section>
-
-      <section className="web-section web-container" aria-label="Website projects">
-        {publishedWebProjects.length > 0 ? (
-          <div className="web-project-grid">{publishedWebProjects.map(project => <Link to={`/web/projects/${project.slug}`} key={project.slug} className="web-project-card">{project.coverImage && <img src={project.coverImage} alt={`${project.title} website`} loading="lazy" />}<span>{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span><h2>{project.title}</h2><p>{project.summary}</p><strong>View case study <ArrowUpRight size={17} /></strong></Link>)}</div>
-        ) : (
-          <div className="web-empty-state"><div className="web-empty-state__graphic" aria-hidden="true"><div className="web-empty-state__browser"><span /><span /><span /><div /><i /><i /></div></div><span className="web-eyebrow">WEBSITE PROJECTS</span><h2>Web projects are on the way.</h2><p>I'm building my collection of published website projects. Completed examples will appear here when they're ready to share and, where applicable, approved by the client.</p><Link className="web-button web-button--primary" to="/web/contact">Let's Work Together <ArrowRight size={17} aria-hidden="true" /></Link></div>
-        )}
+      <section className="web-section web-container web-projects-section" aria-label="Website projects">
+        <SectionIntro eyebrow="SELF-INITIATED PROJECTS" title="Explore the websites." description="Both projects are my own work, not paid client commissions. Each has a live link and public source code." />
+        <div className="web-project-grid">
+          {publishedWebProjects.map(project => (
+            <article key={project.slug} className="web-project-card">
+              {project.coverImage
+                ? <img src={project.coverImage} alt={`${project.title} website preview`} loading="lazy" />
+                : <PortfolioSitePreview slug={project.slug} />}
+              <span>{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <div className="web-project-card__actions">
+                <Link to={`/web/projects/${project.slug}`}>Read case study <ArrowUpRight size={17} aria-hidden="true" /></Link>
+                {project.publishedUrl && <a href={project.publishedUrl} target="_blank" rel="noopener noreferrer">Visit live website <ExternalLink size={16} aria-hidden="true" /></a>}
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
-
-      {programmingHighlights.length > 0 && (
-        <section id="programming-work" className="web-section web-section--tinted web-programming-work" aria-labelledby="programming-work-title">
-          <div className="web-container web-programming-work__layout">
-            <div className="web-programming-work__intro">
-              <span className="web-eyebrow">ALSO BY DYLAN / SEPARATE PORTFOLIO</span>
-              <h2 id="programming-work-title">Games &amp; software programming.</h2>
-              <p>Outside website development, I build games, simulations and technical systems using Unreal Engine, Unity, C++ and C#. These are programming projects, not website client case studies.</p>
-              <Link className="web-button web-button--outline" to="/games/projects">View Programming Portfolio <ArrowUpRight size={17} aria-hidden="true" /></Link>
-            </div>
-            <div className="web-programming-work__cards" aria-label="Selected programming projects">
-              {programmingHighlights.map(project => (
-                <Link className="web-programming-work__card" key={project.slug} to={`/games/projects/${project.slug}`}>
-                  {project.image && (
-                    <div className="web-programming-work__image">
-                      <img src={project.image} alt={`${project.title} project screenshot`} loading="lazy" />
-                    </div>
-                  )}
-                  <div className="web-programming-work__card-copy">
-                    <span className="web-eyebrow">{project.tech.slice(0, 2).join(' · ')}</span>
-                    <h3>{project.title}</h3>
-                    <p>{project.summary}</p>
-                    <strong>See programming case study <ArrowUpRight size={16} aria-hidden="true" /></strong>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
       <CallToAction />
     </main>
   );
@@ -280,10 +287,12 @@ export function WebProjects() {
 export function WebProjectDetail() {
   const { slug } = useParams();
   const project = publishedWebProjects.find(p => p.slug === slug);
-  if (!project) return <main className="web-section web-container web-project-notfound"><span className="web-eyebrow">CASE STUDY NOT FOUND</span><h1>Nothing published here yet.</h1><p>Only approved, completed client work is shown in this portfolio.</p><Link to="/web/projects" className="web-button web-button--primary"><ArrowLeft size={17} /> All Web Projects</Link></main>;
+  if (!project) return <main className="web-section web-container web-project-notfound"><span className="web-eyebrow">CASE STUDY NOT FOUND</span><h1>This project isn't available.</h1><p>Only my own work and client projects cleared for publication are shown here.</p><Link to="/web/projects" className="web-button web-button--primary"><ArrowLeft size={17} /> All Web Projects</Link></main>;
 
-  return <main className="web-container web-case-study"><Link className="web-back-link" to="/web/projects"><ArrowLeft size={17} /> Back to web projects</Link><span className="web-eyebrow">{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span><h1>{project.title}</h1><p className="web-case-study__lead">{project.summary}</p>{project.coverImage && <img className="web-case-study__cover" src={project.coverImage} alt={`${project.title} website preview`} />}
-    <div className="web-case-study__columns"><article><h2>The work</h2>{project.description.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</article><aside><h3>Project details</h3><p>{project.status}</p><div className="web-case-study__tech">{project.tech.map(t => <span key={t}>{t}</span>)}</div>{project.publishedUrl && <a href={project.publishedUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--primary">Visit Website <ExternalLink size={17} /></a>}</aside></div>
+  return <main className="web-container web-case-study"><Link className="web-back-link" to="/web/projects"><ArrowLeft size={17} /> Back to web projects</Link><span className="web-eyebrow">{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span><h1>{project.title}</h1><p className="web-case-study__lead">{project.summary}</p>{project.coverImage
+      ? <img className="web-case-study__cover" src={project.coverImage} alt={`${project.title} website preview`} />
+      : <div className="web-case-study__preview"><PortfolioSitePreview slug={project.slug} /></div>}
+    <div className="web-case-study__columns"><article><h2>The work</h2>{project.description.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</article><aside><h3>Project details</h3><p>{project.status}</p><div className="web-case-study__tech">{project.tech.map(t => <span key={t}>{t}</span>)}</div>{project.publishedUrl && <a href={project.publishedUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--primary">Visit Live Website <ExternalLink size={17} aria-hidden="true" /></a>}{project.sourceUrl && <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--outline">View Source on GitHub <ExternalLink size={17} aria-hidden="true" /></a>}</aside></div>
     {(project.beforeImage || project.afterImage) && <section className="web-section"><SectionIntro eyebrow="BEFORE & AFTER" title="The difference." /><div className="web-comparison">{project.beforeImage && <figure><img src={project.beforeImage} alt={`${project.title} before redesign`} /><figcaption>Before</figcaption></figure>}{project.afterImage && <figure><img src={project.afterImage} alt={`${project.title} after redesign`} /><figcaption>After</figcaption></figure>}</div></section>}
   </main>;
 }
