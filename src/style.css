@@ -1012,6 +1012,38 @@ button {
   color: #737580;
 }
 
+/* Discreet link to the separate web development portfolio. */
+.footer-other-portfolio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 11px;
+  margin-top: 18px;
+}
+
+.footer-other-portfolio > span {
+  font: 700 9px 'Space Grotesk', sans-serif;
+  letter-spacing: .12em;
+  color: #858692;
+}
+
+.footer-other-portfolio__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #c0c0ca;
+  font-size: 11px;
+  text-decoration: underline;
+  text-decoration-color: #56545e;
+  text-underline-offset: 4px;
+}
+
+.footer-other-portfolio__link:hover { color: #f06276; }
+.footer-other-portfolio__link:focus-visible {
+  outline: 2px solid #f06276;
+  outline-offset: 4px;
+}
+
 /* Responsive layout */
 /* Responsive layout */
 @media (max-width:1000px) {

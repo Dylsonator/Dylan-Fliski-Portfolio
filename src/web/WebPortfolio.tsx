@@ -71,6 +71,12 @@ function WebFooter() {
         <div>
           <strong>Dylan Fliski<span>.</span></strong>
           <p>Independent web development for small businesses in Cheltenham, Gloucester, Tewkesbury and nearby.</p>
+          <div className="web-footer__other-portfolio">
+            <span>ALSO BY DYLAN</span>
+            <Link className="web-footer__other-link" to="/">
+              Games programming portfolio <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
           <span>© {new Date().getFullYear()} Dylan Fliski</span>
         </div>
         <nav aria-label="Web portfolio footer">

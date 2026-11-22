@@ -4,12 +4,12 @@
 
 ## What changed and why
 
-**Share separate links:** `https://dylanfliski.com/games` for games programming and `https://dylanfliski.com/web` for local web-development clients. `https://dylanfliski.com/` also displays games programming. No visitor-facing selection or cross-links exist; no second domain is required.
+**Share separate links:** `https://dylanfliski.com/games` for games programming and `https://dylanfliski.com/web` for local web-development clients. `https://dylanfliski.com/` also displays games programming. No visitor-facing selection screen exists. A small reciprocal footer link lets interested visitors discover the other portfolio while both remain separate; no second domain is required.
 
 
 The original game portfolio remains intact: all **11** game projects, case studies, screenshots, videos, demos, GitHub/itch links, the featured project carousel, the latest-work cards, CV, About page, and game contact options are preserved. The original games portfolio is shown at `/` and `/games`; the independent web business is available at `/web`. Visitors can be sent one URL without encountering a portfolio selector.
 
-The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with **no new runtime dependencies**. The existing game CSS is unchanged; new web styles are scoped to `.web-site` (light, green-accent web portfolio). The games section keeps its existing dark/red visual identity. There is **no chooser, cross-portfolio navigation, or switcher**; the web header now reuses the actual existing logo asset (`/images/logo-mark.png`).
+The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with **no new runtime dependencies**. The existing game CSS is unchanged; new web styles are scoped to `.web-site` (light, green-accent web portfolio). The games section keeps its existing dark/red visual identity. There is **no chooser or top-navigation switcher**; discreet reciprocal footer links connect the two otherwise independent sections; the web header now reuses the actual existing logo asset (`/images/logo-mark.png`).
 
 ### Routes
 
@@ -31,7 +31,7 @@ The existing Vite 6 / React 19 / TypeScript / Tailwind 3 setup is retained, with
 | `/web/contact` | Website project enquiry form / direct email fallback |
 | `/web/privacy` | Enquiry privacy information |
 
-The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The original Games Programming homepage is **preserved at `/`**, with `/games` offering a shareable alias; its canonical URL is `/` to avoid duplicate indexing. The Web portfolio is only linked within its own `/web/*` pages, and there is no visible cross-navigation or shared selection page. Both use the **same domain**, so this is URL/path and interface separation, not separate domains or technical isolation.
+The Netlify-style `public/_redirects` preserves historic public URLs: `/projects`, `/projects/:slug`, `/about`, `/contact`, `/services`. The React routes provide matching in-app fallbacks. The original Games Programming homepage is **preserved at `/`**, with `/games` offering a shareable alias; its canonical URL is `/` to avoid duplicate indexing. The web portfolio stays under its own `/web/*` routes, with only a small reciprocal footer link to the games homepage. There is no shared selection page or mixed navigation menus. Both use the **same domain**, so this is URL/path and interface separation, not separate domains or technical isolation.
 
 ### Prices — introductory rates
 
@@ -90,7 +90,7 @@ Local static checks completed: TypeScript/TSX parsing, PostCSS parsing, sitemap 
 
 Manual review checklist:
 
-- Root `/`: game portfolio immediately opens. No selection screen, visible web links or portfolio switcher.
+- Root `/`: games portfolio immediately opens. No selection screen or portfolio switcher; a quiet footer link points to web development.
 - Web header: existing red computer/gear logo appears instead of “df”, and web-only footer actions appear.
 - Shareable independent URLs: `/games` and `/web`, without links between them.
 - Games: featured carousel, 11 projects, all case studies, images/videos, About, CV, contact and mobile nav. The Last Service now has five optimised genuine gameplay screenshots and an up-to-date 2026 release/patch case study.

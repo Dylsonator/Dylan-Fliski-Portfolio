@@ -30,10 +30,12 @@ for (const slug of slugs) check(!file('src/web/data.ts').includes(`slug: '${slug
 check(slugs.length === 11, `Existing game project count unchanged (${slugs.length})`);
 check(routes.includes('path="/games"') && routes.includes('path="/web"') && routes.includes('path="/"'), 'Separate games and web routes mounted');
 check(routes.includes('<Route path="/" element={<GamePortfolioLayout />}'), 'Root displays original game portfolio, not a chooser');
-check(!routes.includes('PortfolioChooser') && !routes.includes('Switch to Web Development'), 'No chooser or cross-promotion from games');
-check(!web.includes('to="/games"') && !web.includes('to="/"'), 'Web portfolio never links to games or chooser');
+check(!routes.includes('PortfolioChooser') && !routes.includes('Switch to Web Development'), 'No forced portfolio chooser or switcher');
+check(routes.includes('<Link to="/web" className="footer-other-portfolio__link">'), 'Games footer subtly links to Web Development');
+check(web.includes('<Link className="web-footer__other-link" to="/">'), 'Web footer subtly links to Games Programming homepage');
+check(!routes.includes('to="/web" onClick') && !web.includes('to="/games"'), 'Both main navigation menus stay independent');
 check(web.includes('/images/logo-mark.png') && existsSync(join(root, 'public/images/logo-mark.png')), 'Web header reuses existing Games Programmer logo');
-check(!web.includes('OTHER PORTFOLIO') && !web.includes('Switch to Game Development'), 'Web footer and header stay independent');
+check(!web.includes('OTHER PORTFOLIO') && !web.includes('Switch to Game Development'), 'Web branding and layout stay independent');
 check(!existsSync(join(root, 'src/dual/PortfolioChooser.tsx')), 'Removed old selection page component');
 check(routes.includes('path="/projects/:slug"') && redirects.includes('/projects/:slug /games/projects/:slug 301'), 'Legacy game project redirect');
 check(redirects.includes('/* /index.html 200'), 'SPA fallback configured');

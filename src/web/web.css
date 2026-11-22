@@ -276,6 +276,13 @@
 .web-footer__contact > span { font-size: 10px; color: #9dc3b1; font-weight: 800; letter-spacing: .12em; }
 .web-footer__contact a { display: inline-flex; align-items: center; gap: 7px; }
 
+/* A quiet cross-link, without mixing the two portfolio navigation menus. */
+.web-footer__other-portfolio { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 11px; margin: 0 0 20px; }
+.web-footer__other-portfolio > span { color: #9dc3b1; font-size: 10px; letter-spacing: .1em; font-weight: 800; }
+.web-footer__other-link { display: inline-flex; align-items: center; gap: 5px; color: #cbdbd3; font-size: 12px; text-decoration: underline !important; text-decoration-color: #5e8777 !important; text-underline-offset: 4px; }
+.web-footer__other-link:hover { color: #fff; }
+.web-footer__other-link:focus-visible { outline: 3px solid #e4a866; outline-offset: 4px; }
+
 @media (max-width: 1100px) {
   .web-header__inner { gap: 16px; }
   .web-header__quote { display: none; }
