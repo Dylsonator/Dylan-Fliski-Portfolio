@@ -44,7 +44,7 @@ const META: Record<string, PageMeta> = {
   },
   '/web/projects': {
     title: 'Web Development Work | Dylan Fliski',
-    description: 'Explore two real portfolio websites built by Dylan Fliski: a Games Programming portfolio and a Web Development services site, with project breakdowns and source code.',
+    description: 'Explore two real portfolio websites built by Dylan Fliski: a Games Programming portfolio and a Web Development services site, with live demos, screenshots and project breakdowns.',
   },
   '/web/about': {
     title: 'About Your Web Developer | Dylan Fliski Cheltenham',
