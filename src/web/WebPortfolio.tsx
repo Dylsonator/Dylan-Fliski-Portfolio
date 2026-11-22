@@ -219,39 +219,6 @@ export function WebServices() {
   );
 }
 
-/** Decorative style previews, not screenshots or client-site mockups. */
-function PortfolioSitePreview({ slug }: { slug: string }) {
-  if (slug === 'games-programming-portfolio') {
-    return (
-      <div className="web-portfolio-preview web-portfolio-preview--games" aria-hidden="true">
-        <div className="web-portfolio-preview__top"><span>DYLAN <em>FLISKI</em></span><small>GAMES PROGRAMMER</small></div>
-        <div className="web-portfolio-preview__body">
-          <span className="web-portfolio-preview__eyebrow">PORTFOLIO / SELECTED WORK</span>
-          <strong>Games <em>Programmer.</em></strong>
-          <small>Unreal Engine · Unity · C++ · C#</small>
-          <div className="web-portfolio-preview__chips"><span>PROJECTS</span><span>TECHNICAL WORK</span></div>
-        </div>
-        <span className="web-portfolio-preview__note">STYLE PREVIEW · PERSONAL WEBSITE</span>
-      </div>
-    );
-  }
-  if (slug === 'web-development-portfolio') {
-    return (
-      <div className="web-portfolio-preview web-portfolio-preview--web" aria-hidden="true">
-        <div className="web-portfolio-preview__top"><span>Dylan Fliski</span><small>WEB DEVELOPMENT</small></div>
-        <div className="web-portfolio-preview__body">
-          <span className="web-portfolio-preview__eyebrow">INDEPENDENT WEB DEVELOPER</span>
-          <strong>Small Business <em>Websites.</em></strong>
-          <small>Clear prices. Made for mobile.</small>
-          <div className="web-portfolio-preview__chips"><span>VIEW SERVICES</span><span>GET A QUOTE</span></div>
-        </div>
-        <span className="web-portfolio-preview__note">STYLE PREVIEW · THIS WEBSITE</span>
-      </div>
-    );
-  }
-  return null;
-}
-
 export function WebProjects() {
   return (
     <main>
@@ -265,9 +232,7 @@ export function WebProjects() {
         <div className="web-project-grid">
           {publishedWebProjects.map(project => (
             <article key={project.slug} className="web-project-card">
-              {project.coverImage
-                ? <img src={project.coverImage} alt={`${project.title} website preview`} loading="lazy" />
-                : <PortfolioSitePreview slug={project.slug} />}
+              {project.coverImage && <img src={project.coverImage} alt={`${project.title} actual website screenshot`} width={1365} height={900} loading="lazy" decoding="async" />}
               <span>{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span>
               <h3>{project.title}</h3>
               <p>{project.summary}</p>
@@ -287,14 +252,81 @@ export function WebProjects() {
 export function WebProjectDetail() {
   const { slug } = useParams();
   const project = publishedWebProjects.find(p => p.slug === slug);
-  if (!project) return <main className="web-section web-container web-project-notfound"><span className="web-eyebrow">CASE STUDY NOT FOUND</span><h1>This project isn't available.</h1><p>Only my own work and client projects cleared for publication are shown here.</p><Link to="/web/projects" className="web-button web-button--primary"><ArrowLeft size={17} /> All Web Projects</Link></main>;
 
-  return <main className="web-container web-case-study"><Link className="web-back-link" to="/web/projects"><ArrowLeft size={17} /> Back to web projects</Link><span className="web-eyebrow">{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span><h1>{project.title}</h1><p className="web-case-study__lead">{project.summary}</p>{project.coverImage
-      ? <img className="web-case-study__cover" src={project.coverImage} alt={`${project.title} website preview`} />
-      : <div className="web-case-study__preview"><PortfolioSitePreview slug={project.slug} /></div>}
-    <div className="web-case-study__columns"><article><h2>The work</h2>{project.description.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</article><aside><h3>Project details</h3><p>{project.status}</p><div className="web-case-study__tech">{project.tech.map(t => <span key={t}>{t}</span>)}</div>{project.publishedUrl && <a href={project.publishedUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--primary">Visit Live Website <ExternalLink size={17} aria-hidden="true" /></a>}{project.sourceUrl && <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--outline">View Source on GitHub <ExternalLink size={17} aria-hidden="true" /></a>}</aside></div>
-    {(project.beforeImage || project.afterImage) && <section className="web-section"><SectionIntro eyebrow="BEFORE & AFTER" title="The difference." /><div className="web-comparison">{project.beforeImage && <figure><img src={project.beforeImage} alt={`${project.title} before redesign`} /><figcaption>Before</figcaption></figure>}{project.afterImage && <figure><img src={project.afterImage} alt={`${project.title} after redesign`} /><figcaption>After</figcaption></figure>}</div></section>}
-  </main>;
+  if (!project) {
+    return <main className="web-section web-container web-project-notfound">
+      <span className="web-eyebrow">CASE STUDY NOT FOUND</span>
+      <h1>This project isn't available.</h1>
+      <p>Only my own work and client projects cleared for publication are shown here.</p>
+      <Link to="/web/projects" className="web-button web-button--primary"><ArrowLeft size={17} aria-hidden="true" /> All Web Projects</Link>
+    </main>;
+  }
+
+  return (
+    <main className="web-container web-case-study">
+      <Link className="web-back-link" to="/web/projects"><ArrowLeft size={17} aria-hidden="true" /> Back to web projects</Link>
+      <span className="web-eyebrow">{project.sector} · {project.type === 'Client' ? 'CLIENT PROJECT' : 'PERSONAL PROJECT'}</span>
+      <h1>{project.title}</h1>
+      <p className="web-case-study__lead">{project.summary}</p>
+      {project.coverImage && (
+        <img className="web-case-study__cover" src={project.coverImage} alt={`Screenshot of ${project.title}`} width={1365} height={900} />
+      )}
+      <div className="web-case-study__columns">
+        <article>
+          <h2>The work</h2>
+          {project.description.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+        </article>
+        <aside>
+          <h3>Project details</h3>
+          <p>{project.status}</p>
+          <div className="web-case-study__tech">{project.tech.map(t => <span key={t}>{t}</span>)}</div>
+          {project.publishedUrl && (
+            <a href={project.publishedUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--primary">
+              Visit Live Website <ExternalLink size={17} aria-hidden="true" />
+            </a>
+          )}
+          {project.sourceUrl && (
+            <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--outline">
+              View Source on GitHub <ExternalLink size={17} aria-hidden="true" />
+            </a>
+          )}
+        </aside>
+      </div>
+      {!!project.walkthrough?.length && (
+        <section className="web-section web-case-study__walkthrough" aria-label="Website features and implementation">
+          <SectionIntro eyebrow="BEHIND THE WEBSITE" title="What I built and why." description="Three real screenshots from this website build, with the purpose and implementation of each section." />
+          <div className="web-case-study__feature-list">
+            {project.walkthrough.map((section, index) => (
+              <article className="web-case-study__feature" key={section.image}>
+                <figure>
+                  <img src={section.image} alt={section.alt} width={1365} height={900} loading="lazy" decoding="async" />
+                  <figcaption>Real website capture · {section.title}</figcaption>
+                </figure>
+                <div className="web-case-study__feature-copy">
+                  <span className="web-eyebrow">{String(index + 1).padStart(2, '0')} / {String(project.walkthrough?.length ?? 0).padStart(2, '0')}</span>
+                  <h3>{section.title}</h3>
+                  <dl>
+                    <div><dt>What it is</dt><dd>{section.what}</dd></div>
+                    <div><dt>Why it's there</dt><dd>{section.why}</dd></div>
+                    <div><dt>How I built it</dt><dd>{section.how}</dd></div>
+                  </dl>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+      {(project.beforeImage || project.afterImage) && (
+        <section className="web-section">
+          <SectionIntro eyebrow="BEFORE & AFTER" title="The difference." />
+          <div className="web-comparison">
+            {project.beforeImage && <figure><img src={project.beforeImage} alt={`${project.title} before redesign`} /><figcaption>Before</figcaption></figure>}
+            {project.afterImage && <figure><img src={project.afterImage} alt={`${project.title} after redesign`} /><figcaption>After</figcaption></figure>}
+          </div>
+        </section>
+      )}
+    </main>
+  );
 }
 
 export function WebAbout() {
