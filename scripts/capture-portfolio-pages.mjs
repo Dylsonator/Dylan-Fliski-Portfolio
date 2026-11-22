@@ -41,7 +41,7 @@ try {
     const response = await page.goto(baseUrl + capture.path, { waitUntil: 'domcontentloaded', timeout: 30000 });
     if (!response || !response.ok()) throw new Error('Page failed: ' + capture.path);
     try {
-      await page.locator('main').first().waitFor({ state: 'visible', timeout: 10000 });
+      await page.locator(capture.path === '/' ? '.hero' : 'main').first().waitFor({ state: 'visible', timeout: 10000 });
     } catch (error) {
       console.error('FAILED URL:', page.url());
       console.error('BODY:', (await page.locator('body').innerText()).slice(0, 1500));
