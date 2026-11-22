@@ -190,7 +190,7 @@
 .web-project-card p { color: #65776e; font-size: 14px; }
 .web-project-card > strong { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; color: #246c56; font-size: 13px; }
 
-/* Two real, self-initiated websites, with clearly labelled style previews. */
+/* Authentic self-initiated website captures and development walkthroughs. */
 .web-projects-section .web-section-heading { margin-bottom: 27px; }
 .web-project-card { display: flex; flex-direction: column; min-width: 0; }
 .web-project-card h3 { font: 700 clamp(22px, 2vw, 26px)/1.25 'Space Grotesk', sans-serif; margin: 9px 0; }
@@ -199,35 +199,55 @@
 .web-project-card__actions a { display: inline-flex; align-items: center; gap: 6px; color: var(--web-green); font-size: 12px; font-weight: 800; text-underline-offset: 4px; }
 .web-project-card__actions a:hover { text-decoration: underline; }
 .web-project-card__actions a:focus-visible { outline: 3px solid #e4a866; outline-offset: 4px; }
-.web-portfolio-preview { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; aspect-ratio: 16/10; overflow: hidden; border-radius: 10px; padding: clamp(18px, 2.8vw, 32px); }
-.web-portfolio-preview__top { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; justify-content: space-between; }
-.web-portfolio-preview__top > span { font: 800 clamp(13px, 1.5vw, 18px)/1.2 'Space Grotesk', sans-serif; letter-spacing: -.025em; }
-.web-portfolio-preview__top small { font-size: 9px; font-weight: 800; letter-spacing: .1em; }
-.web-portfolio-preview__body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding-block: 15px; }
-.web-portfolio-preview__eyebrow, .web-portfolio-preview__note { font: 800 9px/1.5 'DM Sans',sans-serif; letter-spacing: .1em; }
-.web-portfolio-preview__body > strong { font: 700 clamp(24px, 3.2vw, 42px)/1.08 'Space Grotesk',sans-serif; letter-spacing: -.045em; max-width: 330px; }
-.web-portfolio-preview__body > small { font-size: 11px; }
-.web-portfolio-preview__chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
-.web-portfolio-preview__chips > span { padding: 8px 10px; border-radius: 7px; font-size: 9px; font-weight: 800; letter-spacing: .03em; }
-.web-portfolio-preview--games { color: #f5f5f7; background: radial-gradient(circle at 90% 30%,#42202b 0%,transparent 54%),#101115; }
-.web-portfolio-preview--games .web-portfolio-preview__top em, .web-portfolio-preview--games .web-portfolio-preview__body strong em { font-style: normal; color: #ff6375; }
-.web-portfolio-preview--games .web-portfolio-preview__eyebrow, .web-portfolio-preview--games .web-portfolio-preview__note { color: #f58b9c; }
-.web-portfolio-preview--games .web-portfolio-preview__body > small, .web-portfolio-preview--games .web-portfolio-preview__top small { color: #b2b2bd; }
-.web-portfolio-preview--games .web-portfolio-preview__chips > span { color: #f8e8ed; background: #4d2833; }
-.web-portfolio-preview--web { background: linear-gradient(155deg,#f8faf5,#e7f0e9); border: 1px solid #d9e4da; color: #1e3036; }
-.web-portfolio-preview--web .web-portfolio-preview__top small, .web-portfolio-preview--web .web-portfolio-preview__eyebrow, .web-portfolio-preview--web .web-portfolio-preview__note { color: #317361; }
-.web-portfolio-preview--web .web-portfolio-preview__body strong em { color: #358371; font-style: normal; }
-.web-portfolio-preview--web .web-portfolio-preview__body > small { color: #587069; }
-.web-portfolio-preview--web .web-portfolio-preview__chips > span:first-child { color: #fff; background: #215b51; }
-.web-portfolio-preview--web .web-portfolio-preview__chips > span:last-child { color: #215b51; border: 1px solid #90baaa; }
-.web-case-study__preview { max-width: 840px; margin-top: 39px; }
-.web-case-study__preview .web-portfolio-preview { max-height: 410px; aspect-ratio: 16/8; }
 .web-case-study__columns aside .web-button { display: flex; margin-top: 14px; }
-@media (max-width: 560px) {
-  .web-portfolio-preview { padding: 18px; }
-  .web-portfolio-preview__body > strong { font-size: clamp(22px, 6.5vw, 30px); }
-  .web-portfolio-preview__top small { font-size: 8px; }
-  .web-case-study__preview .web-portfolio-preview { aspect-ratio: 16/10; max-height: none; }
+
+.web-case-study__walkthrough { border-top: 1px solid var(--web-line); }
+.web-case-study__walkthrough .web-section-heading { max-width: 790px; margin-bottom: 32px; }
+.web-case-study__feature-list { display: grid; gap: 32px; }
+.web-case-study__feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  align-items: center;
+  gap: clamp(25px, 4vw, 57px);
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--web-line);
+}
+.web-case-study__feature:last-child { border-bottom: 0; }
+.web-case-study__feature:nth-child(even) > figure { grid-column: 2; grid-row: 1; }
+.web-case-study__feature:nth-child(even) > .web-case-study__feature-copy { grid-column: 1; grid-row: 1; }
+.web-case-study__feature figure { min-width: 0; margin: 0; }
+.web-case-study__feature figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1365/900;
+  object-fit: cover;
+  background: #e4eae5;
+  border: 1px solid #dce5df;
+  border-radius: 14px;
+}
+.web-case-study__feature figcaption { margin-top: 9px; font-size: 11px; color: var(--web-muted); }
+.web-case-study__feature-copy { min-width: 0; }
+.web-case-study__feature-copy > h3 {
+  margin: 11px 0 23px;
+  font: 700 clamp(24px, 2.8vw, 35px)/1.18 'Space Grotesk', sans-serif;
+  letter-spacing: -.035em;
+}
+.web-case-study__feature-copy dl { display: grid; gap: 19px; margin: 0; }
+.web-case-study__feature-copy dl > div { margin: 0; }
+.web-case-study__feature-copy dt {
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #24705b;
+}
+.web-case-study__feature-copy dd { margin: 0; font-size: 14px; line-height: 1.75; color: #4e665c; }
+@media (max-width: 850px) {
+  .web-case-study__feature { grid-template-columns: 1fr; gap: 22px; }
+  .web-case-study__feature:nth-child(even) > figure,
+  .web-case-study__feature:nth-child(even) > .web-case-study__feature-copy { grid-column: auto; grid-row: auto; }
 }
 
 .web-project-notfound { min-height: 62vh; }
