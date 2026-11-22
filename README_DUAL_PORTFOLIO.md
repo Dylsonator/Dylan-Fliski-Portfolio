@@ -52,6 +52,12 @@ Use `src/web/data.ts` `webProjects` to add genuine case studies. A `type: 'Clien
 
 The Web Projects page contains two real personal portfolio websites, not paid client commissions. Both link to their live routes and the same public GitHub repository. No client projects, reviews, ratings or testimonials have been fabricated.
 
+### Screenshot-based build walkthroughs (22 November 2026)
+
+Each of the two personal website case studies has **three real browser screenshots** and concise explanations of **what the section is, why it exists, and how it was implemented**. Games: homepage and featured work, searchable project archive, and The Last Service case-study page. Web: homepage, pricing cards, and contact/enquiry flow. These are screenshots of the actual built React/Vite pages, captured with headless Chromium at 1365×900, not invented client-site mockups. The images in `public/images/portfolio/captures/` are fixed snapshots; refresh them if the UI changes materially.
+
+The optional `scripts/capture-portfolio-pages.mjs` can reproduce the six images after building and locally serving the site, with Playwright installed for the capture task. This is not a production dependency.
+
 ## Netlify-hosted enquiry form — verification required
 
 The repository already used `public/_redirects` for Netlify-style SPA routing. This is consistent with Netlify deployment but **the hosting account, form detection setting, notification recipient, and real delivery have not been independently verified**.
