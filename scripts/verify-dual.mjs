@@ -44,9 +44,16 @@ check(data.includes("slug: 'games-programming-portfolio'") && data.includes("slu
 check((data.match(/type: 'Personal',/g) || []).length === 2, 'Both website case studies are personal projects, not client commissions');
 check(data.includes("publishedUrl: 'https://dylanfliski.com/'") && data.includes("publishedUrl: 'https://dylanfliski.com/web'"), 'Both project links point to the actual live portfolio sections');
 check((data.match(/sourceUrl: 'https:\/\/github.com\/Dylsonator\/Dylan-Fliski-Portfolio'/g) || []).length === 2, 'Both projects link to the same public source repository');
-check(web.includes('PortfolioSitePreview') && !web.includes('programmingHighlights'), 'Web project cards show site previews, not unrelated game project cards');
+check(!web.includes('PortfolioSitePreview') && !web.includes('programmingHighlights'), 'Website project cards use genuine captured images, not decorative or unrelated work');
 check(web.includes('publishedWebProjects.map(project') && web.includes('View Source on GitHub'), 'Web project cards and details link to real work and source code');
 for (const slug of ['games-programming-portfolio', 'web-development-portfolio']) check(sitemap.includes(`<loc>https://dylanfliski.com/web/projects/${slug}</loc>`), `Web project indexed: ${slug}`);
+for (const name of ['games-home.jpg', 'games-projects.jpg', 'games-case-study.jpg', 'web-home.jpg', 'web-services.jpg', 'web-contact.jpg']) {
+  check(existsSync(join(root, 'public/images/portfolio/captures', name)), `Genuine browser capture exists: ${name}`);
+  check(data.includes(`/images/portfolio/captures/${name}`), `Browser capture is referenced in website case study: ${name}`);
+}
+check((data.match(/what:/g) || []).length === 7 && (data.match(/why:/g) || []).length === 7 && (data.match(/how:/g) || []).length === 7, 'Six screenshots explain what, why and how (plus one type definition)');
+check(web.includes('section.what') && web.includes('section.why') && web.includes('section.how'), 'Project detail renders all three explanations per screenshot');
+check(file('src/style.css').includes('.project-work-tabs button.active'), 'Games archive origin filter controls are visibly distinguished');
 for (const p of [79, 149, 249, 349]) check(data.includes(`priceGBP: ${p}`), `Introductory rate £${p}`);
 check(html.includes('data-netlify="true"') && html.includes('name="web-enquiry"'), 'Static hosted form blueprint detected');
 for (const input of ['name','business','email','phone','website','service','budget','contact-method','description','consent','bot-field']) check(html.includes(`name="${input}"`) && web.includes(`name="${input}"`), `Form field present in HTML blueprint and React: ${input}`);
