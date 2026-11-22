@@ -51,7 +51,7 @@ for (const name of ['games-home.jpg', 'games-projects.jpg', 'games-case-study.jp
   check(existsSync(join(root, 'public/images/portfolio/captures', name)), `Genuine browser capture exists: ${name}`);
   check(data.includes(`/images/portfolio/captures/${name}`), `Browser capture is referenced in website case study: ${name}`);
 }
-check((data.match(/what:/g) || []).length === 6 && (data.match(/why:/g) || []).length === 6 && (data.match(/how:/g) || []).length === 6, 'Each of six screenshots explains what, why and how');
+check((data.match(/what:/g) || []).length === 7 && (data.match(/why:/g) || []).length === 7 && (data.match(/how:/g) || []).length === 7, 'Six screenshots explain what, why and how (plus one type definition)');
 check(web.includes('section.what') && web.includes('section.why') && web.includes('section.how'), 'Project detail renders all three explanations per screenshot');
 check(file('src/style.css').includes('.project-work-tabs button.active'), 'Games archive origin filter controls are visibly distinguished');
 for (const p of [79, 149, 249, 349]) check(data.includes(`priceGBP: ${p}`), `Introductory rate £${p}`);
