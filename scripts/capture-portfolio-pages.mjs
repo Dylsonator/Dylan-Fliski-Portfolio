@@ -11,7 +11,7 @@ const baseUrl = 'http://127.0.0.1:4173';
 const output = resolve('public/images/portfolio/captures');
 const captures = [
   { path: '/', file: 'games-home.jpg', selector: null },
-  { path: '/games/projects', file: 'games-projects.jpg', selector: '.filterbar', offset: 230 },
+  { path: '/games/projects', file: 'games-projects.jpg', selector: '.filterbar', offset: 380 },
   { path: '/games/projects/the-last-service', file: 'games-case-study.jpg', selector: null },
   { path: '/web', file: 'web-home.jpg', selector: null },
   { path: '/web/services', file: 'web-services.jpg', selector: '.web-pricing-grid', offset: 90 },
