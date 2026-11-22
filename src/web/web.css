@@ -190,73 +190,44 @@
 .web-project-card p { color: #65776e; font-size: 14px; }
 .web-project-card > strong { display: inline-flex; align-items: center; gap: 7px; margin-top: 20px; color: #246c56; font-size: 13px; }
 
-/* Web work and the separate games/software portfolio are clearly distinguished. */
-.web-projects-inline-link {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 4px;
-  color: var(--web-green) !important;
-  font-weight: 700;
-  text-decoration: underline !important;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-}
-.web-projects-inline-link svg { flex: 0 0 auto; align-self: center; }
-.web-programming-work { scroll-margin-top: 30px; }
-.web-programming-work__layout {
-  display: grid;
-  grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
-  gap: clamp(28px, 5vw, 70px);
-  align-items: center;
-}
-.web-programming-work__intro h2 {
-  margin: 15px 0 18px;
-  font: 700 clamp(32px, 3.6vw, 48px)/1.14 'Space Grotesk', sans-serif;
-  letter-spacing: -.045em;
-}
-.web-programming-work__intro p {
-  max-width: 48ch;
-  margin: 0 0 24px;
-  color: var(--web-muted);
-  font-size: 14px;
-  line-height: 1.8;
-}
-.web-programming-work__cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-.web-programming-work__card {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  background: #fff;
-  border: 1px solid var(--web-line);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: border-color .2s;
-}
-.web-programming-work__card:hover { border-color: #79a993; }
-.web-programming-work__image { aspect-ratio: 16 / 10; background: #1d2928; overflow: hidden; }
-.web-programming-work__image img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.web-programming-work__card-copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px; }
-.web-programming-work__card-copy > .web-eyebrow { font-size: 10px; line-height: 1.5; letter-spacing: .06em; }
-.web-programming-work__card h3 {
-  margin: 0;
-  font: 700 clamp(17px, 1.6vw, 21px)/1.25 'Space Grotesk', sans-serif;
-  letter-spacing: -.025em;
-}
-.web-programming-work__card p { margin: 0 0 5px; color: var(--web-muted); font-size: 12px; line-height: 1.7; }
-.web-programming-work__card strong { display: inline-flex; align-items: center; gap: 5px; margin-top: auto; color: var(--web-green); font-size: 12px; }
-@media (max-width: 1050px) {
-  .web-programming-work__layout { grid-template-columns: 1fr; }
-}
+/* Two real, self-initiated websites, with clearly labelled style previews. */
+.web-projects-section .web-section-heading { margin-bottom: 27px; }
+.web-project-card { display: flex; flex-direction: column; min-width: 0; }
+.web-project-card h3 { font: 700 clamp(22px, 2vw, 26px)/1.25 'Space Grotesk', sans-serif; margin: 9px 0; }
+.web-project-card > p { line-height: 1.7; flex: 1; }
+.web-project-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 21px; margin-top: 18px; }
+.web-project-card__actions a { display: inline-flex; align-items: center; gap: 6px; color: var(--web-green); font-size: 12px; font-weight: 800; text-underline-offset: 4px; }
+.web-project-card__actions a:hover { text-decoration: underline; }
+.web-project-card__actions a:focus-visible { outline: 3px solid #e4a866; outline-offset: 4px; }
+.web-portfolio-preview { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; aspect-ratio: 16/10; overflow: hidden; border-radius: 10px; padding: clamp(18px, 2.8vw, 32px); }
+.web-portfolio-preview__top { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; justify-content: space-between; }
+.web-portfolio-preview__top > span { font: 800 clamp(13px, 1.5vw, 18px)/1.2 'Space Grotesk', sans-serif; letter-spacing: -.025em; }
+.web-portfolio-preview__top small { font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+.web-portfolio-preview__body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding-block: 15px; }
+.web-portfolio-preview__eyebrow, .web-portfolio-preview__note { font: 800 9px/1.5 'DM Sans',sans-serif; letter-spacing: .1em; }
+.web-portfolio-preview__body > strong { font: 700 clamp(24px, 3.2vw, 42px)/1.08 'Space Grotesk',sans-serif; letter-spacing: -.045em; max-width: 330px; }
+.web-portfolio-preview__body > small { font-size: 11px; }
+.web-portfolio-preview__chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+.web-portfolio-preview__chips > span { padding: 8px 10px; border-radius: 7px; font-size: 9px; font-weight: 800; letter-spacing: .03em; }
+.web-portfolio-preview--games { color: #f5f5f7; background: radial-gradient(circle at 90% 30%,#42202b 0%,transparent 54%),#101115; }
+.web-portfolio-preview--games .web-portfolio-preview__top em, .web-portfolio-preview--games .web-portfolio-preview__body strong em { font-style: normal; color: #ff6375; }
+.web-portfolio-preview--games .web-portfolio-preview__eyebrow, .web-portfolio-preview--games .web-portfolio-preview__note { color: #f58b9c; }
+.web-portfolio-preview--games .web-portfolio-preview__body > small, .web-portfolio-preview--games .web-portfolio-preview__top small { color: #b2b2bd; }
+.web-portfolio-preview--games .web-portfolio-preview__chips > span { color: #f8e8ed; background: #4d2833; }
+.web-portfolio-preview--web { background: linear-gradient(155deg,#f8faf5,#e7f0e9); border: 1px solid #d9e4da; color: #1e3036; }
+.web-portfolio-preview--web .web-portfolio-preview__top small, .web-portfolio-preview--web .web-portfolio-preview__eyebrow, .web-portfolio-preview--web .web-portfolio-preview__note { color: #317361; }
+.web-portfolio-preview--web .web-portfolio-preview__body strong em { color: #358371; font-style: normal; }
+.web-portfolio-preview--web .web-portfolio-preview__body > small { color: #587069; }
+.web-portfolio-preview--web .web-portfolio-preview__chips > span:first-child { color: #fff; background: #215b51; }
+.web-portfolio-preview--web .web-portfolio-preview__chips > span:last-child { color: #215b51; border: 1px solid #90baaa; }
+.web-case-study__preview { max-width: 840px; margin-top: 39px; }
+.web-case-study__preview .web-portfolio-preview { max-height: 410px; aspect-ratio: 16/8; }
+.web-case-study__columns aside .web-button { display: flex; margin-top: 14px; }
 @media (max-width: 560px) {
-  .web-programming-work__cards { grid-template-columns: 1fr; }
-  .web-programming-work__intro .web-button { width: 100%; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .web-programming-work__card { transition: none; }
+  .web-portfolio-preview { padding: 18px; }
+  .web-portfolio-preview__body > strong { font-size: clamp(22px, 6.5vw, 30px); }
+  .web-portfolio-preview__top small { font-size: 8px; }
+  .web-case-study__preview .web-portfolio-preview { aspect-ratio: 16/10; max-height: none; }
 }
 
 .web-project-notfound { min-height: 62vh; }
