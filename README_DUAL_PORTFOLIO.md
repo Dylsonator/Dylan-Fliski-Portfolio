@@ -50,7 +50,7 @@ The new service catalogue shows indicative rates of £49–£99 (speed), £59–
 
 Use `src/web/data.ts` `webProjects` to add genuine case studies. A `type: 'Client'` item remains invisible until **both** `clientPermission: true` and `status: 'Completed'` are set. Obtain permission before using client names, images, screenshots or site links. The existing game projects remain in `src/projects.ts` and are never mixed into the web portfolio.
 
-The Web Projects page contains two real personal portfolio websites, not paid client commissions. Both link to their live routes and the same public GitHub repository. No client projects, reviews, ratings or testimonials have been fabricated.
+The Web Projects page contains two real personal portfolio websites, not paid client commissions. Both link to their live routes and provide screenshot-based case studies. They intentionally do not link to the website's source repository. No client projects, reviews, ratings or testimonials have been fabricated.
 
 ### Screenshot-based build walkthroughs (22 November 2026)
 
