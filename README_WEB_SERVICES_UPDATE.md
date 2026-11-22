@@ -44,7 +44,7 @@ Set `VITE_WEB_FORM_PROVIDER=netlify` **only in an approved deploy preview**, aft
 
 ## Real The Last Service screenshots
 
-`/games/projects/the-last-service` has five genuinely captured images supplied by the developer; `.webp` compressed at approximately the original capture dimensions to avoid unnecessary loading. The existing official itch.io cover and download link remain. The case study now explains C++/Blueprint systems, environment baseline, the eight-stamp rule, 41 anomalies and the post-release v1.0.1 bug-fix update. It does not spoil hidden anomalies or present the planned v1.1 overhaul as already completed. Images are in `public/images/gallery/last-service/` and total about 250 KB instead of approximately 10 MB of PNGs.
+`/games/projects/the-last-service` has five genuinely captured images supplied by the developer; `.webp` compressed at approximately the original capture dimensions to avoid unnecessary loading. The genuine in-game bus-stop cover and official itch.io download link remain. The case study now explains C++/Blueprint systems, environment baseline, the eight-stamp rule, 41 anomalies and the post-release v1.0.1 bug-fix update. It does not spoil hidden anomalies or present the planned v1.1 overhaul as already completed. Images are in `public/images/gallery/last-service/` and total about 250 KB instead of approximately 10 MB of PNGs.
 
 ## Design-quality checklist applied
 
