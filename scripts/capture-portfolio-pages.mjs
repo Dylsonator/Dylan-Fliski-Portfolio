@@ -35,10 +35,19 @@ const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] }
 
 try {
   const page = await browser.newPage({ viewport: { width: 1365, height: 900 }, deviceScaleFactor: 1, reducedMotion: 'reduce' });
+  page.on('pageerror', error => console.error('PAGE ERROR:', error.stack || error.message));
+  page.on('console', message => { if (message.type() === 'error') console.error('BROWSER CONSOLE:', message.text()); });
   for (const capture of captures) {
     const response = await page.goto(baseUrl + capture.path, { waitUntil: 'domcontentloaded', timeout: 30000 });
     if (!response || !response.ok()) throw new Error('Page failed: ' + capture.path);
-    await page.locator('main').first().waitFor({ state: 'visible', timeout: 10000 });
+    try {
+      await page.locator('main').first().waitFor({ state: 'visible', timeout: 10000 });
+    } catch (error) {
+      console.error('FAILED URL:', page.url());
+      console.error('BODY:', (await page.locator('body').innerText()).slice(0, 1500));
+      console.error('HTML:', (await page.content()).slice(0, 2200));
+      throw error;
+    }
     await page.evaluate(async () => {
       await document.fonts.ready;
       await Promise.all(Array.from(document.images).filter(img => img.loading !== 'lazy').map(img => img.decode().catch(() => {})));
