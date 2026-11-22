@@ -5,6 +5,7 @@ on:
     branches: [real-portfolio-case-study-images-2026-11-22]
     paths:
       - scripts/capture-portfolio-pages.mjs
+      - src/style.css
       - .github/workflows/capture-portfolio-pages.yml
 
 permissions:
