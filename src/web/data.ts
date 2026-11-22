@@ -83,8 +83,6 @@ export type WebProject = {
   afterImage?: string;
   description: string[];
   publishedUrl?: string;
-  /** Public code repository when authorised to share (optional). */
-  sourceUrl?: string;
   /** Real captures of this website, with an implementation walkthrough. */
   walkthrough?: {
     image: string;
@@ -111,7 +109,6 @@ export const webProjects: WebProject[] = [
     status: 'Completed',
     tech: ['React', 'TypeScript', 'Vite', 'CSS', 'React Router'],
     publishedUrl: 'https://dylanfliski.com/',
-    sourceUrl: 'https://github.com/Dylsonator/Dylan-Fliski-Portfolio',
     coverImage: '/images/portfolio/captures/games-home.jpg',
     walkthrough: [
       {
@@ -155,7 +152,6 @@ export const webProjects: WebProject[] = [
     status: 'Completed',
     tech: ['React', 'TypeScript', 'Vite', 'CSS', 'React Router'],
     publishedUrl: 'https://dylanfliski.com/web',
-    sourceUrl: 'https://github.com/Dylsonator/Dylan-Fliski-Portfolio',
     coverImage: '/images/portfolio/captures/web-home.jpg',
     walkthrough: [
       {
@@ -187,7 +183,7 @@ export const webProjects: WebProject[] = [
       'I designed and built this Web Development section of my own website to explain the services I offer and let prospective customers explore them before making contact.',
       'It presents four website packages, six optional improvements and three monthly care plans, with individual service details and clearly stated scope and exclusions.',
       'A separate green-and-cream design, responsive layouts and route-specific metadata distinguish this section from the Games Programming portfolio while keeping the same underlying website.',
-      'The contact experience supports service-specific enquiries. The hosted form remains disabled until delivery is verified, with a working direct-email alternative in the meantime. Both portfolio sections share the same public source repository.',
+      'The contact experience supports service-specific enquiries. The hosted form remains disabled until delivery is verified, with a working direct-email alternative in the meantime. Both sections are separate experiences within the same website.',
     ],
   },
 ];

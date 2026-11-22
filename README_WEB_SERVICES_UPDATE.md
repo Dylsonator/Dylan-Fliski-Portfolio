@@ -4,7 +4,7 @@
 
 ## Scope
 
-The existing Games Programming homepage and website project archive are preserved. The Web Development section remains visually separate, keeps the existing green/cream palette and computer-and-gear logo, and links to Games Programming through a discreet reciprocal footer link. The `/web/projects` page now showcases the two real website experiences Dylan built (Games Programming and Web Development), clearly labelled as personal portfolio projects. Both share the same public repository and are not presented as paid client commissions. No fake reviews, clients or client case studies have been added.
+The existing Games Programming homepage and website project archive are preserved. The Web Development section remains visually separate, keeps the existing green/cream palette and computer-and-gear logo, and links to Games Programming through a discreet reciprocal footer link. The `/web/projects` page now showcases the two real website experiences Dylan built (Games Programming and Web Development), clearly labelled as personal portfolio projects. Both share one application codebase and are not presented as paid client commissions. Website case studies no longer advertise or link to the source repository. No fake reviews, clients or client case studies have been added.
 
 ### Existing prices unchanged
 

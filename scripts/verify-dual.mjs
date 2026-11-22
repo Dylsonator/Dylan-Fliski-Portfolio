@@ -43,9 +43,9 @@ check(web.includes('publishedWebProjects') && data.includes('clientPermission ==
 check(data.includes("slug: 'games-programming-portfolio'") && data.includes("slug: 'web-development-portfolio'"), 'Two real personal website projects are documented');
 check((data.match(/type: 'Personal',/g) || []).length === 2, 'Both website case studies are personal projects, not client commissions');
 check(data.includes("publishedUrl: 'https://dylanfliski.com/'") && data.includes("publishedUrl: 'https://dylanfliski.com/web'"), 'Both project links point to the actual live portfolio sections');
-check((data.match(/sourceUrl: 'https:\/\/github.com\/Dylsonator\/Dylan-Fliski-Portfolio'/g) || []).length === 2, 'Both projects link to the same public source repository');
+check(!data.includes('sourceUrl') && !web.includes('View Source on GitHub'), 'Portfolio project case studies do not expose source repository links');
 check(!web.includes('PortfolioSitePreview') && !web.includes('programmingHighlights'), 'Website project cards use genuine captured images, not decorative or unrelated work');
-check(web.includes('publishedWebProjects.map(project') && web.includes('View Source on GitHub'), 'Web project cards and details link to real work and source code');
+check(web.includes('publishedWebProjects.map(project') && web.includes('Visit Live Website'), 'Website project cards and detail pages offer live-site links');
 for (const slug of ['games-programming-portfolio', 'web-development-portfolio']) check(sitemap.includes(`<loc>https://dylanfliski.com/web/projects/${slug}</loc>`), `Web project indexed: ${slug}`);
 for (const name of ['games-home.jpg', 'games-projects.jpg', 'games-case-study.jpg', 'web-home.jpg', 'web-services.jpg', 'web-contact.jpg']) {
   check(existsSync(join(root, 'public/images/portfolio/captures', name)), `Genuine browser capture exists: ${name}`);

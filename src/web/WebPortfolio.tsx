@@ -228,7 +228,7 @@ export function WebProjects() {
         <p>Two websites you can explore right now: my Games Programming portfolio and this Web Development portfolio. They're distinct sections of the same website, built and maintained by me.</p>
       </section>
       <section className="web-section web-container web-projects-section" aria-label="Website projects">
-        <SectionIntro eyebrow="SELF-INITIATED PROJECTS" title="Explore the websites." description="Both projects are my own work, not paid client commissions. Each has a live link and public source code." />
+        <SectionIntro eyebrow="SELF-INITIATED PROJECTS" title="Explore the websites." description="Two real website experiences I designed and built, each with a live demo and a detailed breakdown of the work." />
         <div className="web-project-grid">
           {publishedWebProjects.map(project => (
             <article key={project.slug} className="web-project-card">
@@ -283,11 +283,6 @@ export function WebProjectDetail() {
           {project.publishedUrl && (
             <a href={project.publishedUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--primary">
               Visit Live Website <ExternalLink size={17} aria-hidden="true" />
-            </a>
-          )}
-          {project.sourceUrl && (
-            <a href={project.sourceUrl} target="_blank" rel="noopener noreferrer" className="web-button web-button--outline">
-              View Source on GitHub <ExternalLink size={17} aria-hidden="true" />
             </a>
           )}
         </aside>
